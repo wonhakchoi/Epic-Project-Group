@@ -39,4 +39,18 @@ Easy Eats is for anyone who wants to look for a place to eat. The application wi
   - Can accept or decline friend requests
 
 ## Prototypes
+### Prototype 1
+![image](https://github.com/wonhakchoi/Epic-Project-Group/assets/64765407/41226d51-a2d4-4d39-8513-821f884036ca)
+![image](https://github.com/wonhakchoi/Epic-Project-Group/assets/64765407/6b3a0135-32dd-4a94-b670-a288e74a68ce)
+![image](https://github.com/wonhakchoi/Epic-Project-Group/assets/64765407/1ddebd3c-0a81-4235-806b-52a0faa317c0)
+
+### Prototye 2
+<img width="1029" alt="Screen Shot 2023-05-26 at 5 41 54 PM" src="https://github.com/wonhakchoi/Epic-Project-Group/assets/64765407/9c4b3203-8c6d-4d84-907a-858e3a80b208">
+<img width="971" alt="Screen Shot 2023-05-26 at 5 42 27 PM" src="https://github.com/wonhakchoi/Epic-Project-Group/assets/64765407/6b377ca7-327e-4e98-823d-6bf226da5012">
+
+### Prototype 3
+![image](https://github.com/wonhakchoi/Epic-Project-Group/assets/64765407/a6bd0c5c-2256-4b55-a421-5deea484e5f3)
+
+
+
 
