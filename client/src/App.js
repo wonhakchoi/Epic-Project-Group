@@ -1,0 +1,23 @@
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavigationBar from "./components/NavigationBar";
+import Home from "./pages/Home";
+import Search from "./pages/Search";
+import NotFound from "./pages/NotFound";
+
+function App() {
+    return (
+        <div className="App">
+            <BrowserRouter>
+                <NavigationBar />
+                <Routes>
+                    <Route exact path="/" element={<Home />}></Route>
+                    <Route path="/search" element={<Search />}></Route>
+                    <Route path="/*" element={<NotFound />}></Route>
+                </Routes>
+            </BrowserRouter>
+        </div>
+    );
+}
+
+export default App;
