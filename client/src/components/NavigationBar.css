@@ -1,0 +1,20 @@
+.navigation-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #aeb7b3;
+    padding: 15px;
+}
+
+.navigation-link {
+    color: #4f5d75;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 5px;
+    transition: all 0.2s ease-out;
+}
+
+.navigation-link:hover {
+    color: #e1efe6;
+}
