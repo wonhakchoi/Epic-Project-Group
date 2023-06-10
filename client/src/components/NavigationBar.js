@@ -11,9 +11,6 @@ const NavigationBar = () => {
             <Link to="/lists" className="navigation-link">
                 Lists
             </Link>
-            <Link to="/search" className="navigation-link">
-                Search
-            </Link>
         </div>
     );
 };
