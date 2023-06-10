@@ -8,7 +8,7 @@ const FriendsList = () => {
         id: 1,
         name: "Cedric Pulmano",
         biography: "UBC student",
-        rated_resturants: [    
+        rated_restaurants: [
           {
             id: 1,
             name: "Rain or Shine Ice Cream",
@@ -30,7 +30,7 @@ const FriendsList = () => {
         id: 2,
         name: "Wonhak Choi",
         biography: "UBC student",
-        rated_resturants: [    
+        rated_restaurants: [
           {
             id: 3,
             name: "Browns Crafthouse UBC",
@@ -45,7 +45,7 @@ const FriendsList = () => {
         id: 3,
         name: "Wendy Shen",
         biography: "UBC student",
-        rated_resturants: [
+        rated_restaurants: [
           {
             id: 2,
             name: "McDonald's",
@@ -60,7 +60,7 @@ const FriendsList = () => {
         id: 4,
         name: "Tammy Kim",
         biography: "UBC student",
-        rated_resturants: [    
+        rated_restaurants: [
           {
             id: 3,
             name: "Browns Crafthouse UBC",
@@ -77,7 +77,7 @@ const FriendsList = () => {
     <div>
       <h2>All Friends</h2>
       {friendsList.map((result) => (
-        <Friend key={result.id} name={result.name} biography={result.biography} rated_resturants={result.rated_resturants}/>
+        <Friend key={result.id} name={result.name} biography={result.biography} rated_restaurants={result.rated_restaurants}/>
       ))}
     </div>
   );

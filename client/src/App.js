@@ -4,6 +4,7 @@ import NavigationBar from "./components/NavigationBar";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import ResLists from "./pages/ResLists";
+import FriendsList from "./components/FriendsList";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                 <Routes>
                     <Route exact path="/" element={<Home />}></Route>
                     <Route path={"/lists"} element={<ResLists/>}></Route>
+                    <Route path={"/friends"} element={<FriendsList/>}></Route>
                     <Route path="/*" element={<NotFound />}></Route>
                 </Routes>
             </BrowserRouter>

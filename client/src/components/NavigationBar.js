@@ -11,6 +11,9 @@ const NavigationBar = () => {
             <Link to="/lists" className="navigation-link">
                 Lists
             </Link>
+            <Link to={"/friends"} className="navigation-link">
+                Friends
+            </Link>
         </div>
     );
 };
