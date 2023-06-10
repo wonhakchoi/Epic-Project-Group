@@ -1,0 +1,8 @@
+.resList-card {
+    display: block;
+    padding: 0.5rem;
+}
+.resList-button {
+    display: inline;
+    width: 100%;
+}
