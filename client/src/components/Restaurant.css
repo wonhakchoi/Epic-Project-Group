@@ -16,7 +16,8 @@
 }
 
 .location {
-  font-family: Arial, sans-serif /* Font weight for location */
+  font-family: Arial, sans-serif; /* Font for location */
+  font-weight: bold; /* Font weight for location */
 }
 
 .opening-hours {
@@ -26,4 +27,18 @@
 .rating {
   color: #007bff; /* Color for rating */
   font-weight: bold; /* Font weight for rating */
+}
+
+.add-to-list-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #1e9e7a;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-to-list-button:hover {
+  background-color: #09745f;
 }
