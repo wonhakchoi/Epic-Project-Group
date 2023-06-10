@@ -1,0 +1,25 @@
+.resList-card {
+    display: block;
+    padding: 0.5rem;
+}
+.resList-button {
+    display: inline;
+    width: 100%;
+}
+
+#add-list-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#add-list-button:hover {
+    background-color: #45a049;
+}

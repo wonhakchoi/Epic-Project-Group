@@ -1,4 +1,4 @@
-import "./ResturantList.css"
+import "./RestaurantList.css"
 
 // Component for each Restaurant List Card
 export default function RestaurantList({listDetails}) {
