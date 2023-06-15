@@ -1,3 +1,7 @@
+/**
+ * Represents all friends of the user
+ */
+
 let initialFriends = [
     {
         id: 1,
@@ -66,6 +70,12 @@ let initialFriends = [
                 rating: 4.3,
             },
         ],
+    },
+    {
+        id: 5,
+        name: "Malcolm Zhao",
+        biography: "SFU student",
+        rated_restaurants: [],
     },
 ];
 
