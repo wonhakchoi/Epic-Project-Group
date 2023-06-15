@@ -4,7 +4,7 @@ import FriendSearch from "../components/FriendSearch";
 
 const Friends = () => {
     return (
-        <div>
+        <div className="friends-container">
             <FriendSearch />
             <FriendsList />
         </div>
