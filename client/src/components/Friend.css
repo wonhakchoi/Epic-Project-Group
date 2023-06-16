@@ -1,8 +1,12 @@
-.friend {
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
+.friend-container {
+    height: 225px;
+    border: 3px solid green;
     border-radius: 4px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-color: #ddd;
+    padding: 10px;
+    margin: 20px;
+}
+
+.user-icon {
+    width: 50px;
+    height: 50px;
 }

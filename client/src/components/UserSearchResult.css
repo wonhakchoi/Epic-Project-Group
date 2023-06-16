@@ -1,0 +1,38 @@
+.search-result-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-search-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.user-search-name {
+    width: 100px;
+    margin-right: 20px;
+}
+
+.show-add-friends {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-friend-icon {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.add-friend-text {
+    font-size: 10px;
+    color: grey;
+}
+
+.friends-icon {
+    width: 25px;
+    height: 25px;
+}

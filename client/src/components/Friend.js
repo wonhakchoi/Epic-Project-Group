@@ -1,9 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import "./Friend.css";
 
-const Friend = ({ name, biography, rated_restaurants }) => {
+const Friend = ({ id, name, biography, rated_restaurants }) => {
+    const icons = useSelector((state) => state.iconLocations);
+
     return (
-        <div className="friend">
+        <div className="friend-container">
+            <img className="user-icon" src={icons[id % icons.length]} alt={name} />
             <h3>{name}</h3>
             <p className="biography">{biography}</p>
             <div className="rated-restaurants">

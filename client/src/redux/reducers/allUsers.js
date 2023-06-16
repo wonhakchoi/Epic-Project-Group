@@ -21,6 +21,10 @@ let initialNames = [
     "Polly",
     "Molly",
     "Daffy",
+    "Liam",
+    "Francis",
+    "Sean",
+    "Jerry",
 ];
 
 for (let i = 0; i < initialNames.length; i++) {

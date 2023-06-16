@@ -1,1 +1,30 @@
+.user-search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    margin-bottom: 50px;
+    border: 3px solid green;
+    border-radius: 4px;
+}
 
+.user-search-input {
+    margin-bottom: 30px;
+}
+
+.user-search-results {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-search-users {
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    grid-gap: 40px;
+}
+
+.user-search-results-navigation {
+    margin-top: auto;
+}
