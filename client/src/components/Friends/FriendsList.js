@@ -20,14 +20,6 @@ const FriendsList = () => {
                     />
                 ))}
             </div>
-            <a
-                href="https://www.flaticon.com/free-icons/cartoon"
-                target="_blank"
-                rel="noreferrer"
-                title="cartoon icons"
-            >
-                Cartoon icons from Flaticon
-            </a>
         </div>
     );
 };

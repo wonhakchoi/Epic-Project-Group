@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import "./UserSearchResult.css";
 
-const UserSearchResult = ({ id, name, friends }) => {
+const UserSearchResult = ({ id, name, friends, pending }) => {
     const icons = useSelector((state) => state.iconLocations);
 
     return (
@@ -13,6 +13,11 @@ const UserSearchResult = ({ id, name, friends }) => {
                 <div className="show-add-friends">
                     <img className="friends-icon" src="/images/web-icons/friend.png" alt="Friends!"></img>
                     <p className="add-friend-text">Friends</p>
+                </div>
+            ) : pending ? (
+                <div className="show-add-friends">
+                    <img className="friends-icon" src="/images/web-icons/pending.png" alt="Pending"></img>
+                    <p className="add-friend-text">Pending</p>
                 </div>
             ) : (
                 <div className="show-add-friends">
