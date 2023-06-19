@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import OutgoingRequest from "./OutgoingRequest";
 import IncomingRequest from "./IncomingRequest";
+import "./FriendRequests.css";
 
 const FriendRequests = () => {
     const outRequests = useSelector((state) => state.outgoingRequests);
@@ -24,7 +25,7 @@ const FriendRequests = () => {
                 <div className="in-requests">
                     {inRequests.map((key) => {
                         const user = allUsers[key];
-                        return <IncomingRequest key={key} user={user} />;
+                        return <IncomingRequest key={key} id={key} name={user.name} biography={user.biography} />;
                     })}
                 </div>
             </section>

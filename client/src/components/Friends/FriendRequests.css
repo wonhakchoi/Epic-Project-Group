@@ -1,0 +1,9 @@
+.in-requests {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+    padding: 20px;
+    background-color: lightslategray;
+    border-left: 25px solid white;
+    border-right: 25px solid white;
+}
