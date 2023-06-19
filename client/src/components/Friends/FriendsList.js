@@ -5,20 +5,24 @@ import "./FriendsList.css";
 
 const FriendsList = () => {
     const friends = useSelector((state) => state.userFriends);
+    const users = useSelector((state) => state.allUsers);
 
     return (
         <div>
             <h2>Your Friends</h2>
             <div className="friendslist-container">
-                {friends.map((result) => (
-                    <Friend
-                        key={result.id}
-                        id={result.id}
-                        name={result.name}
-                        biography={result.biography}
-                        rated_restaurants={result.rated_restaurants}
-                    />
-                ))}
+                {friends.map((id) => {
+                    const user = users[id];
+                    return (
+                        <Friend
+                            key={id}
+                            id={id}
+                            name={user.name}
+                            biography={user.biography}
+                            rated_restaurants={user.rated_restaurants}
+                        />
+                    );
+                })}
             </div>
         </div>
     );
