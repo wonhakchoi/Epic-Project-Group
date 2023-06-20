@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import "./Requests.css";
 
 const IncomingRequest = ({ id, name, biography }) => {
     const icons = useSelector((state) => state.iconLocations);
@@ -12,8 +13,8 @@ const IncomingRequest = ({ id, name, biography }) => {
                 <p className="biography">{biography}</p>
             </section>
             <section className="incoming-request-buttons">
-                <button>Accept</button>
-                <button>Reject</button>
+                <button className="accept-button friend-request-button">Accept</button>
+                <button className="reject-button friend-request-button">Reject</button>
             </section>
         </div>
     );

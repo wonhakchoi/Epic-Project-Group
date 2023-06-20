@@ -16,7 +16,7 @@ const FriendRequests = () => {
                 <div className="out-requests">
                     {outRequests.map((key) => {
                         const user = allUsers[key];
-                        return <OutgoingRequest key={key} user={user} />;
+                        return <OutgoingRequest key={key} id={key} name={user.name} biography={user.biography} />;
                     })}
                 </div>
             </section>
