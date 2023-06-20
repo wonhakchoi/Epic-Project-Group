@@ -15,20 +15,14 @@
     margin-right: 20px;
 }
 
-.show-add-friends {
+.user-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.add-friend-icon {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-}
-
-.add-friend-text {
+.friend-text {
     font-size: 10px;
     color: grey;
 }
@@ -36,4 +30,15 @@
 .friends-icon {
     width: 25px;
     height: 25px;
+    transition: all 0.5s ease-out;
+}
+
+.add-friend-icon,
+.confirm-icon {
+    cursor: pointer;
+}
+
+.confirm-icon:hover {
+    transition: all 0.5s ease-out;
+    content: url("../../../public/images/web-icons/confirmGreen.png");
 }

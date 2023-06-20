@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import UserSearchResult from "./UserSearchResult";
 import useDebounce from "../../hooks/useDebounce";
+import { determineStatus } from "../../utils/userUtils";
 import "./FriendSearch.css";
 
 const FriendSearch = () => {
@@ -12,20 +13,10 @@ const FriendSearch = () => {
     const [name, setName] = useState("");
     const searchResults = useDebounce(name, 500);
 
-    // returns users whose name includes what is in the search results
+    // returns users whose name includes the given string
     const filteredUsers = Object.fromEntries(
         Object.entries(users).filter(([id, user]) => user.name.toLowerCase().includes(searchResults.toLowerCase()))
     );
-
-    // returns true if the user's id is found within the list of friends
-    const isFriend = (userId) => {
-        return friends.some((friend) => friend.id === userId);
-    };
-
-    // returns true if the user's id is found within this user's outgoing friend requests
-    const isPending = (userId) => {
-        return outRequests.includes(userId);
-    };
 
     // logic for the pagination
     const resultsPerPage = 6;
@@ -64,14 +55,18 @@ const FriendSearch = () => {
                                 key={id}
                                 id={id}
                                 name={user.name}
-                                friends={isFriend(id)}
-                                pending={isPending(id)}
+                                status={determineStatus(id, friends, outRequests, inRequests)}
                             />
                         ))}
                 </div>
                 <div className="user-search-results-navigation">
-                    <button onClick={decrementOffset}>Previous</button>
-                    <button onClick={incrementOffset}>Next</button>
+                    <img
+                        className="arrow reverse"
+                        src="/images/web-icons/next.png"
+                        alt="Previous"
+                        onClick={decrementOffset}
+                    ></img>
+                    <img className="arrow" src="/images/web-icons/next.png" alt="Next" onClick={incrementOffset}></img>
                     <h5>
                         Page {offset / resultsPerPage + 1} out of{" "}
                         {Math.max(1, Math.ceil(Object.keys(filteredUsers).length / resultsPerPage))}

@@ -1,33 +1,43 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Status } from "../../utils/userUtils";
 import "./UserSearchResult.css";
 
-const UserSearchResult = ({ id, name, friends, pending }) => {
+const UserSearchResult = ({ id, name, status }) => {
     const icons = useSelector((state) => state.iconLocations);
 
     return (
         <div className="search-result-container">
             <img className="user-search-icon" src={icons[id % icons.length]} alt={name} />
             <h3 className="user-search-name">{name}</h3>
-            {friends ? (
-                <div className="show-add-friends">
+            {status === Status.FRIEND ? (
+                <div className="user-container">
                     <img className="friends-icon" src="/images/web-icons/friend.png" alt="Friends!"></img>
-                    <p className="add-friend-text">Friends</p>
+                    <p className="friend-text">Friends</p>
                 </div>
-            ) : pending ? (
-                <div className="show-add-friends">
+            ) : status === Status.OUTGOING ? (
+                <div className="user-container">
                     <img className="friends-icon" src="/images/web-icons/pending.png" alt="Pending"></img>
-                    <p className="add-friend-text">Pending</p>
+                    <p className="friend-text">Pending</p>
+                </div>
+            ) : status === Status.INCOMING ? (
+                <div className="user-container">
+                    <img
+                        className="friends-icon confirm-icon"
+                        src="/images/web-icons/confirm.png"
+                        alt="Requested"
+                    ></img>
+                    <p className="friend-text">Accept Request?</p>
                 </div>
             ) : (
-                <div className="show-add-friends">
+                <div className="user-container">
                     <img
-                        className="add-friend-icon"
+                        className="friends-icon add-friend-icon"
                         src="/images/web-icons/addFriend.png"
                         alt="Add Friend"
                         onClick={(event) => console.log("Added Friend: " + name)}
                     ></img>
-                    <p className="add-friend-text">Add Friend</p>
+                    <p className="friend-text">Add Friend</p>
                 </div>
             )}
         </div>

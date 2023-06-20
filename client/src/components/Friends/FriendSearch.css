@@ -17,6 +17,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 0px;
 }
 
 .user-search-users {
@@ -27,4 +28,18 @@
 
 .user-search-results-navigation {
     margin-top: auto;
+}
+
+.user-search-results-navigation * {
+    margin: 10px;
+}
+
+.arrow {
+    width: 25px;
+    height: 25px;
+    margin: 0 5px 0 5px;
+}
+
+.reverse {
+    transform: scaleX(-1);
 }

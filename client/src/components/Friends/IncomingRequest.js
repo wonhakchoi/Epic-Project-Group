@@ -6,7 +6,7 @@ const IncomingRequest = ({ id, name, biography }) => {
     const icons = useSelector((state) => state.iconLocations);
 
     return (
-        <div>
+        <div className="request-container">
             <section className="incoming-request-header">
                 <img className="user-icon" src={icons[id % icons.length]} alt={name} />
                 <h3>{name}</h3>
