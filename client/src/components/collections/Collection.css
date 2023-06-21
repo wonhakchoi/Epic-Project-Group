@@ -1,13 +1,13 @@
-.resList-card {
+.collection-card {
     display: block;
     padding: 0.5rem;
 }
-.resList-button {
+.collection-button {
     display: inline;
     width: 100%;
 }
 
-#add-list-button {
+#add-new-collection-button {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -20,6 +20,6 @@
     cursor: pointer;
 }
 
-#add-list-button:hover {
+#add-new-collection-button:hover {
     background-color: #45a049;
 }

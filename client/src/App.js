@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
-import ResLists from "./pages/ResLists";
+import Collections from "./pages/Collections";
 import Friends from "./pages/Friends";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
                 <NavigationBar />
                 <Routes>
                     <Route exact path="/" element={<Home />}></Route>
-                    <Route path={"/lists"} element={<ResLists />}></Route>
+                    <Route path={"/collections"} element={<Collections />}></Route>
                     <Route path={"/friends"} element={<Friends />}></Route>
                     <Route path="/*" element={<NotFound />}></Route>
                 </Routes>

@@ -4,7 +4,7 @@ import "./Restaurant.css"; // Import the CSS file for styling
 const Restaurant = ({ restaurant }) => {
   const { name, description, location, openingHours, rating } = restaurant;
 
-  const handleAddToList = () => {
+  const handleAddToCollection = () => {
     console.log("Add to My List clicked!", name);
   }
 
@@ -21,7 +21,7 @@ const Restaurant = ({ restaurant }) => {
       <p className="info">
         Rating: <span className="rating">{rating}</span>
       </p>
-      <button className="add-to-list-button" onClick={handleAddToList}>
+      <button className="add-to-collection-button" onClick={handleAddToCollection}>
         Add to My List
       </button>
     </div>
