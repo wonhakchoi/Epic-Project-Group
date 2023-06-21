@@ -11,7 +11,7 @@ const FriendsList = () => {
         <div>
             <h2>Your Friends</h2>
             <div className="friendslist-container">
-                {friends.map((id) => {
+                {[...friends].map((id) => {
                     const user = users[id];
                     return (
                         <Friend

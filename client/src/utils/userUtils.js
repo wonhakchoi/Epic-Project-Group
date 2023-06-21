@@ -22,15 +22,15 @@ export const determineStatus = (userId, friends, outRequests, inRequests) => {
 
 // returns true if the user's id is found within the list of friends
 const isFriend = (userId, friends) => {
-    return friends.includes(userId);
+    return friends.has(userId);
 };
 
 // returns true if the user's id is found within this user's outgoing friend requests
 const isOutgoing = (userId, outRequests) => {
-    return outRequests.includes(userId);
+    return outRequests.has(userId);
 };
 
 // returns true if the user's id is found within this user's incoming friend requests
 const isIncoming = (userId, inRequests) => {
-    return inRequests.includes(userId);
+    return inRequests.has(userId);
 };

@@ -2,9 +2,7 @@
  * Represents all friends of the user
  */
 
-let initialFriends = ["1", "2", "3", "4", "5", "9"];
-
-const userFriends = (friends = initialFriends, action) => {
+const userFriends = (friends = new Set(["1", "2", "3", "4", "5", "9"]), action) => {
     switch (action.type) {
         default:
             return friends;
