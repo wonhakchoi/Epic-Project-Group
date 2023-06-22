@@ -10,10 +10,10 @@ const FriendRequests = () => {
     const allUsers = useSelector((state) => state.allUsers);
 
     return (
-        <div>
+        <div className="friend-requests-container">
             <section>
                 <h1>Pending Requests</h1>
-                <div className="out-requests">
+                <div className="requests">
                     {[...outRequests].map((key) => {
                         const user = allUsers[key];
                         return <OutgoingRequest key={key} id={key} name={user.name} biography={user.biography} />;
@@ -22,7 +22,7 @@ const FriendRequests = () => {
             </section>
             <section>
                 <h1>Incoming Requests</h1>
-                <div className="in-requests">
+                <div className="requests">
                     {[...inRequests].map((key) => {
                         const user = allUsers[key];
                         return <IncomingRequest key={key} id={key} name={user.name} biography={user.biography} />;

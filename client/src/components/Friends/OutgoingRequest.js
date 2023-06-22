@@ -1,9 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { outgoingToStranger } from "../../redux/actions/userActions";
 import "./Requests.css";
 
 const OutgoingRequest = ({ id, name, biography }) => {
     const icons = useSelector((state) => state.iconLocations);
+    const dispatch = useDispatch();
 
     return (
         <div className="request-container">
@@ -13,7 +15,12 @@ const OutgoingRequest = ({ id, name, biography }) => {
                 <p className="biography">{biography}</p>
             </section>
             <section className="outgoing-request-buttons">
-                <button className="reject-button friend-request-button">Cancel</button>
+                <button
+                    className="reject-button friend-request-button"
+                    onClick={() => dispatch(outgoingToStranger(id))}
+                >
+                    Cancel
+                </button>
             </section>
         </div>
     );

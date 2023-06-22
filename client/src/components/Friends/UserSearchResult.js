@@ -1,10 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Status } from "../../utils/userUtils";
+import { incomingToFriend, strangerToOutgoing } from "../../redux/actions/userActions";
 import "./UserSearchResult.css";
 
 const UserSearchResult = ({ id, name, status }) => {
     const icons = useSelector((state) => state.iconLocations);
+    const dispatch = useDispatch();
 
     return (
         <div className="search-result-container">
@@ -26,6 +28,7 @@ const UserSearchResult = ({ id, name, status }) => {
                         className="friends-icon confirm-icon"
                         src="/images/web-icons/confirm.png"
                         alt="Requested"
+                        onClick={() => dispatch(incomingToFriend(id))}
                     ></img>
                     <p className="friend-text">Accept Request?</p>
                 </div>
@@ -35,7 +38,7 @@ const UserSearchResult = ({ id, name, status }) => {
                         className="friends-icon add-friend-icon"
                         src="/images/web-icons/addFriend.png"
                         alt="Add Friend"
-                        onClick={(event) => console.log("Added Friend: " + name)}
+                        onClick={() => dispatch(strangerToOutgoing(id))}
                     ></img>
                     <p className="friend-text">Add Friend</p>
                 </div>
