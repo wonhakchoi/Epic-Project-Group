@@ -6,6 +6,8 @@ import NotFound from "./pages/NotFound";
 import Collections from "./pages/Collections";
 import Friends from "./pages/Friends";
 import CollectionPage from "./components/collections/CollectionPage";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
     return (
@@ -17,6 +19,8 @@ function App() {
                     <Route path={"/collections"} element={<Collections />}></Route>
                     <Route path={"/collections/*"} element={<CollectionPage />}></Route>
                     <Route path={"/friends"} element={<Friends />}></Route>
+                    <Route path={"/login"} element={<Login />}></Route>
+                    <Route path={"/signup"} element={<Signup />}></Route>
                     <Route path="/*" element={<NotFound />}></Route>
                 </Routes>
             </BrowserRouter>

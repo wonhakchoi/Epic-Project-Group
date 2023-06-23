@@ -1,0 +1,7 @@
+Icons from Flaticon
+
+apien - addFriend.png, friend.png
+freepik - pending.png
+smashicons - next.png
+roundicons - confirm.png
+octopocto - confirmGreen.png
