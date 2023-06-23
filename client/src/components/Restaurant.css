@@ -29,7 +29,7 @@
   font-weight: bold; /* Font weight for rating */
 }
 
-.add-to-list-button {
+.add-to-collection-button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   background-color: #1e9e7a;
@@ -39,6 +39,6 @@
   cursor: pointer;
 }
 
-.add-to-list-button:hover {
+.add-to-collection-button:hover {
   background-color: #09745f;
 }
