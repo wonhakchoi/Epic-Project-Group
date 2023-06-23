@@ -1,24 +1,28 @@
-import {useState} from "react";
 import "../components/collections/Collection.css"
-import Collection from "../components/collections/Collection";
+import CollectionCard from "../components/collections/CollectionCard";
+import {useDispatch, useSelector} from "react-redux";
+import {addCollection} from "../redux/reducers/collectionsSlice";
+import {COLLECTION_IMG} from "../redux/data/sampleCollections";
 
 const {v4: uuid} = require('uuid');
 
-// Some sample data, this will need to be stored in database later
-const sampleCollections = [{name: "Collection 1"}, {name: "Collection 2"}, {name: "Collection 3"}]
-
 // Page for displaying all the user made collections of restaurants
+
+// TODO: form for adding new collections
+// TODO: delete collections
+// TODO: be able to modify existing collections
+
 export default function Collections() {
-    const [collections, setCollections] = useState(sampleCollections);
+    // const [collections, setCollections] = useState(sampleCollections);
+    const collections = useSelector((state) => state.collections.collections)
+    const dispatch = useDispatch();
 
     function handleAddCollection() {
-        setCollections([
-            ...collections, {name: ("Collection")}
-        ])
+        dispatch(addCollection({id: uuid(), name: "New Collection", img: COLLECTION_IMG}));
     }
 
     const displayCollections = collections.map(collection =>
-        <Collection collectionDetails={collection} key={uuid()}/>)
+        <CollectionCard collectionDetails={collection} key={collection.id}/>)
 
     return (
         <div>
