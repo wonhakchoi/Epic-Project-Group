@@ -4,7 +4,7 @@ import { incomingToFriend, incomingToStranger } from "../../redux/actions/userAc
 import "./Requests.css";
 
 const IncomingRequest = ({ id, name, biography }) => {
-    const icons = useSelector((state) => state.iconLocations);
+    const icons = useSelector((state) => state.users.iconLocations);
     const dispatch = useDispatch();
 
     return (

@@ -5,7 +5,7 @@ import { incomingToFriend, strangerToOutgoing } from "../../redux/actions/userAc
 import "./UserSearchResult.css";
 
 const UserSearchResult = ({ id, name, status }) => {
-    const icons = useSelector((state) => state.iconLocations);
+    const icons = useSelector((state) => state.users.iconLocations);
     const dispatch = useDispatch();
 
     return (

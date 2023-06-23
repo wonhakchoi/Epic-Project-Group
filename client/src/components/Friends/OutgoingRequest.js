@@ -4,7 +4,7 @@ import { outgoingToStranger } from "../../redux/actions/userActions";
 import "./Requests.css";
 
 const OutgoingRequest = ({ id, name, biography }) => {
-    const icons = useSelector((state) => state.iconLocations);
+    const icons = useSelector((state) => state.users.iconLocations);
     const dispatch = useDispatch();
 
     return (

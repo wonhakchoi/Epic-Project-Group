@@ -6,10 +6,10 @@ import { determineStatus } from "../../utils/userUtils";
 import "./FriendSearch.css";
 
 const FriendSearch = () => {
-    const users = useSelector((state) => state.allUsers);
-    const friends = useSelector((state) => state.userFriends);
-    const outRequests = useSelector((state) => state.outgoingRequests);
-    const inRequests = useSelector((state) => state.incomingRequests);
+    const users = useSelector((state) => state.users.allUsers);
+    const friends = useSelector((state) => state.users.userFriends);
+    const outRequests = useSelector((state) => state.users.outgoingRequests);
+    const inRequests = useSelector((state) => state.users.incomingRequests);
     const [name, setName] = useState("");
     const searchResults = useDebounce(name, 500);
 

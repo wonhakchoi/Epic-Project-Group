@@ -4,8 +4,8 @@ import Friend from "./Friend";
 import "./FriendsList.css";
 
 const FriendsList = () => {
-    const friends = useSelector((state) => state.userFriends);
-    const users = useSelector((state) => state.allUsers);
+    const friends = useSelector((state) => state.users.userFriends);
+    const users = useSelector((state) => state.users.allUsers);
 
     return (
         <div>

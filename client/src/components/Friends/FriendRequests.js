@@ -5,9 +5,9 @@ import IncomingRequest from "./IncomingRequest";
 import "./FriendRequests.css";
 
 const FriendRequests = () => {
-    const outRequests = useSelector((state) => state.outgoingRequests);
-    const inRequests = useSelector((state) => state.incomingRequests);
-    const allUsers = useSelector((state) => state.allUsers);
+    const outRequests = useSelector((state) => state.users.outgoingRequests);
+    const inRequests = useSelector((state) => state.users.incomingRequests);
+    const allUsers = useSelector((state) => state.users.allUsers);
 
     return (
         <div className="friend-requests-container">

@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import "./Friend.css";
 
 const Friend = ({ id, name, biography, rated_restaurants }) => {
-    const icons = useSelector((state) => state.iconLocations);
-    const restaurants = useSelector((state) => state.allRestaurants);
+    const icons = useSelector((state) => state.users.iconLocations);
+    const restaurants = useSelector((state) => state.restaurants.allRestaurants);
 
     return (
         <div className="friend-container">
