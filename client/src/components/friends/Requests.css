@@ -1,0 +1,35 @@
+.request-container {
+    border: 2px solid grey;
+    padding: 10px 0;
+}
+
+.request-container * {
+    margin: 5px 0;
+}
+
+.friend-request-button {
+    color: white;
+    width: 70px;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 15px 2px 0 2px;
+    cursor: pointer;
+    transition: all 0.5s ease-out;
+}
+
+.accept-button {
+    background-color: #28a745;
+}
+
+.accept-button:hover {
+    background-color: #218838;
+}
+
+.reject-button {
+    background-color: #de4d5c;
+}
+
+.reject-button:hover {
+    background-color: #c82333;
+}
