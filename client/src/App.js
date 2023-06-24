@@ -3,8 +3,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
-import ResLists from "./pages/ResLists";
-import FriendsList from "./components/FriendsList";
+import Collections from "./pages/Collections";
+import Friends from "./pages/Friends";
+import CollectionPage from "./components/collections/CollectionPage";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 
 function App() {
     return (
@@ -13,8 +17,12 @@ function App() {
                 <NavigationBar />
                 <Routes>
                     <Route exact path="/" element={<Home />}></Route>
-                    <Route path={"/lists"} element={<ResLists/>}></Route>
-                    <Route path={"/friends"} element={<FriendsList/>}></Route>
+                    <Route path={"/collections"} element={<Collections />}></Route>
+                    <Route path={"/collections/*"} element={<CollectionPage />}></Route>
+                    <Route path={"/friends"} element={<Friends />}></Route>
+                    <Route path={"/login"} element={<Login />}></Route>
+                    <Route path={"/signup"} element={<Signup />}></Route>
+                    <Route path={"/profile"} element={<Profile />}></Route>
                     <Route path="/*" element={<NotFound />}></Route>
                 </Routes>
             </BrowserRouter>

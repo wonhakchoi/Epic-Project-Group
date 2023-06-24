@@ -8,8 +8,8 @@ const NavigationBar = () => {
             <Link to="/" className="navigation-link">
                 Home
             </Link>
-            <Link to="/lists" className="navigation-link">
-                Lists
+            <Link to={"/collections"} className="navigation-link">
+                Collections
             </Link>
             <Link to={"/friends"} className="navigation-link">
                 Friends
