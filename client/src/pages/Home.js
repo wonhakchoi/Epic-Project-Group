@@ -12,7 +12,7 @@ const Home = () => {
 
     return (
         <div>
-            <h1>Easy Eats</h1>
+            <br />
             <SearchBar onSearch={handleSearch}/>
         </div>
     );
