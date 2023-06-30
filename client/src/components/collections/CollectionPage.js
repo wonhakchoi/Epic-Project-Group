@@ -1,5 +1,4 @@
 import {useSelector} from "react-redux";
-import React from "react";
 import RestaurantCard from "../RestaurantCard";
 
 export default function CollectionPage() {
