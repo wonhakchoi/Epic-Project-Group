@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { enableMapSet } from "immer";
 import NavigationBar from "./components/NavigationBar";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -9,6 +10,8 @@ import CollectionPage from "./components/collections/CollectionPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
+
+enableMapSet();
 
 function App() {
     return (

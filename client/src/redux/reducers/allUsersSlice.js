@@ -9,9 +9,21 @@
  *          3: 2.9
  *      }
  * }
- */
 
-let initialUsers = {};
+
+const allUsers = (users = initialUsers, action) => {
+    switch (action.type) {
+        default:
+            return users;
+    }
+};
+
+export default allUsers;
+*/
+
+import { createSlice } from "@reduxjs/toolkit";
+
+let initialState = {};
 let initialNames = [
     "Cedric Pulmano",
     "Malcolm Zhao",
@@ -37,36 +49,35 @@ let initialNames = [
 ];
 
 for (let i = 0; i < initialNames.length; i++) {
-    initialUsers[(i + 1).toString()] = {
+    initialState[(i + 1).toString()] = {
         name: initialNames[i],
         biography: `${i % 2 === 0 ? "UBC" : "SFU"} student`,
         rated_restaurants: {},
     };
 }
 
-initialUsers["1"].rated_restaurants = {
+initialState["1"].rated_restaurants = {
     1: 3.5,
     4: 5.0,
 };
 
-initialUsers["3"].rated_restaurants = {
+initialState["3"].rated_restaurants = {
     4: 4.8,
 };
 
-initialUsers["4"].rated_restaurants = {
+initialState["4"].rated_restaurants = {
     1: 3.7,
     2: 2.9,
 };
 
-initialUsers["5"].rated_restaurants = {
+initialState["5"].rated_restaurants = {
     2: 4.2,
 };
 
-const allUsers = (users = initialUsers, action) => {
-    switch (action.type) {
-        default:
-            return users;
-    }
-};
+const allUsersSlice = createSlice({
+    name: "allUsers",
+    initialState,
+    reducers: {},
+});
 
-export default allUsers;
+export default allUsersSlice.reducer;

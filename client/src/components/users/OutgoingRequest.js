@@ -17,7 +17,7 @@ const OutgoingRequest = ({ id, name, biography }) => {
             <section className="outgoing-request-buttons">
                 <button
                     className="reject-button friend-request-button"
-                    onClick={() => dispatch(outgoingToStranger(id))}
+                    onClick={() => outgoingToStranger(dispatch, id)}
                 >
                     Cancel
                 </button>

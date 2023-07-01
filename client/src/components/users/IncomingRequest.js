@@ -15,12 +15,12 @@ const IncomingRequest = ({ id, name, biography }) => {
                 <p className="biography">{biography}</p>
             </section>
             <section className="incoming-request-buttons">
-                <button className="accept-button friend-request-button" onClick={() => dispatch(incomingToFriend(id))}>
+                <button className="accept-button friend-request-button" onClick={() => incomingToFriend(dispatch, id)}>
                     Accept
                 </button>
                 <button
                     className="reject-button friend-request-button"
-                    onClick={() => dispatch(incomingToStranger(id))}
+                    onClick={() => incomingToStranger(dispatch, id)}
                 >
                     Reject
                 </button>
