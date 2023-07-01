@@ -6,13 +6,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const incomingRequestsSlice = createSlice({
     name: "incomingRequests",
-    initialState: new Set(["7", "10"]),
+    initialState: ["7", "10"],
     reducers: {
         incomingToFriend(state, action) {
-            state.delete(action.payload);
+            return state.filter((id) => id !== action.payload);
         },
         incomingToStranger(state, action) {
-            state.delete(action.payload);
+            return state.filter((id) => id !== action.payload);
         },
     },
 });
