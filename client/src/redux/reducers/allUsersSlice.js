@@ -9,17 +9,7 @@
  *          3: 2.9
  *      }
  * }
-
-
-const allUsers = (users = initialUsers, action) => {
-    switch (action.type) {
-        default:
-            return users;
-    }
-};
-
-export default allUsers;
-*/
+ */
 
 import { createSlice } from "@reduxjs/toolkit";
 

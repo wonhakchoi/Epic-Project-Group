@@ -7,16 +7,6 @@
  *      location: "1391 E 41st Ave, Vancouver, BC",
  *      openingHours: "6AM to 12PM",
  * }
-
-
-const allRestaurants = (restaurants = initialRestaurants, action) => {
-    switch (action.type) {
-        default:
-            return restaurants;
-    }
-};
-
-export default allRestaurants;
  */
 
 import { createSlice } from "@reduxjs/toolkit";
