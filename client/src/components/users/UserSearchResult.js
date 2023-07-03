@@ -10,7 +10,7 @@ const UserSearchResult = ({ id, name, status }) => {
 
     return (
         <div className="search-result-container">
-            <img className="user-search-icon" src={icons[id % icons.length]} alt={name} />
+            <img className="user-search-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
             <h3 className="user-search-name">{name}</h3>
             {status === Status.FRIEND ? (
                 <div className="user-container">

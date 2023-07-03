@@ -10,7 +10,7 @@ const OutgoingRequest = ({ id, name, biography }) => {
     return (
         <div className="request-container">
             <section className="outgoing-request-header">
-                <img className="user-icon" src={icons[id % icons.length]} alt={name} />
+                <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
                 <h3>{name}</h3>
                 <p className="biography">{biography}</p>
             </section>

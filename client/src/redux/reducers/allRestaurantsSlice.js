@@ -10,38 +10,30 @@
  */
 
 import { createSlice } from "@reduxjs/toolkit";
+import { getRestaurantsAsync } from "../thunks/restaurantsThunks";
+import { REQUEST_STATE } from "../requestStates";
 
-const initialState = {
-    1: {
-        name: "Rain or Shine Ice Cream",
-        description: "Ice Cream",
-        location: "6001 University Blvd, Vancouver, BC",
-        openingHours: "12:00 PM to 10:00 PM",
-    },
-    2: {
-        name: "McDonald's",
-        description: "Fast food restaurant",
-        location: "5728 University Blvd, Vancouver, BC",
-        openingHours: "Open 24 hours",
-    },
-    3: {
-        name: "Browns Crafthouse UBC",
-        description: "Pub",
-        location: "6111 University Blvd, Vancouver, BC",
-        openingHours: "11AM to 12PM",
-    },
-    4: {
-        name: "Duffin's Donuts",
-        description: "Heaven on Earth",
-        location: "1391 E 41st Ave, Vancouver, BC",
-        openingHours: "6AM to 12PM",
-    },
-};
+let initialState = { restaurants: [], getRestaurants: REQUEST_STATE.PENDING, error: null };
 
 const allRestaurantsSlice = createSlice({
     name: "allRestaurants",
     initialState,
     reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(getRestaurantsAsync.pending, (state) => {
+                state.getRestaurants = REQUEST_STATE.PENDING;
+                state.error = null;
+            })
+            .addCase(getRestaurantsAsync.fulfilled, (state, action) => {
+                state.getRestaurants = REQUEST_STATE.FULFILLED;
+                state.restaurants = action.payload.data;
+            })
+            .addCase(getRestaurantsAsync.rejected, (state, action) => {
+                state.getRestaurants = REQUEST_STATE.REJECTED;
+                state.error = action.error;
+            });
+    },
 });
 
 export default allRestaurantsSlice.reducer;

@@ -12,62 +12,30 @@
  */
 
 import { createSlice } from "@reduxjs/toolkit";
+import { getUsersAsync } from "../thunks/usersThunks";
+import { REQUEST_STATE } from "../requestStates";
 
-let initialState = {};
-let initialNames = [
-    "Cedric Pulmano",
-    "Malcolm Zhao",
-    "Tammy Kim",
-    "Wendy Shen",
-    "Wonhak Choi",
-    "Johnny Test",
-    "Bruce Wayne",
-    "Conner Connerson",
-    "Jesus Christ",
-    "Jimi Hendrix",
-    "Quentin Tarantino",
-    "Taz Mania",
-    "Tally Hall",
-    "Sally Hall",
-    "Kurt Cobain",
-    "Molly Mollerson",
-    "Daffy Duck",
-    "Liam Pulmano",
-    "Jonathan Hermon",
-    "Sean Noh",
-    "Jerry Springer",
-];
-
-for (let i = 0; i < initialNames.length; i++) {
-    initialState[(i + 1).toString()] = {
-        name: initialNames[i],
-        biography: `${i % 2 === 0 ? "UBC" : "SFU"} student`,
-        rated_restaurants: {},
-    };
-}
-
-initialState["1"].rated_restaurants = {
-    1: 3.5,
-    4: 5.0,
-};
-
-initialState["3"].rated_restaurants = {
-    4: 4.8,
-};
-
-initialState["4"].rated_restaurants = {
-    1: 3.7,
-    2: 2.9,
-};
-
-initialState["5"].rated_restaurants = {
-    2: 4.2,
-};
+let initialState = { users: [], getUsers: REQUEST_STATE.PENDING, error: null };
 
 const allUsersSlice = createSlice({
     name: "allUsers",
     initialState,
     reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(getUsersAsync.pending, (state) => {
+                state.getUsers = REQUEST_STATE.PENDING;
+                state.error = null;
+            })
+            .addCase(getUsersAsync.fulfilled, (state, action) => {
+                state.getUsers = REQUEST_STATE.FULFILLED;
+                state.users = action.payload.data;
+            })
+            .addCase(getUsersAsync.rejected, (state, action) => {
+                state.getUsers = REQUEST_STATE.REJECTED;
+                state.error = action.error;
+            });
+    },
 });
 
 export default allUsersSlice.reducer;

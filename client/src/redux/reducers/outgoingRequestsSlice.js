@@ -6,7 +6,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const outgoingRequestsSlice = createSlice({
     name: "outgoingRequests",
-    initialState: ["12", "15"],
+    initialState: ["64a20849b5b47429af1b7909"],
     reducers: {
         strangerToOutgoing: (state, action) => {
             state.push(action.payload);

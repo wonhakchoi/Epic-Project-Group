@@ -6,7 +6,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const incomingRequestsSlice = createSlice({
     name: "incomingRequests",
-    initialState: ["7", "10"],
+    initialState: ["64a20849b5b47429af1b790a"],
     reducers: {
         incomingToFriend(state, action) {
             return state.filter((id) => id !== action.payload);
