@@ -13,12 +13,15 @@ const userFriendsSlice = createSlice({
         "64a20849b5b47429af1b7904",
     ],
     reducers: {
+        setFriends(state, action) {
+            return action.payload;
+        },
         incomingToFriend(state, action) {
             state.push(action.payload);
         },
     },
 });
 
-export const { incomingToFriend } = userFriendsSlice.actions;
+export const { setFriends, incomingToFriend } = userFriendsSlice.actions;
 
 export default userFriendsSlice.reducer;

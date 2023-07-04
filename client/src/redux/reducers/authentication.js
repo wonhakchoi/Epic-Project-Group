@@ -1,6 +1,6 @@
 const initialState = {
-    loggedIn: false,
-    user: null,
+    loggedIn: true,
+    user: "64a20849b5b47429af1b7900",
 };
 
 const authentication = (state = initialState, action) => {

@@ -8,6 +8,9 @@ const outgoingRequestsSlice = createSlice({
     name: "outgoingRequests",
     initialState: ["64a20849b5b47429af1b7909"],
     reducers: {
+        setOutgoingRequests(state, action) {
+            return action.payload;
+        },
         strangerToOutgoing: (state, action) => {
             state.push(action.payload);
         },
@@ -17,5 +20,6 @@ const outgoingRequestsSlice = createSlice({
     },
 });
 
-export const { strangerToOutgoing, outgoingToStranger } = outgoingRequestsSlice.actions;
+export const { setOutgoingRequests, strangerToOutgoing, outgoingToStranger } = outgoingRequestsSlice.actions;
+
 export default outgoingRequestsSlice.reducer;

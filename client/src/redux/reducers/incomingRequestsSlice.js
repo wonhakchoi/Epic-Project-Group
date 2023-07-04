@@ -8,6 +8,9 @@ const incomingRequestsSlice = createSlice({
     name: "incomingRequests",
     initialState: ["64a20849b5b47429af1b790a"],
     reducers: {
+        setIncomingRequests(state, action) {
+            return action.payload;
+        },
         incomingToFriend(state, action) {
             return state.filter((id) => id !== action.payload);
         },
@@ -17,6 +20,6 @@ const incomingRequestsSlice = createSlice({
     },
 });
 
-export const { incomingToFriend, incomingToStranger } = incomingRequestsSlice.actions;
+export const { setIncomingRequests, incomingToFriend, incomingToStranger } = incomingRequestsSlice.actions;
 
 export default incomingRequestsSlice.reducer;
