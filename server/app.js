@@ -1,30 +1,45 @@
 // var createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const cors = require('cors')
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const cors = require("cors");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const collectionsRouter = require('./routes/collections');
+// import routes
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const restaurantsRouter = require("./routes/restaurants");
+const collectionsRouter = require("./routes/collections");
+
+// mongoose setup
+mongoose
+    .connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log("Connected to Inventory Database"))
+    .catch((error) => console.error("MongoDB Connection Error:", error));
 
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "jade");
 
-app.use(cors())
-app.use(logger('dev'));
+app.use(cors());
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/collections', collectionsRouter);
+// setup routes
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/restaurants", restaurantsRouter);
+app.use("/collections", collectionsRouter);
 
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
