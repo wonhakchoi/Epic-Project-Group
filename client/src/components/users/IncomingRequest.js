@@ -10,17 +10,17 @@ const IncomingRequest = ({ id, name, biography }) => {
     return (
         <div className="request-container">
             <section className="incoming-request-header">
-                <img className="user-icon" src={icons[id % icons.length]} alt={name} />
+                <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
                 <h3>{name}</h3>
                 <p className="biography">{biography}</p>
             </section>
             <section className="incoming-request-buttons">
-                <button className="accept-button friend-request-button" onClick={() => dispatch(incomingToFriend(id))}>
+                <button className="accept-button friend-request-button" onClick={() => incomingToFriend(dispatch, id)}>
                     Accept
                 </button>
                 <button
                     className="reject-button friend-request-button"
-                    onClick={() => dispatch(incomingToStranger(id))}
+                    onClick={() => incomingToStranger(dispatch, id)}
                 >
                     Reject
                 </button>
