@@ -33,6 +33,9 @@ const collectionsSlice = createSlice({
                 state.getCollections = REQUEST_STATE.FULFILLED;
                 state.collections = action.payload;
             })
+            .addCase(getCollectionsAsync.rejected, (state) => {
+                state.getCollections = REQUEST_STATE.REJECTED;
+            })
     }
 })
 
