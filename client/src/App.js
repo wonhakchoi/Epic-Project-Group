@@ -9,8 +9,18 @@ import CollectionPage from "./components/collections/CollectionPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
+import {useEffect} from "react";
+import {getCollectionsAsync} from "./redux/thunks/collectionsThunks";
+import {useDispatch} from "react-redux";
 
 function App() {
+    const dispatch = useDispatch();
+
+    // get collections on app load
+    useEffect(() => {
+        dispatch(getCollectionsAsync());
+    }, []);
+
     return (
         <div className="App">
             <BrowserRouter>

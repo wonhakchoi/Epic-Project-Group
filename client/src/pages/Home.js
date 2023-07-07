@@ -1,6 +1,6 @@
 import React from "react";
 import SearchBar from "../components/SearchBar";
-import CollectionPopup from "../components/CollectionPopup";
+import CollectionPopup from "../components/collections/CollectionPopup";
 
 const Home = () => {
     // return <div>HOME</div>;
@@ -14,6 +14,7 @@ const Home = () => {
         <div>
             <br />
             <SearchBar onSearch={handleSearch}/>
+            <CollectionPopup></CollectionPopup>
         </div>
     );
 };
