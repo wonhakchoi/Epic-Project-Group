@@ -6,10 +6,10 @@
 // }
 
 export const getCollections = async () => {
-    const response = await fetch('http://localhost:3001/collections', {
-        method: 'GET'
-    })
+    const response = await fetch("http://localhost:3001/collections", {
+        method: "GET",
+    });
     return response.json();
-}
+};
 
 export default getCollections;

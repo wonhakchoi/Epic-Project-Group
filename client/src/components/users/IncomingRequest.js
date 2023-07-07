@@ -1,10 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { incomingToFriend, incomingToStranger } from "../../redux/actions/userActions";
+import { acceptIncomingAsync, rejectIncomingAsync } from "../../redux/thunks/usersThunks";
 import "./Requests.css";
 
 const IncomingRequest = ({ id, name, biography }) => {
     const icons = useSelector((state) => state.users.iconLocations);
+    const authenticationSlice = useSelector((state) => state.authentication.authentication);
     const dispatch = useDispatch();
 
     return (
@@ -15,12 +16,15 @@ const IncomingRequest = ({ id, name, biography }) => {
                 <p className="biography">{biography}</p>
             </section>
             <section className="incoming-request-buttons">
-                <button className="accept-button friend-request-button" onClick={() => incomingToFriend(dispatch, id)}>
+                <button
+                    className="accept-button friend-request-button"
+                    onClick={() => dispatch(acceptIncomingAsync({ userID: authenticationSlice.user, otherID: id }))}
+                >
                     Accept
                 </button>
                 <button
                     className="reject-button friend-request-button"
-                    onClick={() => incomingToStranger(dispatch, id)}
+                    onClick={() => dispatch(rejectIncomingAsync({ userID: authenticationSlice.user, otherID: id }))}
                 >
                     Reject
                 </button>

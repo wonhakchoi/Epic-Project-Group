@@ -3,25 +3,36 @@
  */
 
 import { createSlice } from "@reduxjs/toolkit";
+import { acceptIncomingAsync } from "../thunks/usersThunks";
+import { REQUEST_STATE } from "../requestStates";
+
+let initialState = { friends: [], acceptIncoming: REQUEST_STATE.PENDING, error: null };
 
 const userFriendsSlice = createSlice({
     name: "userFriends",
-    initialState: [
-        "64a20849b5b47429af1b7900",
-        "64a20849b5b47429af1b7908",
-        "64a20849b5b47429af1b7901",
-        "64a20849b5b47429af1b7904",
-    ],
+    initialState,
     reducers: {
         setFriends(state, action) {
-            return action.payload;
+            state.friends = action.payload;
         },
-        incomingToFriend(state, action) {
-            state.push(action.payload);
-        },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(acceptIncomingAsync.pending, (state) => {
+                state.acceptIncoming = REQUEST_STATE.PENDING;
+                state.error = null;
+            })
+            .addCase(acceptIncomingAsync.fulfilled, (state, action) => {
+                state.acceptIncoming = REQUEST_STATE.FULFILLED;
+                state.friends = action.payload.data.friends;
+            })
+            .addCase(acceptIncomingAsync.rejected, (state, action) => {
+                state.acceptIncoming = REQUEST_STATE.REJECTED;
+                state.error = action.error;
+            });
     },
 });
 
-export const { setFriends, incomingToFriend } = userFriendsSlice.actions;
+export const { setFriends } = userFriendsSlice.actions;
 
 export default userFriendsSlice.reducer;
