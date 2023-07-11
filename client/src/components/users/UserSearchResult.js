@@ -10,7 +10,7 @@ const UserSearchResult = ({ id, name, status }) => {
 
     return (
         <div className="search-result-container">
-            <img className="user-search-icon" src={icons[id % icons.length]} alt={name} />
+            <img className="user-search-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
             <h3 className="user-search-name">{name}</h3>
             {status === Status.FRIEND ? (
                 <div className="user-container">
@@ -28,7 +28,7 @@ const UserSearchResult = ({ id, name, status }) => {
                         className="friends-icon confirm-icon"
                         src="/images/web-icons/confirm.png"
                         alt="Requested"
-                        onClick={() => dispatch(incomingToFriend(id))}
+                        onClick={() => incomingToFriend(dispatch, id)}
                     ></img>
                     <p className="friend-text">Accept Request?</p>
                 </div>
@@ -38,7 +38,7 @@ const UserSearchResult = ({ id, name, status }) => {
                         className="friends-icon add-friend-icon"
                         src="/images/web-icons/addFriend.png"
                         alt="Add Friend"
-                        onClick={() => dispatch(strangerToOutgoing(id))}
+                        onClick={() => strangerToOutgoing(dispatch, id)}
                     ></img>
                     <p className="friend-text">Add Friend</p>
                 </div>

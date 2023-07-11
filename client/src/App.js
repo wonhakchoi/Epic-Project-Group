@@ -8,6 +8,7 @@ import Friends from "./pages/Friends";
 import CollectionPage from "./components/collections/CollectionPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                     <Route path={"/friends"} element={<Friends />}></Route>
                     <Route path={"/login"} element={<Login />}></Route>
                     <Route path={"/signup"} element={<Signup />}></Route>
+                    <Route path={"/profile"} element={<Profile />}></Route>
                     <Route path="/*" element={<NotFound />}></Route>
                 </Routes>
             </BrowserRouter>

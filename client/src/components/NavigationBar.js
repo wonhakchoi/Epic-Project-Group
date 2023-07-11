@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import PeopleIcon from '@mui/icons-material/People';
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function ButtonAppBar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -61,6 +62,12 @@ export default function ButtonAppBar() {
         onClose={toggleDrawer(false)} // Close the side menu on click
       >
         <List>
+        <ListItem button component={Link} to="/profile">
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItem>
           <ListItem button component={Link} to="/friends">
             <ListItemIcon>
               <PeopleIcon />
