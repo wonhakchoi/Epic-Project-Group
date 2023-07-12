@@ -12,6 +12,18 @@ const userSchema = new mongoose.Schema({
         type: Map,
         of: Number,
     },
+    friends: {
+        type: [String],
+        default: [],
+    },
+    outgoingRequests: {
+        type: [String],
+        default: [],
+    },
+    incomingRequests: {
+        type: [String],
+        default: [],
+    },
 });
 
 const User = mongoose.model("User", userSchema);
