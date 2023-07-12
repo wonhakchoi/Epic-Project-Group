@@ -23,3 +23,36 @@
 #add-new-collection-button:hover {
     background-color: #45a049;
 }
+
+.collection-popup {
+    background-color: white;
+    margin: auto;
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    width: 20%;
+    height: 100%;
+}
+
+.collection-popup-button {
+    width: 100%;
+    height: 5%;
+    font-size: large;
+}
+
+.collection-close {
+    position: relative;
+    top: 80%;
+    font-size: large;
+}
+.collection-form {
+    background-color: white;
+    margin: auto;
+    position: absolute;
+    z-index: 1;
+    left: 25%;
+    top: 25%;
+    width: 50%;
+    height: 50%;
+}
