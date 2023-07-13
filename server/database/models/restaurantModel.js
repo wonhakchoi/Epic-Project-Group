@@ -18,10 +18,14 @@ const restaurantSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        placeId: {
+            type: String,
+            required: true
+        }
     },
     { collection: "restaurants" }
 );
 
 const Restaurant = mongoose.model("Restaurant", restaurantSchema);
 
-module.exports = Restaurant;
+module.exports = {Restaurant};
