@@ -17,13 +17,13 @@ const {generateRestaurants, clearDatabase, generateCauliflowers} = require("./da
 
 // mongoose setup
 mongoose
-    // .connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`, {
-    //     useNewUrlParser: true,
-    //     useUnifiedTopology: true,
-    // })
-    // .then(() => console.log("Connected to Easy-Eats Database"))
-    .connect('mongodb://127.0.0.1:27017/easy-eats')
-    .then(() => console.log("Connected to Local Database"))
+    .connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log("Connected to Easy-Eats Database"))
+    // .connect('mongodb://127.0.0.1:27017/easy-eats')
+    // .then(() => console.log("Connected to Local Database"))
     .catch((error) => console.error("MongoDB Connection Error:", error));
 
 
