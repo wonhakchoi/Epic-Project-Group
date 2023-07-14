@@ -32,12 +32,19 @@ const cancelOutgoing = async (userID, otherID) => {
     return cancelRequest;
 };
 
+// unfriend friend
+const unfriend = async (userID, otherID) => {
+    const unfriendRequest = await axios.put(`${baseUserUrl}/unfriend/${userID}/${otherID}`);
+    return unfriendRequest;
+};
+
 const UserService = {
     getUsers,
     acceptIncoming,
     rejectIncoming,
     sendOutgoing,
     cancelOutgoing,
+    unfriend,
 };
 
 export default UserService;

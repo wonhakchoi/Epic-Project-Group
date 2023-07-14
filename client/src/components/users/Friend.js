@@ -1,11 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { unfriendAsync } from "../../redux/thunks/usersThunks";
 import "./Friend.css";
 import "./Buttons.css";
 
 const Friend = ({ id, name, biography, ratedRestaurants }) => {
     const icons = useSelector((state) => state.users.iconLocations);
     const restaurantsSlice = useSelector((state) => state.restaurants.allRestaurants);
+    const authenticationSlice = useSelector((state) => state.authentication.authentication);
+    const dispatch = useDispatch();
 
     return (
         <div className="friend-container">
@@ -28,10 +31,16 @@ const Friend = ({ id, name, biography, ratedRestaurants }) => {
                 })}
             </section>
             <section className="friend-buttons">
-                <button className="accept-button friend-request-button" onClick={() => console.log("View Profile")}>
+                <button
+                    className="accept-button friend-request-button"
+                    onClick={() => console.log(`View Profile ID ${id}`)}
+                >
                     View
                 </button>
-                <button className="reject-button friend-request-button" onClick={() => console.log("Unfriend :(")}>
+                <button
+                    className="reject-button friend-request-button"
+                    onClick={() => dispatch(unfriendAsync({ userID: authenticationSlice.user, otherID: id }))}
+                >
                     Unfriend
                 </button>
             </section>
