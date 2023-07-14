@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import FriendsList from "../components/users/FriendsList";
 import FriendSearch from "../components/users/FriendSearch";
@@ -13,6 +13,7 @@ const Friends = () => {
     const usersSlice = useSelector((state) => state.users.allUsers);
     const restaurantsSlice = useSelector((state) => state.restaurants.allRestaurants);
     const authenticationSlice = useSelector((state) => state.authentication.authentication);
+    const [loaded, setLoaded] = useState(false);
     const dispatch = useDispatch();
 
     // loads initial users and restaurants information
@@ -21,26 +22,30 @@ const Friends = () => {
         dispatch(getRestaurantsAsync());
     }, [dispatch]);
 
-    const isLoading = () => {
-        return (
-            usersSlice.getUsers !== REQUEST_STATE.FULFILLED ||
-            restaurantsSlice.getRestaurants !== REQUEST_STATE.FULFILLED
-        );
-    };
-
     // sets up user profile once user and restaurant information is finished loading
     useEffect(() => {
-        if (!authenticationSlice.loggedIn || isLoading()) {
+        if (
+            !authenticationSlice.loggedIn ||
+            usersSlice.getUsers !== REQUEST_STATE.FULFILLED ||
+            restaurantsSlice.getRestaurants !== REQUEST_STATE.FULFILLED
+        ) {
             return;
         }
-
         const signedInUser = usersSlice.users.filter((user) => user._id === authenticationSlice.user)[0];
         setFriendsLists(dispatch, signedInUser.friends, signedInUser.incomingRequests, signedInUser.outgoingRequests);
-    }, [usersSlice.getUsers, restaurantsSlice.getRestaurants, authenticationSlice.loggedin]);
+        setLoaded(true);
+    }, [
+        usersSlice.getUsers,
+        restaurantsSlice.getRestaurants,
+        authenticationSlice.loggedIn,
+        authenticationSlice.user,
+        usersSlice.users,
+        dispatch,
+    ]);
 
     return (
         <div className="friends-container">
-            {isLoading() ? (
+            {!loaded ? (
                 <LoadingUsers />
             ) : (
                 <div>

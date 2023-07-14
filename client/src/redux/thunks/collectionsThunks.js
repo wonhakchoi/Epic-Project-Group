@@ -5,6 +5,6 @@ import getCollections from "../services/collectionsService";
 export const getCollectionsAsync = createAsyncThunk(
     'collections/getCollections',
     async () => {
-        return await getCollections();
+        return getCollections();
     }
 )

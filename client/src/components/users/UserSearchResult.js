@@ -1,11 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Status } from "../../utils/userUtils";
-import { incomingToFriend, strangerToOutgoing } from "../../redux/actions/userActions";
+import { acceptIncomingAsync, sendOutgoingAsync } from "../../redux/thunks/usersThunks";
 import "./UserSearchResult.css";
 
 const UserSearchResult = ({ id, name, status }) => {
     const icons = useSelector((state) => state.users.iconLocations);
+    const authenticationSlice = useSelector((state) => state.authentication.authentication);
     const dispatch = useDispatch();
 
     return (
@@ -28,7 +29,7 @@ const UserSearchResult = ({ id, name, status }) => {
                         className="friends-icon confirm-icon"
                         src="/images/web-icons/confirm.png"
                         alt="Requested"
-                        onClick={() => incomingToFriend(dispatch, id)}
+                        onClick={() => dispatch(acceptIncomingAsync({ userID: authenticationSlice.user, otherID: id }))}
                     ></img>
                     <p className="friend-text">Accept Request?</p>
                 </div>
@@ -38,7 +39,7 @@ const UserSearchResult = ({ id, name, status }) => {
                         className="friends-icon add-friend-icon"
                         src="/images/web-icons/addFriend.png"
                         alt="Add Friend"
-                        onClick={() => strangerToOutgoing(dispatch, id)}
+                        onClick={() => dispatch(sendOutgoingAsync({ userID: authenticationSlice.user, otherID: id }))}
                     ></img>
                     <p className="friend-text">Add Friend</p>
                 </div>

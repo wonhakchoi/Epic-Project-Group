@@ -1,10 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { outgoingToStranger } from "../../redux/actions/userActions";
+import { cancelOutgoingAsync } from "../../redux/thunks/usersThunks";
 import "./Requests.css";
 
 const OutgoingRequest = ({ id, name, biography }) => {
     const icons = useSelector((state) => state.users.iconLocations);
+    const authenticationSlice = useSelector((state) => state.authentication.authentication);
     const dispatch = useDispatch();
 
     return (
@@ -17,7 +18,7 @@ const OutgoingRequest = ({ id, name, biography }) => {
             <section className="outgoing-request-buttons">
                 <button
                     className="reject-button friend-request-button"
-                    onClick={() => outgoingToStranger(dispatch, id)}
+                    onClick={() => dispatch(cancelOutgoingAsync({ userID: authenticationSlice.user, otherID: id }))}
                 >
                     Cancel
                 </button>

@@ -7,15 +7,16 @@ import "./FriendSearch.css";
 
 const FriendSearch = () => {
     const usersSlice = useSelector((state) => state.users.allUsers);
-    const friends = useSelector((state) => state.users.userFriends);
-    const outRequests = useSelector((state) => state.users.outgoingRequests);
-    const inRequests = useSelector((state) => state.users.incomingRequests);
+    const friendsSlice = useSelector((state) => state.users.userFriends);
+    const outRequestsSlice = useSelector((state) => state.users.outgoingRequests);
+    const inRequestsSlice = useSelector((state) => state.users.incomingRequests);
+    const authenticationSlice = useSelector((state) => state.authentication.authentication);
 
     // returns users whose name includes the given string
     const [name, setName] = useState("");
     const searchResults = useDebounce(name, 500);
-    const filteredUsers = usersSlice.users.filter((user) =>
-        user.name.toLowerCase().includes(searchResults.toLowerCase())
+    const filteredUsers = usersSlice.users.filter(
+        (user) => user.name.toLowerCase().includes(searchResults.toLowerCase()) && user._id !== authenticationSlice.user
     );
 
     // logic for the pagination
@@ -53,7 +54,12 @@ const FriendSearch = () => {
                             key={user._id}
                             id={user._id}
                             name={user.name}
-                            status={determineStatus(user._id, friends, outRequests, inRequests)}
+                            status={determineStatus(
+                                user._id,
+                                friendsSlice.friends,
+                                outRequestsSlice.outgoingRequests,
+                                inRequestsSlice.incomingRequests
+                            )}
                         />
                     ))}
                 </div>

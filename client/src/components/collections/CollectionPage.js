@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux";
-import RestaurantCard from "../RestaurantCard";
+import RestaurantCard from "../restaurants/RestaurantCard";
 
 export default function CollectionPage() {
     const collectionDetails = useSelector(state => state.collections.currCollectionDetails)

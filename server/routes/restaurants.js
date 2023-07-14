@@ -1,10 +1,14 @@
 var express = require("express");
 var router = express.Router();
-var Restaurant = require("../models/restaurantModel");
+var Restaurant = require("../database/models/restaurantModel");
 
-/* GET restaurants listing. */
+/* GET restaurants listing */
 router.get("/", async (req, res, next) => {
-    const restaurants = await Restaurant.find({});
-    res.send(restaurants);
+    try {
+        const restaurants = await Restaurant.find({});
+        res.send(restaurants);
+    } catch (error) {
+        console.error(error);
+    }
 });
 module.exports = router;
