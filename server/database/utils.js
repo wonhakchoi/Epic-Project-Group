@@ -6,7 +6,7 @@ const {sampleCauliflowers} = require("../data/sampleCollections");
 
 // clears all collections in the database
 async function clearDatabase() {
-    await User.deleteMany();
+    // await User.deleteMany();
     await Restaurant.deleteMany();
     await Cauliflower.deleteMany();
 }
