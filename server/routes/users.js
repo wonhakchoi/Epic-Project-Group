@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var mongoose = require("mongoose");
-var User = require("../models/userModel");
+var User = require("../database/models/userModel");
 
 /*
 MONGODB COMMANDS

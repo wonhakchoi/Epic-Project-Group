@@ -13,6 +13,7 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const restaurantsRouter = require("./routes/restaurants");
 const collectionsRouter = require("./routes/collections");
+const {generateRestaurants, clearDatabase, generateCauliflowers} = require("./database/utils");
 
 // mongoose setup
 mongoose
@@ -20,8 +21,15 @@ mongoose
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
-    .then(() => console.log("Connected to Inventory Database"))
+    .then(() => console.log("Connected to Easy-Eats Database"))
+    // .connect('mongodb://127.0.0.1:27017/easy-eats')
+    // .then(() => console.log("Connected to Local Database"))
     .catch((error) => console.error("MongoDB Connection Error:", error));
+
+
+// clearDatabase().then(() => console.log("Database cleared"))
+// generateRestaurants().then(() => console.log("Database populated with restaurants"));
+// generateCauliflowers().then(() => console.log("Database populated with cauliflowers"));
 
 const app = express();
 

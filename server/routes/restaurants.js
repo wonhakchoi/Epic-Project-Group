@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var Restaurant = require("../models/restaurantModel");
+var Restaurant = require("../database/models/restaurantModel");
 
 /* GET restaurants listing */
 router.get("/", async (req, res, next) => {
