@@ -1,31 +1,10 @@
-// accept incoming friend request
-export const incomingToFriend = (userId) => {
-    return {
-        type: "INCOMING_TO_FRIEND",
-        payload: userId,
-    };
-};
+import { setFriends } from "../reducers/userFriendsSlice";
+import { setIncomingRequests } from "../reducers/incomingRequestsSlice";
+import { setOutgoingRequests } from "../reducers/outgoingRequestsSlice";
 
-// reject incoming friend request
-export const incomingToStranger = (userId) => {
-    return {
-        type: "INCOMING_TO_STRANGER",
-        payload: userId,
-    };
-};
-
-// cancel outgoing friend request
-export const outgoingToStranger = (userId) => {
-    return {
-        type: "OUTGOING_TO_STRANGER",
-        payload: userId,
-    };
-};
-
-// sends friend request to user
-export const strangerToOutgoing = (userId) => {
-    return {
-        type: "STRANGER_TO_OUTGOING",
-        payload: userId,
-    };
+// sets up friend requests of currently logged in user
+export const setFriendsLists = (dispatch, friends, incoming, outgoing) => {
+    dispatch(setFriends(friends));
+    dispatch(setIncomingRequests(incoming));
+    dispatch(setOutgoingRequests(outgoing));
 };

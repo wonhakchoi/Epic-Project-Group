@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import allRestaurants from "./allRestaurants";
+import allRestaurants from "./allRestaurantsSlice";
 
 const restaurantsReducer = combineReducers({
     allRestaurants,

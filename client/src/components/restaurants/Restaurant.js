@@ -1,8 +1,7 @@
 import React from "react";
 import "./Restaurant.css";
 import {useDispatch} from "react-redux";
-import {displayAddToCollection} from "../redux/reducers/homeSlice";
-import CollectionPopup from "./CollectionPopup";
+import {displayAddToCollection, setRestaurant} from "../../redux/reducers/collectionPopupSlice";
 
 const Restaurant = ({restaurant}) => {
     const {name, description, location, openingHours, rating} = restaurant;
@@ -10,12 +9,12 @@ const Restaurant = ({restaurant}) => {
 
 
     const handleAddToCollection = () => {
-        // console.log("Add to My List clicked!", name);
         dispatch(displayAddToCollection())
+        dispatch(setRestaurant(restaurant))
     }
 
     return (
-        <div className="restaurant-card">
+        <div className={'restaurant-card'}>
             <h3>{name}</h3>
             <p className="description">{description}</p>
             <p className="info">
@@ -28,10 +27,8 @@ const Restaurant = ({restaurant}) => {
                 Rating: <span className="rating">{rating}</span>
             </p>
             <button className="add-to-collection-button" onClick={handleAddToCollection}>
-                Add to My List
+                Add to Collection
             </button>
-            {/*<CollectionPopup restaurant={restaurant}></CollectionPopup>*/}
-
         </div>
     );
 };

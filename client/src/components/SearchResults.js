@@ -1,5 +1,5 @@
 import React from "react";
-import Restaurant from "./Restaurant";
+import Restaurant from "./restaurants/Restaurant";
 
 const SearchResults = ({ searchTerm }) => {
   // Simulated search results data
