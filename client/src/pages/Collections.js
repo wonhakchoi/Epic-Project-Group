@@ -5,10 +5,6 @@ import {showForm} from "../redux/reducers/collectionsSlice";
 import CollectionForm from "../components/collections/CollectionForm";
 
 // Page for displaying all the user made collections of restaurants
-
-// TODO: delete collections
-// TODO: be able to modify existing collections
-
 export default function Collections() {
     // const [collections, setCollections] = useState(sampleCollections);
     const collections = useSelector((state) => state.collections.collections)
@@ -21,7 +17,7 @@ export default function Collections() {
     }
 
     const displayCollections = collections.map(collection =>
-        <CollectionCard collectionDetails={collection} key={collection.id}/>)
+        <CollectionCard collectionId={collection._id} collection={collection} key={collection._id}/>)
 
     return (
         <div>

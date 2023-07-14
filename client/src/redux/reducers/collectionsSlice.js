@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {REQUEST_STATE} from "../requestStates";
-import {getCollectionsAsync} from "../thunks/collectionsThunks";
+import {getCollectionDetailsAsync, getCollectionsAsync, getRestaurantsAsync} from "../thunks/collectionsThunks";
 
 import {v4 as uuid} from "uuid";
 
@@ -9,10 +9,13 @@ import {v4 as uuid} from "uuid";
 const INITIAL_STATE = {
     collections: [],
     currCollectionDetails: {},
-    getCollections: REQUEST_STATE.IDLE,
+    currRestaurants: [],
     formVisible: false,
     newCollectionName: "",
-    newCollectionImg: ""
+    newCollectionImg: "",
+    getCollections: REQUEST_STATE.IDLE,
+    getCollectionDetails: REQUEST_STATE.IDLE,
+    getRestaurants: REQUEST_STATE.IDLE
 }
 
 const collectionsSlice = createSlice({
@@ -69,6 +72,26 @@ const collectionsSlice = createSlice({
             })
             .addCase(getCollectionsAsync.rejected, (state) => {
                 state.getCollections = REQUEST_STATE.REJECTED;
+            })
+            .addCase(getCollectionDetailsAsync.pending, (state) => {
+                state.getCollectionDetails = REQUEST_STATE.PENDING;
+            })
+            .addCase(getCollectionDetailsAsync.fulfilled, (state, action) => {
+                state.getCollectionDetails = REQUEST_STATE.FULFILLED;
+                state.currCollectionDetails = action.payload;
+            })
+            .addCase(getCollectionDetailsAsync.rejected, (state) => {
+                state.getCollectionDetails = REQUEST_STATE.REJECTED;
+            })
+            .addCase(getRestaurantsAsync.pending, (state) => {
+                state.getRestaurants = REQUEST_STATE.PENDING;
+            })
+            .addCase(getRestaurantsAsync.fulfilled, (state, action) => {
+                state.getRestaurants = REQUEST_STATE.FULFILLED;
+                state.currRestaurants = action.payload;
+            })
+            .addCase(getRestaurantsAsync.rejected, (state) => {
+                state.getRestaurants = REQUEST_STATE.REJECTED;
             })
     }
 })

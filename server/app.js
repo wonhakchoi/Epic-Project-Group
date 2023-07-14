@@ -17,18 +17,29 @@ const {generateRestaurants, clearDatabase, generateCauliflowers} = require("./da
 
 // mongoose setup
 mongoose
-    .connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .then(() => console.log("Connected to Easy-Eats Database"))
-    // .connect('mongodb://127.0.0.1:27017/easy-eats')
-    // .then(() => console.log("Connected to Local Database"))
+    // .connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`, {
+    //     useNewUrlParser: true,
+    //     useUnifiedTopology: true,
+    // })
+    // .then(() => console.log("Connected to Easy-Eats Database"))
+    .connect('mongodb://127.0.0.1:27017/easy-eats')
+    .then(() => console.log("Connected to Local Database"))
     .catch((error) => console.error("MongoDB Connection Error:", error));
 
 
-// clearDatabase().then(() => console.log("Database cleared"))
-// generateRestaurants().then(() => console.log("Database populated with restaurants"));
+// clearDatabase()
+//     .then(() => {
+//         console.log("Database cleared")
+//         return generateRestaurants()
+//     })
+//     .then(() => {
+//         console.log("Database populated with restaurants")
+//         return generateCauliflowers()
+//     })
+//     .then(() => {
+//         console.log("Database populated with cauliflowers");
+//     })
+// generateRestaurants().then(() =>;
 // generateCauliflowers().then(() => console.log("Database populated with cauliflowers"));
 
 const app = express();
@@ -40,7 +51,7 @@ app.set("view engine", "jade");
 app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -49,7 +60,6 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/restaurants", restaurantsRouter);
 app.use("/collections", collectionsRouter);
-
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
 //   next(createError(404));
