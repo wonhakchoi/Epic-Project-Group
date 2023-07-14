@@ -32,10 +32,10 @@ const sampleUserCollections = [{
 const sampleCauliflowers =
     [
         {
-            name: "Collection A", img: COLLECTION_IMG, restaurants: ['rainorshine', 'mcdonalds']
+            name: "Collection A", img: COLLECTION_IMG, restaurants: ['64b1a56b637046211569d760', '64b1a56b637046211569d762']
         },
         {
-            name: "Collection B", img: COLLECTION_IMG, restaurants: ['browns']
+            name: "Collection B", img: COLLECTION_IMG, restaurants: ['64b1a56b637046211569d764']
         }
     ]
 

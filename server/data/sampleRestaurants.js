@@ -32,6 +32,7 @@ const sampleSearchRestaurants = [
 
 const sampleDBRestaurants = [
     {
+        "_id": "64b1a56b637046211569d760",
         "name": "Rain or Shine Ice Cream",
         "description": "Ice Cream",
         "location": "6001 University Blvd, Vancouver, BC",
@@ -39,12 +40,14 @@ const sampleDBRestaurants = [
         "placeId": "rainorshine"
     },
     {
+        "_id": "64b1a56b637046211569d762",
         "name": "McDonald's",
         "description": "Fast food restaurant",
         "location": "5728 University Blvd, Vancouver, BC",
         "openingHours": "Open 24 hours",
         "placeId": "mcdonalds"
     }, {
+        "_id": "64b1a56b637046211569d764",
         "name": "Browns Crafthouse UBC",
         "description": "Pub",
         "location": "6111 University Blvd, Vancouver, BC",
@@ -52,6 +55,7 @@ const sampleDBRestaurants = [
         "placeId": "browns"
     },
     {
+        "_id": "64b1a56b637046211569d766",
         "name": "Duffin's Donuts",
         "description": "Heaven on Earth",
         "location": "1391 E 41st Ave, Vancouver, BC",
