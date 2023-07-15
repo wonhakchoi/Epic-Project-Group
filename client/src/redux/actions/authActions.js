@@ -23,18 +23,14 @@ export const signup = (email, password) => {
         axios
             .post('http://localhost:3001/auth/signup', { email, password })
             .then(response => {
-                if (response == "exist") {
-                    console.log("user exists");
-                    throw new Error("User already exists!");
-                }
+                // console.log(response);
                 dispatch({ type: 'SIGNUP_SUCCESS', payload: response.data });
             }
             )
             .catch(error => {
-                console.log('failed sign up');
-                console.log(error);
+                // console.log(error);
                 // dispatch({ type: 'SIGNUP_FAILURE', payload: error.response.data.error });
-                dispatch({ type: 'SET_MESSAGE', payload: error.message });
+                dispatch({ type: 'SET_MESSAGE', payload: error.response.data.message });
                 // dispatch({ type: 'SIGNUP_FAILURE', payload: error.message });
             });
     };
