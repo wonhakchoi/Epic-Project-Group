@@ -13,6 +13,7 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const restaurantsRouter = require("./routes/restaurants");
 const collectionsRouter = require("./routes/collections");
+const authRouter = require("./routes/auth")
 const {generateRestaurants, clearDatabase, generateCauliflowers} = require("./database/utils");
 
 // mongoose setup for atlas cloud
@@ -61,6 +62,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/restaurants", restaurantsRouter);
 app.use("/collections", collectionsRouter);
+app.use("/auth", authRouter);
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
 //   next(createError(404));
