@@ -1,42 +1,72 @@
-import {useDispatch, useSelector} from "react-redux";
-import {hideForm, setCollectionName, setCollectionImg, addCollection} from "../../redux/reducers/collectionsSlice";
-import {Modal} from "@mui/material";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  hideForm,
+  setCollectionName,
+  setCollectionImg,
+  addCollection,
+} from "../../redux/reducers/collectionsSlice";
+import { Modal, TextField, Button, Box } from "@mui/material";
 
 // form for adding a new collection
 export default function CollectionForm() {
-    const isVisible = useSelector(state => state.collections.formVisible)
-    const dispatch = useDispatch();
+  const isVisible = useSelector((state) => state.collections.formVisible);
+  const dispatch = useDispatch();
 
-    function closeForm() {
-        dispatch(hideForm());
-    }
+  function closeForm() {
+    dispatch(hideForm());
+  }
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        dispatch(addCollection());
-        closeForm();
-    }
+  function handleSubmit(event) {
+    event.preventDefault();
+    dispatch(addCollection());
+    closeForm();
+  }
 
-    return <Modal open={isVisible} onClose={() => closeForm()}>
-        <div className={'collection-form'}>
+  return (
+    <Modal open={isVisible} onClose={closeForm}>
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          backgroundColor: "white",
+          padding: "20px",
+          borderRadius: "8px",
+          boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+        }}
+      >
         <form onSubmit={handleSubmit}>
-            <label>
-                Collection Name:
-                <input type={'text'} name={'collectionName'} onChange={e => dispatch(setCollectionName(e.target.value))}/>
-            </label>
-            <br/>
-            <label>
-                Collection Image:
-                <input type={'text'} name={'collectionImg'} onChange={e => dispatch(setCollectionImg(e.target.value))}/>
-            </label>
-            <br/>
-            <button type={'submit'}>
-                Submit
-            </button>
-            <button type={'reset'}>
-                Clear
-            </button>
+          <TextField
+            label="Collection Name"
+            variant="outlined"
+            fullWidth
+            sx={{ marginBottom: "16px" }}
+            onChange={(e) => dispatch(setCollectionName(e.target.value))}
+          />
+          <TextField
+            label="Collection Image"
+            variant="outlined"
+            fullWidth
+            sx={{ marginBottom: "16px" }}
+            onChange={(e) => dispatch(setCollectionImg(e.target.value))}
+          />
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              sx={{ marginRight: "8px" }}
+            >
+              Submit
+            </Button>
+            <Button variant="contained" color="secondary" type="reset">
+              Clear
+            </Button>
+          </Box>
         </form>
-        </div>
+      </Box>
     </Modal>
+  );
 }
