@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cancelOutgoingAsync } from "../../redux/thunks/usersThunks";
 import "./Requests.css";
+import "./Buttons.css";
 
 const OutgoingRequest = ({ id, name, biography }) => {
     const icons = useSelector((state) => state.users.iconLocations);

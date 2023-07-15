@@ -20,3 +20,7 @@ export const sendOutgoingAsync = createAsyncThunk("users/sendOutgoing", async ({
 export const cancelOutgoingAsync = createAsyncThunk("users/cancelOutgoing", async ({ userID, otherID }) => {
     return await UserService.cancelOutgoing(userID, otherID);
 });
+
+export const unfriendAsync = createAsyncThunk("users/unfriend", async ({ userID, otherID }) => {
+    return await UserService.unfriend(userID, otherID);
+});
