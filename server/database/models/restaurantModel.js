@@ -20,12 +20,12 @@ const restaurantSchema = new mongoose.Schema(
         },
         placeId: {
             type: String,
-            required: true
-        }
+            required: true,
+        },
     },
     { collection: "restaurants" }
 );
 
 const Restaurant = mongoose.model("Restaurant", restaurantSchema);
 
-module.exports = {Restaurant};
+module.exports = { Restaurant };
