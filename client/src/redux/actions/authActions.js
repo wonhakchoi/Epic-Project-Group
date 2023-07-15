@@ -44,7 +44,8 @@ export const login = (email, password) => {
                 dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
             })
             .catch(error => {
-                dispatch({ type: 'LOGIN_FAILURE', payload: error.response.data.error });
+                // dispatch({ type: 'LOGIN_FAILURE', payload: error.response.data.error });
+                dispatch({ type: 'SET_MESSAGE', payload: error.response.data.message });
             });
     };
 };
