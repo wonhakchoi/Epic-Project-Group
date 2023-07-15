@@ -16,32 +16,32 @@ const collectionsRouter = require("./routes/collections");
 const {generateRestaurants, clearDatabase, generateCauliflowers} = require("./database/utils");
 
 // mongoose setup for atlas cloud
-// mongoose
-// .connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-// })
-// .then(() => console.log("Connected to Easy-Eats Database"))
+mongoose
+.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => console.log("Connected to Easy-Eats Database"))
 
 // mongoose setup for local database
-mongoose
-    .connect('mongodb://127.0.0.1:27017/easy-eats')
-    .then(() => console.log("Connected to Local Database"))
-    .catch((error) => console.error("MongoDB Connection Error:", error));
+// mongoose
+//     .connect('mongodb://127.0.0.1:27017/easy-eats')
+//     .then(() => console.log("Connected to Local Database"))
+//     .catch((error) => console.error("MongoDB Connection Error:", error));
 
 // populate db with collection and restaurant data
-// clearDatabase()
-//     .then(() => {
-//         console.log("Database cleared")
-//         return generateRestaurants()
-//     })
-//     .then(() => {
-//         console.log("Database populated with restaurants")
-//         return generateCauliflowers()
-//     })
-//     .then(() => {
-//         console.log("Database populated with cauliflowers");
-//     })
+clearDatabase()
+    .then(() => {
+        console.log("Database cleared")
+        return generateRestaurants()
+    })
+    .then(() => {
+        console.log("Database populated with restaurants")
+        return generateCauliflowers()
+    })
+    .then(() => {
+        console.log("Database populated with cauliflowers");
+    })
 
 const app = express();
 
