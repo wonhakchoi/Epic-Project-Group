@@ -1,15 +1,3 @@
-import {useDispatch, useSelector} from "react-redux";
-import {hideForm, setCollectionName, setCollectionImg} from "../../redux/reducers/collectionsSlice";
-import {Modal} from "@mui/material";
-import {addNewCollectionAsync, getCollectionsAsync} from "../../redux/thunks/collectionsThunks";
-
-// form for adding a new collection
-export default function CollectionForm() {
-    const isVisible = useSelector(state => state.collections.formVisible);
-    const newCollectionName = useSelector(state => state.collections.newCollectionName);
-    const newCollectionImg = useSelector(state => state.collections.newCollectionImg);
-    const dispatch = useDispatch();
-
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -22,7 +10,9 @@ import {addNewCollectionAsync, getCollectionsAsync} from "../../redux/thunks/col
 
 // form for adding a new collection
 export default function CollectionForm() {
-  const isVisible = useSelector((state) => state.collections.formVisible);
+  const isVisible = useSelector(state => state.collections.formVisible);
+  const newCollectionName = useSelector(state => state.collections.newCollectionName);
+  const newCollectionImg = useSelector(state => state.collections.newCollectionImg);
   const dispatch = useDispatch();
 
 
