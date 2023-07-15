@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import SearchResults from './SearchResults';
 import './SearchBar.css';
 import { getMap } from "../redux/services/mapService"
 import Restaurant from "./restaurants/Restaurant";
@@ -46,10 +45,7 @@ const SearchBar = () => {
         <div>
           <h2>All Results For: {searchTerm}</h2>
             {results.map((result) => (
-              <div>
-                <Restaurant key={result.id} restaurant={result} />
-              {/* <a href="https://maps.google.com/maps/contrib/107475541929809498255">Rain or Shine</a> */}
-              </div>
+                <Restaurant key={result.place_id} restaurant={result} />
             ))}
         </div>
       )}
