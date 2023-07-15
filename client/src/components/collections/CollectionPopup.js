@@ -21,7 +21,7 @@ export default function CollectionPopup() {
     }
 
     const collectionComponents = userCollections?.map(collection => (
-        <button className={'collection-popup-button'} key={collection.id}
+        <button className={'collection-popup-button'} key={collection._id}
                 onClick={() => addToCollection(collection)}> Add to {collection.name} </button>
     ))
 
