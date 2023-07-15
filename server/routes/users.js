@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var mongoose = require("mongoose");
-var User = require("../database/models/userModel");
+var { User } = require("../database/models/userModel");
 
 /*
 MONGODB COMMANDS
@@ -20,7 +20,7 @@ router.get("/", async (req, res, next) => {
     }
 });
 
-/* PUT incoming request to friend */
+/* PUT incoming to friend */
 router.put("/acceptIncoming/:userID/:otherID", async (req, res, next) => {
     let { userID, otherID } = req.params;
     userObjectID = new mongoose.Types.ObjectId(userID.toString());
@@ -50,7 +50,7 @@ router.put("/acceptIncoming/:userID/:otherID", async (req, res, next) => {
     }
 });
 
-/* PUT incoming request to stranger */
+/* PUT incoming to stranger */
 router.put("/rejectIncoming/:userID/:otherID", async (req, res, next) => {
     let { userID, otherID } = req.params;
     userObjectID = new mongoose.Types.ObjectId(userID.toString());
@@ -123,6 +123,34 @@ router.put("/cancelOutgoing/:userID/:otherID", async (req, res, next) => {
             { _id: otherObjectID },
             {
                 $pull: { incomingRequests: userID },
+            },
+            { new: true, upsert: true }
+        );
+        const [user, other] = await Promise.all([userQuery.exec(), otherQuery.exec()]);
+        res.status(200).send(user);
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(`Error: ${error}`);
+    }
+});
+
+/* PUT friend to stranger */
+router.put("/unfriend/:userID/:otherID", async (req, res, next) => {
+    let { userID, otherID } = req.params;
+    userObjectID = new mongoose.Types.ObjectId(userID.toString());
+    otherObjectID = new mongoose.Types.ObjectId(otherID.toString());
+    try {
+        const userQuery = User.findOneAndUpdate(
+            { _id: userObjectID },
+            {
+                $pull: { friends: otherID },
+            },
+            { new: true, upsert: true }
+        );
+        const otherQuery = User.findOneAndUpdate(
+            { _id: otherObjectID },
+            {
+                $pull: { friends: userID },
             },
             { new: true, upsert: true }
         );
