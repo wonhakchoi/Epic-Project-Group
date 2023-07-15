@@ -21,7 +21,7 @@ export default function CollectionPopup() {
   }
 
   const collectionComponents = userCollections?.map((collection) => (
-    <div key={collection.id} style={{ marginBottom: "10px" }}>
+    <div key={collection._id} style={{ marginBottom: "10px" }}>
       <Button
         variant="contained"
         onClick={() => addToCollection(collection)}

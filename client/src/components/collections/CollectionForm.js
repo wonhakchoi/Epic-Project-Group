@@ -1,27 +1,43 @@
+import {useDispatch, useSelector} from "react-redux";
+import {hideForm, setCollectionName, setCollectionImg} from "../../redux/reducers/collectionsSlice";
+import {Modal} from "@mui/material";
+import {addNewCollectionAsync, getCollectionsAsync} from "../../redux/thunks/collectionsThunks";
+
+// form for adding a new collection
+export default function CollectionForm() {
+    const isVisible = useSelector(state => state.collections.formVisible);
+    const newCollectionName = useSelector(state => state.collections.newCollectionName);
+    const newCollectionImg = useSelector(state => state.collections.newCollectionImg);
+    const dispatch = useDispatch();
+
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   hideForm,
   setCollectionName,
-  setCollectionImg,
-  addCollection,
+  setCollectionImg
 } from "../../redux/reducers/collectionsSlice";
 import { Modal, TextField, Button, Box } from "@mui/material";
+import {addNewCollectionAsync, getCollectionsAsync} from "../../redux/thunks/collectionsThunks";
 
 // form for adding a new collection
 export default function CollectionForm() {
   const isVisible = useSelector((state) => state.collections.formVisible);
   const dispatch = useDispatch();
 
+
   function closeForm() {
     dispatch(hideForm());
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    dispatch(addCollection());
-    closeForm();
-  }
+
+    function handleSubmit(event) {
+        event.preventDefault();
+        // dispatch(addCollection());
+        dispatch(addNewCollectionAsync({name: newCollectionName, img: newCollectionImg}))
+        dispatch(getCollectionsAsync())
+        closeForm();
+    }
 
   return (
     <Modal open={isVisible} onClose={closeForm}>
