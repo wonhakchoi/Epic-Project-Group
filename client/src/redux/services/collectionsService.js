@@ -21,4 +21,15 @@ export const getRestaurants = async (collectionId) => {
 
 }
 
+export const addNewCollection = async ({name, img}) => {
+    const data = (await axios.post(`${baseCollectionsUrl}`,
+        {
+            name: name,
+            img: img
+        })).data
+    console.log(data)
+    return data;
+
+}
+
 export default getCollections;

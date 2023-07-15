@@ -1,6 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {REQUEST_STATE} from "../requestStates";
-import {getCollectionDetailsAsync, getCollectionsAsync, getRestaurantsAsync} from "../thunks/collectionsThunks";
+import {
+    addNewCollectionAsync,
+    getCollectionDetailsAsync,
+    getCollectionsAsync,
+    getRestaurantsAsync
+} from "../thunks/collectionsThunks";
 
 import {v4 as uuid} from "uuid";
 
@@ -15,7 +20,8 @@ const INITIAL_STATE = {
     newCollectionImg: "",
     getCollections: REQUEST_STATE.IDLE,
     getCollectionDetails: REQUEST_STATE.IDLE,
-    getRestaurants: REQUEST_STATE.IDLE
+    getRestaurants: REQUEST_STATE.IDLE,
+    addCollection: REQUEST_STATE.IDLE
 }
 
 const collectionsSlice = createSlice({
@@ -92,6 +98,15 @@ const collectionsSlice = createSlice({
             })
             .addCase(getRestaurantsAsync.rejected, (state) => {
                 state.getRestaurants = REQUEST_STATE.REJECTED;
+            })
+            .addCase(addNewCollectionAsync.pending, (state) => {
+                state.addCollection = REQUEST_STATE.PENDING;
+            })
+            .addCase(addNewCollectionAsync.fulfilled, (state) => {
+                state.addCollection = REQUEST_STATE.FULFILLED;
+            })
+            .addCase(addNewCollectionAsync.rejected, (state) => {
+                state.addCollection = REQUEST_STATE.REJECTED;
             })
     }
 })

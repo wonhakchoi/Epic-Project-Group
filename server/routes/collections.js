@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 // GET information for a single collection
 router.get('/:collectionId', async function (req, res) {
     let cId = req.params.collectionId;
-    const collection = await Cauliflower.find({"_id" : cId});
+    const collection = await Cauliflower.find({"_id": cId});
     return res.send(collection);
 })
 
@@ -34,5 +34,18 @@ router.get('/:collectionId/restaurants', async (req, res) => {
 // DELETE restaurant from a collection
 
 router.delete('/:collectionId/:restaurantId',)
+
+// POST make new collection
+router.post('/', async (req, res) => {
+
+    let collection = {
+        name: req.body.name,
+        img: req.body.img,
+        restaurants: []
+    }
+    let newCauliflower = new Cauliflower(collection)
+    await newCauliflower.save();
+    res.send(collection);
+})
 
 module.exports = router;
