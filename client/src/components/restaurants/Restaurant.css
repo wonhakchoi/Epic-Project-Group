@@ -42,3 +42,15 @@
 .add-to-collection-button:hover {
   background-color: #09745f;
 }
+
+.yesString {
+  color: #1e9e7a;
+}
+
+.noString {
+  color: crimson;
+}
+
+.midString {
+  color: rgb(180, 160, 43);
+}
