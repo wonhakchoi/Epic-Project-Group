@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { signup, setMessage, clearMessage } from '../../redux/actions/authActions';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,12 +9,12 @@ import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import RestaurantMenuOutlinedIcon from '@mui/icons-material/RestaurantMenuOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { Alert } from '@mui/material';
 
 // resource used: https://mui.com/material-ui/getting-started/templates/ 
 
@@ -33,7 +34,19 @@ function Copyright(props) {
 const SignupForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { error, user, loggedIn, isAuthenticated } = useSelector((state) => state.authentication.authentication);
+    // const error = useSelector(state => state.authentication.error);
+    // const user = useSelector(state => state.authentication.user);
+    // const { error, user, isAuthenticated } = useSelector(state => state.authentication);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        return () => {
+            // Clear the error message when the component unmounts
+            dispatch(clearMessage());
+        };
+    }, [dispatch]);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -46,8 +59,39 @@ const SignupForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Dispatch login action with email and password
-        navigate("/")
+        dispatch(signup(email, password));
+        dispatch(setMessage());
+        // navigate("/")
     };
+
+
+    if (isAuthenticated) {
+        return (
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Avatar sx={{ m: 1, bgcolor: 'success.main' }}>
+                    <RestaurantMenuOutlinedIcon />
+                </Avatar>
+
+                <Alert
+                    action={
+                        <Button href="/" color="inherit" size="small" >
+                            HOME
+                        </Button>
+                    }
+                    sx={{ mt: 4 }}
+                >
+                    You have registered successfully! Go to home page.
+                </Alert>
+            </Box>
+        )
+    }
 
     const defaultTheme = createTheme();
 
@@ -66,11 +110,16 @@ const SignupForm = () => {
                     <Avatar sx={{ m: 1, bgcolor: 'success.main' }}>
                         <RestaurantMenuOutlinedIcon />
                     </Avatar>
+
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
+
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
+                            <Grid item xs={12} >
+                                {error && <Alert severity="error">{error}</Alert>}
+                            </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     autoComplete="given-name"
@@ -100,7 +149,7 @@ const SignupForm = () => {
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
-                                    value={email} 
+                                    value={email}
                                     onChange={handleEmailChange}
                                 />
                             </Grid>
@@ -113,7 +162,7 @@ const SignupForm = () => {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
-                                    value={password} 
+                                    value={password}
                                     onChange={handlePasswordChange}
                                 />
                             </Grid>
@@ -140,13 +189,7 @@ const SignupForm = () => {
         </ThemeProvider>
     );
 
-    // return (
-    //     <form onSubmit={handleSubmit}>
-    //         <input type="email" value={email} onChange={handleEmailChange} />
-    //         <input type="password" value={password} onChange={handlePasswordChange} />
-    //         <button type="submit">Sign Up</button>
-    //     </form>
-    // );
+
 };
 
 export default SignupForm;
