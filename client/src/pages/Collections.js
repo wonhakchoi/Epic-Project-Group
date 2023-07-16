@@ -7,12 +7,10 @@ import { Button, Typography, Container, Grid } from "@mui/material";
 
 // Page for displaying all the user made collections of restaurants
 export default function Collections() {
-  // const [collections, setCollections] = useState(sampleCollections);
   const collections = useSelector((state) => state.collections.collections);
   const dispatch = useDispatch();
 
   const handleAddCollection = () => {
-    // dispatch(addCollection({id: uuid(), name: "New Collection", img: COLLECTION_IMG}));
     dispatch(showForm());
   };
 

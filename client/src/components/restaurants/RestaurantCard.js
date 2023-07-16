@@ -1,16 +1,18 @@
 import React from "react";
-import {useDispatch} from "react-redux";
-import {deleteRestaurantFromCollection} from "../../redux/reducers/collectionsSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteRestaurantCollectionAsync} from "../../redux/thunks/collectionsThunks";
 
 // same as Restaurant.js but with remove button instead of add
 // TODO: duplicate code
 export default function RestaurantCard({restaurant}) {
-    const {name, description, location, openingHours, rating} = restaurant;
+    const collectionDetails = useSelector((state) => state.collections.currCollectionDetails);
+    const {_id, name, description, location, openingHours, rating} = restaurant;
     const dispatch = useDispatch();
 
     function handleRemove() {
-        dispatch(deleteRestaurantFromCollection(restaurant))
-
+        let cId = collectionDetails._id;
+        dispatch(deleteRestaurantCollectionAsync({collectionId: cId, restaurantId: _id}));
+        window.location.reload();
     }
 
     return <div className="restaurant-card">
