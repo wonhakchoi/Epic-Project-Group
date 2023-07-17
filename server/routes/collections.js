@@ -1,0 +1,51 @@
+const express = require('express');
+const {Cauliflower} = require("../database/models/cauliflowerModel");
+const router = express.Router();
+const {Restaurant} = require("../database/models/restaurantModel");
+
+
+// GET all collections
+router.get('/', async (req, res) => {
+    const collections = await Cauliflower.find();
+    return res.send(collections);
+})
+
+// GET information for a single collection
+router.get('/:collectionId', async function (req, res) {
+    let cId = req.params.collectionId;
+    const collection = await Cauliflower.find({"_id": cId});
+    return res.send(collection);
+})
+
+// GET array of restaurants for a collection
+router.get('/:collectionId/restaurants', async (req, res) => {
+    let cId = req.params.collectionId;
+    const collection = await Cauliflower.findById(cId).exec();
+    let restaurants = await Restaurant.find().exec();
+    let response = [];
+    for (let r of restaurants) {
+        if (collection.restaurants.includes(r._id)) {
+            response.push(r);
+        }
+    }
+    return res.send(response);
+})
+
+// DELETE restaurant from a collection
+
+router.delete('/:collectionId/:restaurantId',)
+
+// POST make new collection
+router.post('/', async (req, res) => {
+
+    let collection = {
+        name: req.body.name,
+        img: req.body.img,
+        restaurants: []
+    }
+    let newCauliflower = new Cauliflower(collection)
+    await newCauliflower.save();
+    res.send(collection);
+})
+
+module.exports = router;

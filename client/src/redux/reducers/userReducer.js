@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import allUsers from "./allUsers";
-import userFriends from "./userFriends";
-import incomingRequests from "./incomingRequests";
-import outgoingRequests from "./outgoingRequests";
+import allUsers from "./allUsersSlice";
+import userFriends from "./userFriendsSlice";
+import incomingRequests from "./incomingRequestsSlice";
+import outgoingRequests from "./outgoingRequestsSlice";
 import iconLocations from "./iconLocations";
 
 const usersReducer = combineReducers({

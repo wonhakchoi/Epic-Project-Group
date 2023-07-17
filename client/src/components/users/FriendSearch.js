@@ -6,21 +6,22 @@ import { determineStatus } from "../../utils/userUtils";
 import "./FriendSearch.css";
 
 const FriendSearch = () => {
-    const users = useSelector((state) => state.users.allUsers);
-    const friends = useSelector((state) => state.users.userFriends);
-    const outRequests = useSelector((state) => state.users.outgoingRequests);
-    const inRequests = useSelector((state) => state.users.incomingRequests);
-    const [name, setName] = useState("");
-    const searchResults = useDebounce(name, 500);
+    const usersSlice = useSelector((state) => state.users.allUsers);
+    const friendsSlice = useSelector((state) => state.users.userFriends);
+    const outRequestsSlice = useSelector((state) => state.users.outgoingRequests);
+    const inRequestsSlice = useSelector((state) => state.users.incomingRequests);
+    const authenticationSlice = useSelector((state) => state.authentication.authentication);
 
     // returns users whose name includes the given string
-    const filteredUsers = Object.fromEntries(
-        Object.entries(users).filter(([id, user]) => user.name.toLowerCase().includes(searchResults.toLowerCase()))
+    const [name, setName] = useState("");
+    const searchResults = useDebounce(name, 500);
+    const filteredUsers = usersSlice.users.filter(
+        (user) => user.name.toLowerCase().includes(searchResults.toLowerCase()) && user._id !== authenticationSlice.user
     );
 
     // logic for the pagination
-    const resultsPerPage = 6;
     const [offset, setOffset] = useState(0);
+    const resultsPerPage = 6;
     const incrementOffset = () => {
         if (offset + resultsPerPage >= Object.keys(filteredUsers).length) {
             return;
@@ -48,16 +49,19 @@ const FriendSearch = () => {
             </div>
             <div className="user-search-results">
                 <div className="user-search-users">
-                    {Object.entries(filteredUsers)
-                        .slice(offset, offset + resultsPerPage)
-                        .map(([id, user]) => (
-                            <UserSearchResult
-                                key={id}
-                                id={id}
-                                name={user.name}
-                                status={determineStatus(id, friends, outRequests, inRequests)}
-                            />
-                        ))}
+                    {filteredUsers.slice(offset, offset + resultsPerPage).map((user) => (
+                        <UserSearchResult
+                            key={user._id}
+                            id={user._id}
+                            name={user.name}
+                            status={determineStatus(
+                                user._id,
+                                friendsSlice.friends,
+                                outRequestsSlice.outgoingRequests,
+                                inRequestsSlice.incomingRequests
+                            )}
+                        />
+                    ))}
                 </div>
                 <div className="user-search-results-navigation">
                     <img
