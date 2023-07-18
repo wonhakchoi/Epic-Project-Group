@@ -35,9 +35,6 @@ const SignupForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { error, user, loggedIn, isAuthenticated } = useSelector((state) => state.authentication.authentication);
-    // const error = useSelector(state => state.authentication.error);
-    // const user = useSelector(state => state.authentication.user);
-    // const { error, user, isAuthenticated } = useSelector(state => state.authentication);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

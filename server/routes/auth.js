@@ -1,66 +1,75 @@
 var express = require("express");
 var router = express.Router();
 var Auth = require("../database/models/authModel");
+const { Signup, Login } = require("../controller/authController");
+const { userVerification } = require("../middlewares/authMiddleware");
 
-router.post("/login", async (req, res) => {
-    const { email, password } = req.body
+// Resource: https://www.freecodecamp.org/news/how-to-secure-your-mern-stack-application/
 
-    try {
-        const check = await Auth.findOne({ email: email });
+router.post('/', userVerification);
+router.post('/login', Login);
 
-        if (check) {
-            const pass = check.password;
-            if (password == pass) {
-                // res.json("exist");
-                res.json("You have logged in successfully!");
-            } else {
-                // res.json("doesnotmatch");
-                res.status(401).send({
-                    message: 'The email and password do not match. Please try again.'
-                 });;
-            }
+// router.post("/login", async (req, res) => {
+//     const { email, password } = req.body
+
+//     try {
+//         const check = await Auth.findOne({ email: email });
+
+//         if (check) {
+//             const pass = check.password;
+//             if (password == pass) {
+//                 // res.json("exist");
+//                 res.json("You have logged in successfully!");
+//             } else {
+//                 // res.json("doesnotmatch");
+//                 res.status(401).send({
+//                     message: 'The email and password do not match. Please try again.'
+//                  });;
+//             }
             
-        }
-        else {
-            res.status(401).send({
-                message: 'This email does not exist in our database. Sign up!'
-             });;
-        }
+//         }
+//         else {
+//             res.status(401).send({
+//                 message: 'This email does not exist in our database. Sign up!'
+//              });;
+//         }
 
-    }
-    catch (e) {
-        res.json("fail")
-    }
+//     }
+//     catch (e) {
+//         res.json("fail")
+//     }
 
-})
+// })
 
-router.post("/signup", async (req, res) => {
-    const { email, password } = req.body
+router.post("/signup", Signup);
 
-    const data = {
-        email: email,
-        password: password
-    }
+// router.post("/signup", async (req, res) => {
+//     const { email, password } = req.body
 
-    try {
-        const check = await Auth.findOne({ email: email })
+//     const data = {
+//         email: email,
+//         password: password
+//     }
 
-        if (check) {
-            // USER ALREADY EXISTS IN DATABASE
-            res.status(401).send({
-                message: 'This email is already in use! Log in or sign up with a new email.'
-             });;
-        }
-        else {
-            res.json("You have signed up successfully!");
-            await Auth.insertMany([data]);
-        }
+//     try {
+//         const check = await Auth.findOne({ email: email })
 
-    }
-    catch (e) {
-        res.json("fail")
-    }
+//         if (check) {
+//             // USER ALREADY EXISTS IN DATABASE
+//             res.status(401).send({
+//                 message: 'This email is already in use! Log in or sign up with a new email.'
+//              });;
+//         }
+//         else {
+//             res.json("You have signed up successfully!");
+//             await Auth.insertMany([data]);
+//         }
 
-})
+//     }
+//     catch (e) {
+//         res.json("fail")
+//     }
+
+// })
 
 module.exports = router;

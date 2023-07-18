@@ -39,6 +39,7 @@ const authentication = (state = initialState, action) => {
                 user: null,
                 error: null,
                 loggedIn: false,
+                isAuthenticated: false,
             };
         case 'SET_MESSAGE':
             return {
