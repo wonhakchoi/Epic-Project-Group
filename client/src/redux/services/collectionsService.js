@@ -14,6 +14,7 @@ export const getCollectionDetails = async (collectionId) => {
 
 export const getRestaurants = async (collectionId) => {
     const data = (await axios.get(`${baseCollectionsUrl}/${collectionId}/restaurants`)).data;
+    // console.log(data[0].result);
     return data;
 
 }
@@ -30,6 +31,10 @@ export const addNewCollection = async ({name, img}) => {
 
 export const deleteRestaurantCollection = async ({collectionId, restaurantId}) => {
     await axios.delete(`${baseCollectionsUrl}/${collectionId}/${restaurantId}`)
+}
+
+export const addRestaurantCollection = async ({collectionId, restaurantId}) => {
+    await axios.put(`${baseCollectionsUrl}/${collectionId}/${restaurantId}`)
 }
 
 export default getCollections;

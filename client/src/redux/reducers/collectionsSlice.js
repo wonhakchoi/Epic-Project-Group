@@ -30,11 +30,6 @@ const collectionsSlice = createSlice({
         clickCollection: (state, action) => {
             state.currCollectionDetails = action.payload;
         },
-        addRestaurantToCollection: (state, action) => {
-            let id = action.payload.collectionId;
-            let currCollection = state.collections.find(element => element.id === id);
-            currCollection.restaurants.push(action.payload.restaurant);
-        },
         showForm: (state) => {
             state.formVisible = true;
         },
@@ -102,7 +97,6 @@ const collectionsSlice = createSlice({
 })
 
 export const {
-    addRestaurantToCollection,
     showForm,
     hideForm,
     setCollectionName,
