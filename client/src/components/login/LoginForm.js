@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { login, setMessage, clearMessage } from '../../redux/actions/authActions';
+import { useCookies } from "react-cookie";
+import axios from "axios";
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -39,6 +41,8 @@ const LoginForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [cookies, removeCookie] = useCookies([]);
+
     useEffect(() => {
         return () => {
             // Clear the error message when the component unmounts
@@ -54,13 +58,47 @@ const LoginForm = () => {
         setPassword(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     // Dispatch login action with email and password
+    //     // navigate("/")
+    //     dispatch(login(email, password));
+    //     dispatch(setMessage());
+    // };
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Dispatch login action with email and password
-        // navigate("/")
-        dispatch(login(email, password));
-        dispatch(setMessage());
+        try {
+            const { data } = await axios.post(
+                "http://localhost:3001/auth/login",
+                {
+                    email, password
+                },
+                { withCredentials: true }
+            );
+            console.log("login data");
+            console.log(data);
+            const { success, message } = data;
+            if (success) {
+                console.log("success!");
+                setTimeout(() => {
+                    navigate("/");
+                }, 1000);
+            } else {
+                console.log("error");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        setEmail("");
+        setPassword("");
     };
+
+
+
+    // const Logout = () => {
+    //     removeCookie("token");
+    //     navigate("/signup");
+    // };
 
     if (isAuthenticated) {
         return (
@@ -86,6 +124,7 @@ const LoginForm = () => {
                 >
                     You have logged in successfully! Go to home page.
                 </Alert>
+                {/* <button onClick={Logout}>LOGOUT</button> */}
             </Box>
         )
     }

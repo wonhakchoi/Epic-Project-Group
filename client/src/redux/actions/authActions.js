@@ -1,27 +1,9 @@
 import axios from 'axios';
 
-export const signup = (email, password) => {
-    return dispatch => {
-        axios
-            .post('http://localhost:3001/auth/signup', { email, password })
-            .then(response => {
-                console.log(response);
-                dispatch({ type: 'SIGNUP_SUCCESS', payload: response.data });
-            }
-            )
-            .catch(error => {
-                console.log(error);
-                // dispatch({ type: 'SIGNUP_FAILURE', payload: error.response.data.error });
-                dispatch({ type: 'SET_MESSAGE', payload: error.response.data.message });
-                // dispatch({ type: 'SIGNUP_FAILURE', payload: error.message });
-            });
-    };
-};
-
 // export const signup = (email, password) => {
 //     return dispatch => {
 //         axios
-//             .post('http://localhost:3001/auth/signup', { email, password }, { withCredentials: true })
+//             .post('http://localhost:3001/auth/signup', { email, password })
 //             .then(response => {
 //                 console.log(response);
 //                 dispatch({ type: 'SIGNUP_SUCCESS', payload: response.data });
@@ -36,12 +18,36 @@ export const signup = (email, password) => {
 //     };
 // };
 
+export const signup = (email, password) => {
+    return dispatch => {
+        axios
+            .post('http://localhost:3001/auth/signup', { email, password }, { withCredentials: true })
+            .then(response => {
+                if (response.data.success) {
+                    dispatch({ type: 'SIGNUP_SUCCESS', payload: response.data.message });
+                } else {
+                    dispatch({ type: 'SET_MESSAGE', payload: response.data.message });
+                }
+            })
+            .catch(error => {
+                // console.log(error);
+                // dispatch({ type: 'SIGNUP_FAILURE', payload: error.response.data.error });
+                dispatch({ type: 'SET_MESSAGE', payload: error.response.data.message });
+                // dispatch({ type: 'SIGNUP_FAILURE', payload: error.message });
+            });
+    };
+};
+
 export const login = (email, password) => {
     return dispatch => {
         axios
-            .post('http://localhost:3001/auth/login', { email, password })
+            .post('http://localhost:3001/auth/login', { email, password}, { withCredentials: true })
             .then(response => {
-                dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
+                if (response.data.success) {
+                    dispatch({ type: 'LOGIN_SUCCESS', payload: response.data.message });
+                } else {
+                    dispatch({ type: 'SET_MESSAGE', payload: response.data.message });
+                }
             })
             .catch(error => {
                 // dispatch({ type: 'LOGIN_FAILURE', payload: error.response.data.error });
