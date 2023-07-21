@@ -47,9 +47,9 @@ const authentication = (state = initialState, action) => {
                 error: action.payload,
             };
         case 'CLEAR_MESSAGE':
-            return { 
+            return {
                 ...state,
-                error: null ,
+                error: null,
             };
         default:
             return state;

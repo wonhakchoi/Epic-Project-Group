@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { login, setMessage, clearMessage } from '../../redux/actions/authActions';
+import { login, setMessage, clearMessage, verifySession } from '../../redux/actions/authActions';
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
@@ -45,6 +45,7 @@ const LoginForm = () => {
 
     useEffect(() => {
         return () => {
+            dispatch(verifySession(cookies));
             // Clear the error message when the component unmounts
             dispatch(clearMessage());
         };
@@ -58,40 +59,41 @@ const LoginForm = () => {
         setPassword(e.target.value);
     };
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     // Dispatch login action with email and password
-    //     // navigate("/")
-    //     dispatch(login(email, password));
-    //     dispatch(setMessage());
-    // };
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            const { data } = await axios.post(
-                "http://localhost:3001/auth/login",
-                {
-                    email, password
-                },
-                { withCredentials: true }
-            );
-            console.log("login data");
-            console.log(data);
-            const { success, message } = data;
-            if (success) {
-                console.log("success!");
-                setTimeout(() => {
-                    navigate("/");
-                }, 1000);
-            } else {
-                console.log("error");
-            }
-        } catch (error) {
-            console.log(error);
-        }
-        setEmail("");
-        setPassword("");
+        // Dispatch login action with email and password
+        // navigate("/")
+        dispatch(login(email, password));
+        dispatch(setMessage());
     };
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         const { data } = await axios.post(
+    //             "http://localhost:3001/auth/login",
+    //             {
+    //                 email, password
+    //             },
+    //             { withCredentials: true }
+    //         );
+    //         console.log("login data");
+    //         console.log(data);
+    //         const { success, message } = data;
+    //         if (success) {
+    //             console.log("success!");
+    //             setTimeout(() => {
+    //                 navigate("/");
+    //             }, 1000);
+    //         } else {
+    //             console.log("error");
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    //     setEmail("");
+    //     setPassword("");
+    // };
 
 
 

@@ -18,6 +18,7 @@ const Home = () => {
                 navigate("/login");
             }
             try {
+                // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
                 return axios("http://localhost:3001/auth/", {
                     method: 'POST',
                     mode: 'no-cors',
@@ -28,7 +29,7 @@ const Home = () => {
                     credentials: 'same-origin',
                     withCredentials: true
                 }).then(response => {
-                    // console.log(response.data);
+                    console.log(response.data);
                     let data = response.data
                     const { status, user } = data;
                     // console.log(status);
@@ -39,7 +40,7 @@ const Home = () => {
                         console.log(user);
                         return <div>Hello {user}</div>
                     } else {
-                        return (removeCookie("token"), navigate("/signup"));
+                        return (removeCookie("token"), navigate("/login"));
                     }
                 })
                 // const { status, user } = data;
@@ -68,6 +69,8 @@ const Home = () => {
         };
         verifyCookie();
     }, [cookies, navigate, removeCookie]);
+
+    
 
     const Logout = () => {
         removeCookie("token");
