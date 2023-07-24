@@ -96,7 +96,7 @@ router.delete("/:ratingID", async (req, res, next) => {
     ratingObjectID = new mongoose.Types.ObjectId(ratingID.toString());
     try {
         const deletedRatingQuery = Rating.findOneAndDelete({ _id: ratingObjectID });
-        const deletedRating = await updatedRatingQuery.exec();
+        const deletedRating = await deletedRatingQuery.exec();
         res.status(201).json(deletedRating);
     } catch (error) {
         console.error(error);
