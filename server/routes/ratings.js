@@ -3,12 +3,23 @@ var router = express.Router();
 var mongoose = require("mongoose");
 var { Rating } = require("../database/models/ratingModel");
 
+/* GET all ratings, sorted from latest to earliest creation */
+router.get("/", async (req, res, next) => {
+    try {
+        const allRatings = await Rating.find({}).sort({ createdAt: -1 });
+        res.status(200).send(allRatings);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
+});
+
 /* GET ratings of a specific user */
 router.get("/userRatings/:userID", async (req, res, next) => {
     let { userID } = req.params;
     try {
         const userRatings = await Rating.find({ userID });
-        res.send(userRatings);
+        res.status(200).send(userRatings);
     } catch (error) {
         console.error(error);
         res.status(500).send("Server error");
@@ -20,7 +31,7 @@ router.get("/restaurantRatings/:restaurantID", async (req, res, next) => {
     let { restaurantID } = req.params;
     try {
         const restaurantRatings = await Rating.find({ restaurantID });
-        res.send(restaurantRatings);
+        res.status(200).send(restaurantRatings);
     } catch (error) {
         console.error(error);
         res.status(500).send("Server error");

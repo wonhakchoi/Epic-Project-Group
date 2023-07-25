@@ -18,7 +18,7 @@ const ratingSchema = new mongoose.Schema(
             type: String,
         },
     },
-    { collection: "ratings" }
+    { collection: "ratings", timestamps: true }
 );
 
 const Rating = mongoose.model("Rating", ratingSchema);
