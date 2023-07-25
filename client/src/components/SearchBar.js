@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import SearchResults from './SearchResults';
 import './SearchBar.css';
+import { getMap } from "../redux/services/mapService"
+import Restaurant from "./restaurants/Restaurant";
 
 const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [showResults, setShowResults] = useState(false);
+  let [results, setResults] = useState([])
+  let [searchTerm, setSearchTerm] = useState('');
+  let [showResults, setShowResults] = useState(false);
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
@@ -12,7 +14,17 @@ const SearchBar = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setShowResults(true);
+    if (searchTerm && searchTerm.replace(/\s/g, '').length) {
+      getMap(searchTerm).then((res) => {
+        setResults(res.data.results);
+        setShowResults(true);
+      })
+      // const result = await getMap(searchTerm);
+      // results = result.data.results;
+      // setShowResults(true);
+    } else {
+      alert("invalid search, try again");
+    }
   };
 
   return (
@@ -30,8 +42,11 @@ const SearchBar = () => {
         </button>
       </form>
       {showResults && (
-        <div className="dummy-new-page">
-          <SearchResults />
+        <div>
+          <h2>All Results For: {searchTerm}</h2>
+            {results.map((result) => (
+                <Restaurant key={result.place_id} restaurant={result} />
+            ))}
         </div>
       )}
     </div>
