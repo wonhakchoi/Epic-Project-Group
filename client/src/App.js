@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import Home from "./pages/Home";
+import Search from "./pages/Search";
 import NotFound from "./pages/NotFound";
 import Collections from "./pages/Collections";
 import Friends from "./pages/Friends";
@@ -27,6 +28,7 @@ function App() {
                 <NavigationBar />
                 <Routes>
                     <Route exact path="/" element={<Home />}></Route>
+                    <Route path={"/search"} element={<Search />}></Route>
                     <Route path={"/collections"} element={<Collections />}></Route>
                     <Route path={"/collections/*"} element={<CollectionPage />}></Route>
                     <Route path={"/friends"} element={<Friends />}></Route>
