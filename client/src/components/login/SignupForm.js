@@ -34,6 +34,8 @@ function Copyright(props) {
 const SignupForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [firstName, setFirstname] = useState('');
+    const [lastName, setLastname] = useState('');
     const { error, user, loggedIn, isAuthenticated } = useSelector((state) => state.authentication.authentication);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -53,10 +55,18 @@ const SignupForm = () => {
         setPassword(e.target.value);
     };
 
+    const handleFirstnameChange = (e) => {
+        setFirstname(e.target.value);
+    };
+
+    const handleLastnameChange = (e) => {
+        setLastname(e.target.value);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Dispatch login action with email and password
-        dispatch(signup(email, password));
+        dispatch(signup(email, password, firstName, lastName));
         dispatch(setMessage());
         // navigate("/")
     };
@@ -126,6 +136,8 @@ const SignupForm = () => {
                                     id="firstName"
                                     label="First Name"
                                     autoFocus
+                                    value={firstName}
+                                    onChange={handleFirstnameChange}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -136,6 +148,8 @@ const SignupForm = () => {
                                     label="Last Name"
                                     name="lastName"
                                     autoComplete="family-name"
+                                    value={lastName}
+                                    onChange={handleLastnameChange}
                                 />
                             </Grid>
                             <Grid item xs={12}>

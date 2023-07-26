@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { login, setMessage, clearMessage, verifySession } from '../../redux/actions/authActions';
 import { useCookies } from "react-cookie";
-import axios from "axios";
+import LoadingUsers from '../users/LoadingUsers';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -41,6 +41,8 @@ const LoginForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [loaded, setLoaded] = useState(false);
+
     const [cookies, removeCookie] = useCookies([]);
 
     useEffect(() => {
@@ -48,6 +50,7 @@ const LoginForm = () => {
             dispatch(verifySession(cookies));
             // Clear the error message when the component unmounts
             dispatch(clearMessage());
+            setLoaded(true);
         };
     }, [dispatch]);
 
@@ -95,12 +98,13 @@ const LoginForm = () => {
     //     setPassword("");
     // };
 
-
-
     // const Logout = () => {
     //     removeCookie("token");
     //     navigate("/signup");
     // };
+    if (!loaded) {
+        return <LoadingUsers />;
+    }
 
     if (isAuthenticated) {
         return (

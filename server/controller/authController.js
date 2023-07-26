@@ -1,11 +1,12 @@
-const User = require("../database/models/authModel");
+// const User = require("../database/models/authModel");
+var { User } = require("../database/models/userModel");
 const { createSecretToken } = require("../util/secretToken");
 const bcrypt = require("bcryptjs");
 
 module.exports.Signup = async (req, res, next) => {
     try {
-        const { email, password, createdAt } = req.body;
-        if (!email || !password) {
+        const { email, password, firstName, lastName, createdAt } = req.body;
+        if (!email || !password || !firstName || !lastName) {
             // return res.json({ message: 'All fields are required' })
             return res
                 .status(401)
@@ -27,7 +28,7 @@ module.exports.Signup = async (req, res, next) => {
         // encryptedPassword = await bcrypt.hash(password, 10);
         // console.log(encryptedPassword);
 
-        const user = await User.create({ email, password, createdAt });
+        const user = await User.create({ email, password, firstName, lastName, createdAt });
         const token = createSecretToken(user._id);
         res.cookie("token", token, {
             withCredentials: true,
@@ -74,6 +75,8 @@ module.exports.Login = async (req, res, next) => {
             withCredentials: true,
             httpOnly: false,
         });
+        console.log("authController.js");
+        console.log(user);
         res.status(201).json({ message: "User logged in successfully", success: true });
         next()
     } catch (error) {

@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export const signup = (email, password) => {
+export const signup = (email, password, firstName, lastName) => {
     return dispatch => {
         axios
-            .post('http://localhost:3001/auth/signup', { email, password }, { withCredentials: true })
+            .post('http://localhost:3001/auth/signup', { email, password, firstName, lastName }, { withCredentials: true })
             .then(response => {
                 if (response.data.success) {
                     dispatch({ type: 'SIGNUP_SUCCESS', payload: response.data.message });

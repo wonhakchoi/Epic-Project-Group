@@ -184,22 +184,22 @@ export default function ButtonAppBar() {
             </ListItemIcon>
             <ListItemText primary="Collections" />
           </ListItem>
+          
+          {
+            isAuthenticated ?
+              (<ListItem button component={Link} to="/login" onClick={handleLogout}>
+                <ListItemIcon>
+                  <LockOpenIcon />
+                </ListItemIcon>
+                <ListItemText primary="Log out" />
+              </ListItem>) :
+              <ListItem button component={Link} to="/login" onClick={handleCloseDrawer}>
+                <ListItemIcon>
+                  <LockOpenIcon />
+                </ListItemIcon>
+                <ListItemText primary="Login" />
+              </ListItem>
 
-          {isAuthenticated &&
-            <ListItem button component={Link} to="/login" onClick={handleLogout}>
-              <ListItemIcon>
-                <LockOpenIcon />
-              </ListItemIcon>
-              <ListItemText primary="Log out" />
-            </ListItem>
-          }
-          {!isAuthenticated &&
-            <ListItem button component={Link} to="/login" onClick={handleCloseDrawer}>
-              <ListItemIcon>
-                <LockOpenIcon />
-              </ListItemIcon>
-              <ListItemText primary="Login" />
-            </ListItem>
           }
           {/* <ListItem button component={Link} to="/login" onClick={handleLogout}>
             <ListItemIcon>

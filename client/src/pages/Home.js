@@ -2,20 +2,32 @@ import React from "react";
 import SearchBar from "../components/SearchBar";
 import CollectionPopup from "../components/collections/CollectionPopup";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import LoadingUsers from "../components/users/LoadingUsers";
+import RedirectLoading from "../components/login/redirectLoading";
 
 const Home = () => {
     const navigate = useNavigate();
     const [cookies, removeCookie] = useCookies([]);
     const [username, setUsername] = useState("");
+    const { error, user, loggedIn, isAuthenticated } = useSelector((state) => state.authentication.authentication);
+    const STATES = {
+        LOADING: "loading",
+        REDIRECTING: "redirecting",
+        COMPLETE: "complete",
+    };
+
+    const [state, setState] = useState(STATES.LOADING);
+
 
     useEffect(() => {
         const verifyCookie = async () => {
             if (!cookies.token) {
                 navigate("/login");
+                setState(STATES.COMPLETE);
             }
             try {
                 // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
@@ -37,9 +49,13 @@ const Home = () => {
                     setUsername(user);
 
                     if (status) {
+                        // setLoaded(true);
+                        setState(STATES.COMPLETE);
                         console.log(user);
                         return <div>Hello {user}</div>
                     } else {
+                        // setLoaded(true);
+                        setState(STATES.COMPLETE);
                         return (removeCookie("token"), navigate("/login"));
                     }
                 })
@@ -70,12 +86,6 @@ const Home = () => {
         verifyCookie();
     }, [cookies, navigate, removeCookie]);
 
-    
-
-    const Logout = () => {
-        removeCookie("token");
-        navigate("/signup");
-    };
 
     // return <div>HOME</div>;
     const handleSearch = (searchTerm) => {
@@ -84,16 +94,27 @@ const Home = () => {
         // You can make an API request, update state, or perform any other logic here
     };
 
+    if (state == STATES.LOADING) {
+        return (
+            <LoadingUsers />
+        );
+    }
+
     return (
         <div>
-            <br />
-            <h4>
-                {" "}
-                Welcome <span>{username}</span>
-            </h4>
-            <button onClick={Logout}>LOGOUT</button>
-            <SearchBar onSearch={handleSearch} />
-            <CollectionPopup></CollectionPopup>
+            {state === STATES.REDIRECTING ? (
+                <LoadingUsers />
+            ) : (
+                <div>
+                    <br />
+                    <h4>
+                        {" "}
+                        Welcome <span>{username}</span>
+                    </h4>
+                    <SearchBar onSearch={handleSearch} />
+                    <CollectionPopup></CollectionPopup>
+                </div>
+            )}
         </div>
     );
 };
