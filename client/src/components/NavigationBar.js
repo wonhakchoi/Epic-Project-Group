@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,9 +16,23 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { useCookies } from "react-cookie";
+import { verifySession } from '../redux/actions/authActions';
 
 export default function ButtonAppBar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { error, user, isLoggedIn } = useSelector((state) => state.authentication.authentication);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [cookies, removeCookie] = useCookies([]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(verifySession(cookies));
+    };
+  }, [dispatch]);
 
   const toggleDrawer = (open) => () => {
     setIsDrawerOpen(open);
@@ -26,6 +40,12 @@ export default function ButtonAppBar() {
 
   const handleCloseDrawer = () => {
     setIsDrawerOpen(false);
+  };
+
+  const handleLogout = () => {
+    setIsDrawerOpen(false);
+    removeCookie("token");
+    navigate("/signup");
   };
 
   return (
@@ -76,12 +96,30 @@ export default function ButtonAppBar() {
             </ListItemIcon>
             <ListItemText primary="Collections" />
           </ListItem>
-          <ListItem button component={Link} to="/login" onClick={handleCloseDrawer}>
+          
+          {
+            isLoggedIn ?
+              (<ListItem button component={Link} to="/login" onClick={handleLogout}>
+                <ListItemIcon>
+                  <LockOpenIcon />
+                </ListItemIcon>
+                <ListItemText primary="Log out" />
+              </ListItem>) :
+              <ListItem button component={Link} to="/login" onClick={handleCloseDrawer}>
+                <ListItemIcon>
+                  <LockOpenIcon />
+                </ListItemIcon>
+                <ListItemText primary="Login" />
+              </ListItem>
+
+          }
+          {/* <ListItem button component={Link} to="/login" onClick={handleLogout}>
             <ListItemIcon>
               <LockOpenIcon />
             </ListItemIcon>
             <ListItemText primary="Login" />
-          </ListItem>
+          </ListItem> */}
+
         </List>
       </Drawer>
     </Box>

@@ -13,6 +13,8 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const restaurantsRouter = require("./routes/restaurants");
 const collectionsRouter = require("./routes/collections");
+
+
 const ratingsRouter = require("./routes/ratings");
 const authRouter = require("./routes/auth");
 const mapsRouter = require("./routes/maps_api");
@@ -26,6 +28,8 @@ mongoose
     })
     .then(() => console.log("Connected to Easy-Eats Database"));
 
+// User.deleteMany().then(() => console.log("deleted all users"));
+
 // mongoose setup for local database
 // mongoose
 //     .connect('mongodb://127.0.0.1:27017/easy-eats')
@@ -33,6 +37,7 @@ mongoose
 //     .catch((error) => console.error("MongoDB Connection Error:", error));
 
 // populate db with collection and restaurant data
+
 clearDatabase()
     .then(() => {
         console.log("Database cleared");
@@ -52,7 +57,10 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
-app.use(cors());
+// app.use(cors());
+// https://stackoverflow.com/questions/19743396/cors-cannot-use-wildcard-in-access-control-allow-origin-when-credentials-flag-i
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

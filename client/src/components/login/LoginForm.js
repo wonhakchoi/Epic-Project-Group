@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { login, setMessage, clearMessage } from '../../redux/actions/authActions';
+import { login, setMessage, clearMessage, verifySession } from '../../redux/actions/authActions';
+import { useCookies } from "react-cookie";
+import LoadingUsers from '../users/LoadingUsers';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -35,14 +37,20 @@ function Copyright(props) {
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { error, user, loggedIn, isAuthenticated } = useSelector((state) => state.authentication.authentication);
+    const { error, user, isLoggedIn } = useSelector((state) => state.authentication.authentication);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [loaded, setLoaded] = useState(false);
+
+    const [cookies, removeCookie] = useCookies([]);
+
     useEffect(() => {
         return () => {
+            dispatch(verifySession(cookies));
             // Clear the error message when the component unmounts
             dispatch(clearMessage());
+            setLoaded(true);
         };
     }, [dispatch]);
 
@@ -62,7 +70,43 @@ const LoginForm = () => {
         dispatch(setMessage());
     };
 
-    if (isAuthenticated) {
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         const { data } = await axios.post(
+    //             "http://localhost:3001/auth/login",
+    //             {
+    //                 email, password
+    //             },
+    //             { withCredentials: true }
+    //         );
+    //         console.log("login data");
+    //         console.log(data);
+    //         const { success, message } = data;
+    //         if (success) {
+    //             console.log("success!");
+    //             setTimeout(() => {
+    //                 navigate("/");
+    //             }, 1000);
+    //         } else {
+    //             console.log("error");
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    //     setEmail("");
+    //     setPassword("");
+    // };
+
+    // const Logout = () => {
+    //     removeCookie("token");
+    //     navigate("/signup");
+    // };
+    if (!loaded) {
+        return <LoadingUsers />;
+    }
+
+    if (isLoggedIn) {
         return (
             <Box
                 sx={{
@@ -86,6 +130,7 @@ const LoginForm = () => {
                 >
                     You have logged in successfully! Go to home page.
                 </Alert>
+                {/* <button onClick={Logout}>LOGOUT</button> */}
             </Box>
         )
     }
