@@ -36,6 +36,7 @@ const Friends = () => {
         ) {
             return;
         }
+
         const signedInUser = usersSlice.users.filter((user) => user._id === authenticationSlice.user)[0];
         setFriendsLists(dispatch, signedInUser.friends, signedInUser.incomingRequests, signedInUser.outgoingRequests);
         setLoaded(true);

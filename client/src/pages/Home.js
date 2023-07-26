@@ -18,7 +18,7 @@ import RedirectLoading from "../components/login/redirectLoading";
 const Home = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
-  const [username, setUsername] = useState("");
+  const [username, setUserName] = useState("");
   const { error, user, isLoggedIn } = useSelector((state) => state.authentication.authentication);
   const STATES = {
       LOADING: "loading",
