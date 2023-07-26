@@ -4,10 +4,13 @@ var mongoose = require("mongoose");
 var { Rating } = require("../database/models/ratingModel");
 
 /* GET all ratings, sorted from latest to earliest creation */
-router.get("/", async (req, res, next) => {
+router.get("/:skip/:limit", async (req, res, next) => {
+    const { skip, limit } = req.params;
     try {
-        const allRatings = await Rating.find({}).sort({ createdAt: -1 });
-        res.status(200).send(allRatings);
+        // const ratingSection = await Rating.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit);
+        const ratingSection = await Rating.find({}).sort({ _id: -1 }).skip(skip).limit(limit);
+        const count = await Rating.countDocuments();
+        res.status(200).send({ ratings: ratingSection, databaseSize: count });
     } catch (error) {
         console.error(error);
         res.status(500).send("Server Error");
@@ -114,3 +117,5 @@ router.delete("/:ratingID", async (req, res, next) => {
         res.status(500).send("Server error");
     }
 });
+
+module.exports = router;

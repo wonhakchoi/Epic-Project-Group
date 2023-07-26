@@ -1,14 +1,5 @@
 /**
  * Represents all users on the site
- *
- * id: {
- *      name: "Michael Myers",
- *      biography: "UBC Student",
- *      rated_restaurants: {
- *          1: 4.5,
- *          3: 2.9
- *      }
- * }
  */
 
 import { createSlice } from "@reduxjs/toolkit";
