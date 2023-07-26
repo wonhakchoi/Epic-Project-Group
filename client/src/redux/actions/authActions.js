@@ -43,7 +43,6 @@ export const login = (email, password) => {
 export const verifySession = (cookies) => {
     return dispatch => {
         if (!cookies.token) {
-            // navigate("/login");
             dispatch({ type: 'LOGOUT' });
         }
 

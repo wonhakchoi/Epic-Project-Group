@@ -12,7 +12,7 @@ import RedirectLoading from "../components/login/redirectLoading";
 const Home = () => {
     const navigate = useNavigate();
     const [cookies, removeCookie] = useCookies([]);
-    const [username, setUsername] = useState("");
+    const [userName, setUserName] = useState("");
     const { error, user, isLoggedIn } = useSelector((state) => state.authentication.authentication);
     const STATES = {
         LOADING: "loading",
@@ -46,43 +46,22 @@ const Home = () => {
                     const { status, user } = data;
                     console.log(status);
 
-                    // setUsername(user.firstName);
+                    // setUserName(user.firstName);
 
                     if (status) {
-                        // setLoaded(true);
-                        setUsername(user.firstName);
+                        setUserName(user.firstName);
                         setState(STATES.COMPLETE);
-                        console.log(user);
+                        // console.log(user);
                         return <div>Hello {user.firstName}</div>
                     } else {
-                        // setLoaded(true);
                         setState(STATES.COMPLETE);
                         return (removeCookie("token"), navigate("/login"));
                     }
                 })
-                // const { status, user } = data;
-                // console.log(status);
-                // console.log("user");
-                // console.log(user);
 
             } catch (err) {
                 console.log(err);
             }
-
-            // setUsername(user);
-
-            // if (status) {
-            //     console.log(user);
-            //     return <div>Hello {user}</div>
-            // } else {
-            //     return (removeCookie("token"), navigate("/signup"));
-            // }
-
-            // return status
-            //     ? toast(`Hello ${user}`, {
-            //         position: "top-right",
-            //     })
-            //     : (removeCookie("token"), navigate("/login"));
         };
         verifyCookie();
     }, [cookies, navigate, removeCookie]);
@@ -109,8 +88,7 @@ const Home = () => {
                 <div>
                     <br />
                     <h4>
-                        {" "}
-                        Welcome <span>{username}</span>
+                        Welcome <span>{userName}</span>
                     </h4>
                     <SearchBar onSearch={handleSearch} />
                     <CollectionPopup></CollectionPopup>
