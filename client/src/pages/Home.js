@@ -44,12 +44,13 @@ const Home = () => {
                     console.log(response.data);
                     let data = response.data
                     const { status, user } = data;
-                    // console.log(status);
+                    console.log(status);
 
-                    setUsername(user.firstName);
+                    // setUsername(user.firstName);
 
                     if (status) {
                         // setLoaded(true);
+                        setUsername(user.firstName);
                         setState(STATES.COMPLETE);
                         console.log(user);
                         return <div>Hello {user.firstName}</div>
