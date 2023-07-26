@@ -61,8 +61,6 @@ export const verifySession = (cookies) => {
             // console.log(response.data);
             let data = response.data
             const { status, user } = data;
-            // console.log(status);
-            // setUsername(user);
 
             if (status) {
                 console.log(user);

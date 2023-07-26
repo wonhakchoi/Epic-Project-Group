@@ -1,9 +1,7 @@
 const initialState = {
-    loggedIn: true,
-    // user: "64a20849b5b47429af1b7900",
     user: null,
     error: null,
-    isAuthenticated: false,
+    isLoggedIn: false,
 };
 
 const authentication = (state = initialState, action) => {
@@ -11,10 +9,9 @@ const authentication = (state = initialState, action) => {
         case 'SIGNUP_SUCCESS':
             return {
                 ...state,
-                user: action.payload,
+                user: action.payload._id,
                 error: null,
-                loggedIn: true,
-                isAuthenticated: true,
+                isLoggedIn: true,
             };
         case 'SIGNUP_FAILURE':
             return {
@@ -29,8 +26,7 @@ const authentication = (state = initialState, action) => {
                 ...state,
                 user: action.payload._id,
                 error: null,
-                loggedIn: true,
-                isAuthenticated: true,
+                isLoggedIn: true,
             };
         case 'LOGIN_FAILURE':
             return {
@@ -42,8 +38,7 @@ const authentication = (state = initialState, action) => {
                 ...state,
                 user: null,
                 error: null,
-                loggedIn: false,
-                isAuthenticated: false,
+                isLoggedIn: false,
             };
         case 'SET_MESSAGE':
             return {

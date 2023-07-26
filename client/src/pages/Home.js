@@ -13,7 +13,7 @@ const Home = () => {
     const navigate = useNavigate();
     const [cookies, removeCookie] = useCookies([]);
     const [username, setUsername] = useState("");
-    const { error, user, loggedIn, isAuthenticated } = useSelector((state) => state.authentication.authentication);
+    const { error, user, isLoggedIn } = useSelector((state) => state.authentication.authentication);
     const STATES = {
         LOADING: "loading",
         REDIRECTING: "redirecting",

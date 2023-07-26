@@ -37,7 +37,7 @@ function Copyright(props) {
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { error, user, loggedIn, isAuthenticated } = useSelector((state) => state.authentication.authentication);
+    const { error, user, isLoggedIn } = useSelector((state) => state.authentication.authentication);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -106,7 +106,7 @@ const LoginForm = () => {
         return <LoadingUsers />;
     }
 
-    if (isAuthenticated) {
+    if (isLoggedIn) {
         return (
             <Box
                 sx={{

@@ -36,7 +36,7 @@ const SignupForm = () => {
     const [password, setPassword] = useState('');
     const [firstName, setFirstname] = useState('');
     const [lastName, setLastname] = useState('');
-    const { error, user, loggedIn, isAuthenticated } = useSelector((state) => state.authentication.authentication);
+    const { error, user, isLoggedIn } = useSelector((state) => state.authentication.authentication);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -72,7 +72,7 @@ const SignupForm = () => {
     };
 
 
-    if (isAuthenticated) {
+    if (isLoggedIn) {
         return (
             <Box
                 sx={{

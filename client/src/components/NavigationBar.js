@@ -111,7 +111,7 @@ import { verifySession } from '../redux/actions/authActions';
 
 export default function ButtonAppBar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { error, user, loggedIn, isAuthenticated } = useSelector((state) => state.authentication.authentication);
+  const { error, user, isLoggedIn } = useSelector((state) => state.authentication.authentication);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
@@ -186,7 +186,7 @@ export default function ButtonAppBar() {
           </ListItem>
           
           {
-            isAuthenticated ?
+            isLoggedIn ?
               (<ListItem button component={Link} to="/login" onClick={handleLogout}>
                 <ListItemIcon>
                   <LockOpenIcon />
