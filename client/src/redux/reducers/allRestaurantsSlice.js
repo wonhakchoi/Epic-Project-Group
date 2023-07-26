@@ -1,12 +1,5 @@
 /**
- * Represents all ratings on the site
- *
- * id: {
- *      name: "Duffin's Donuts",
- *      description: "Heaven on Earth",
- *      location: "1391 E 41st Ave, Vancouver, BC",
- *      openingHours: "6AM to 12PM",
- * }
+ * Represents all restaurants on the site
  */
 
 import { createSlice } from "@reduxjs/toolkit";

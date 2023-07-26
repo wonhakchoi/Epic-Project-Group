@@ -9,9 +9,10 @@ import CollectionPage from "./components/collections/CollectionPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
-import {useEffect} from "react";
-import {getCollectionsAsync} from "./redux/thunks/collectionsThunks";
-import {useDispatch} from "react-redux";
+import Discover from "./pages/Discover";
+import { useEffect } from "react";
+import { getCollectionsAsync } from "./redux/thunks/collectionsThunks";
+import { useDispatch } from "react-redux";
 
 function App() {
     const dispatch = useDispatch();
@@ -19,7 +20,7 @@ function App() {
     // get collections on app load
     useEffect(() => {
         dispatch(getCollectionsAsync());
-    }, []);
+    }, [dispatch]);
 
     return (
         <div className="App">
@@ -33,6 +34,7 @@ function App() {
                     <Route path={"/login"} element={<Login />}></Route>
                     <Route path={"/signup"} element={<Signup />}></Route>
                     <Route path={"/profile"} element={<Profile />}></Route>
+                    <Route path={"/discover"} element={<Discover />}></Route>
                     <Route path="/*" element={<NotFound />}></Route>
                 </Routes>
             </BrowserRouter>
