@@ -24,10 +24,6 @@ module.exports.Signup = async (req, res, next) => {
                 });;
         }
 
-        //Encrypt user password
-        // encryptedPassword = await bcrypt.hash(password, 10);
-        // console.log(encryptedPassword);
-
         const user = await User.create({ email, password, firstName, lastName, createdAt });
         const token = createSecretToken(user._id);
         res.cookie("token", token, {
@@ -77,7 +73,7 @@ module.exports.Login = async (req, res, next) => {
         });
         console.log("authController.js");
         console.log(user);
-        res.status(201).json({ message: "User logged in successfully", success: true });
+        res.status(201).json({ message: "User logged in successfully", success: true, user });
         next()
     } catch (error) {
         console.error(error);

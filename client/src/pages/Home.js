@@ -46,13 +46,13 @@ const Home = () => {
                     const { status, user } = data;
                     // console.log(status);
 
-                    setUsername(user);
+                    setUsername(user.firstName);
 
                     if (status) {
                         // setLoaded(true);
                         setState(STATES.COMPLETE);
                         console.log(user);
-                        return <div>Hello {user}</div>
+                        return <div>Hello {user.firstName}</div>
                     } else {
                         // setLoaded(true);
                         setState(STATES.COMPLETE);

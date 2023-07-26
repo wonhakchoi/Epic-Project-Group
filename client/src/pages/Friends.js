@@ -25,7 +25,8 @@ const Friends = () => {
     // sets up user profile once user and restaurant information is finished loading
     useEffect(() => {
         if (
-            !authenticationSlice.loggedIn ||
+            // !authenticationSlice.loggedIn ||
+            !authenticationSlice.isAuthenticated ||
             usersSlice.getUsers !== REQUEST_STATE.FULFILLED ||
             restaurantsSlice.getRestaurants !== REQUEST_STATE.FULFILLED
         ) {

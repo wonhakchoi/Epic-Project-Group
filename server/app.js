@@ -16,6 +16,7 @@ const collectionsRouter = require("./routes/collections");
 const authRouter = require("./routes/auth")
 const mapsRouter = require("./routes/maps_api")
 const {generateRestaurants, clearDatabase, generateCauliflowers} = require("./database/utils");
+// var { User } = require("./database/models/userModel");
 
 // mongoose setup for atlas cloud
 mongoose
@@ -24,6 +25,8 @@ mongoose
     useUnifiedTopology: true,
 })
 .then(() => console.log("Connected to Easy-Eats Database"))
+
+// User.deleteMany().then(() => console.log("deleted all users"));
 
 // mongoose setup for local database
 // mongoose

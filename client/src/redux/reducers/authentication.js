@@ -1,6 +1,7 @@
 const initialState = {
     loggedIn: true,
-    user: "64a20849b5b47429af1b7900",
+    // user: "64a20849b5b47429af1b7900",
+    user: null,
     error: null,
     isAuthenticated: false,
 };
@@ -21,9 +22,12 @@ const authentication = (state = initialState, action) => {
                 error: action.payload,
             };
         case 'LOGIN_SUCCESS':
+            // console.log("authentication.js");
+            // console.log(action.payload._id);
+            // console.log("authentication.js end");
             return {
                 ...state,
-                user: action.payload,
+                user: action.payload._id,
                 error: null,
                 loggedIn: true,
                 isAuthenticated: true,
