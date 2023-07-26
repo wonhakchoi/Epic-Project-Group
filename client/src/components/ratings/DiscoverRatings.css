@@ -1,0 +1,8 @@
+.rating {
+    color: darkblue;
+    margin: 20px;
+}
+
+.load-more {
+    cursor: pointer;
+}

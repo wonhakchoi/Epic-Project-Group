@@ -1,9 +1,9 @@
 // var createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const cors = require('cors')
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const cors = require("cors");
 
 const mongoose = require("mongoose");
 require("dotenv").config();
@@ -13,18 +13,20 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const restaurantsRouter = require("./routes/restaurants");
 const collectionsRouter = require("./routes/collections");
-const authRouter = require("./routes/auth")
-const mapsRouter = require("./routes/maps_api")
-const {generateRestaurants, clearDatabase, generateCauliflowers} = require("./database/utils");
-// var { User } = require("./database/models/userModel");
+
+
+const ratingsRouter = require("./routes/ratings");
+const authRouter = require("./routes/auth");
+const mapsRouter = require("./routes/maps_api");
+const { generateRestaurants, clearDatabase, generateCauliflowers } = require("./database/utils");
 
 // mongoose setup for atlas cloud
 mongoose
-.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log("Connected to Easy-Eats Database"))
+    .connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log("Connected to Easy-Eats Database"));
 
 // User.deleteMany().then(() => console.log("deleted all users"));
 
@@ -35,18 +37,19 @@ mongoose
 //     .catch((error) => console.error("MongoDB Connection Error:", error));
 
 // populate db with collection and restaurant data
-// clearDatabase()
-//     .then(() => {
-//         console.log("Database cleared")
-//         return generateRestaurants()
-//     })
-//     .then(() => {
-//         console.log("Database populated with restaurants")
-//         return generateCauliflowers()
-//     })
-//     .then(() => {
-//         console.log("Database populated with cauliflowers");
-//     })
+
+clearDatabase()
+    .then(() => {
+        console.log("Database cleared");
+        return generateRestaurants();
+    })
+    .then(() => {
+        console.log("Database populated with restaurants");
+        return generateCauliflowers();
+    })
+    .then(() => {
+        console.log("Database populated with cauliflowers");
+    });
 
 const app = express();
 
@@ -60,7 +63,7 @@ app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -69,6 +72,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/restaurants", restaurantsRouter);
 app.use("/collections", collectionsRouter);
+app.use("/ratings", ratingsRouter);
 app.use("/auth", authRouter);
 app.use("/maps", mapsRouter);
 // // catch 404 and forward to error handler
