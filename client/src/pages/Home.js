@@ -18,7 +18,9 @@ import RedirectLoading from "../components/login/redirectLoading";
 const Home = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
+
   const [username, setUserName] = useState("");
+
   const { error, user, isLoggedIn } = useSelector((state) => state.authentication.authentication);
   const STATES = {
       LOADING: "loading",
@@ -50,6 +52,7 @@ const Home = () => {
                     let data = response.data
                     const { status, user } = data;
                     console.log(status);
+
 
                     // setUserName(user.firstName);
 
