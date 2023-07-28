@@ -1,18 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showForm } from "../redux/reducers/collectionsSlice";
 import CollectionCard from "../components/collections/CollectionCard";
 import CollectionForm from "../components/collections/CollectionForm";
 import { Button, Typography, Container, Grid } from "@mui/material";
 
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import LoadingUsers from "../components/users/LoadingUsers";
+
 // Page for displaying all the user made collections of restaurants
 export default function Collections() {
-  // const [collections, setCollections] = useState(sampleCollections);
   const collections = useSelector((state) => state.collections.collections);
   const dispatch = useDispatch();
 
+  const [loaded, setLoaded] = useState(false);
+  const navigate = useNavigate();
+  const [cookies, removeCookie] = useCookies([]);
+
+  useEffect(() => {
+    const verifyCookie = async () => {
+      if (!cookies.token) {
+        navigate("/login");
+      }
+      try {
+        // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
+        return axios("http://localhost:3001/auth/", {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+          },
+          credentials: 'same-origin',
+          withCredentials: true
+        }).then(response => {
+          let data = response.data
+          const { status, user } = data;
+
+          if (status) {
+            setLoaded(true);
+          } else {
+            setLoaded(true);
+            return (removeCookie("token"), navigate("/login"));
+          }
+        })
+
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    verifyCookie();
+  }, [cookies, navigate, removeCookie]);
+
   const handleAddCollection = () => {
-    // dispatch(addCollection({id: uuid(), name: "New Collection", img: COLLECTION_IMG}));
     dispatch(showForm());
   };
 
@@ -21,6 +63,10 @@ export default function Collections() {
       <CollectionCard collectionId={collection._id} collection={collection} />
     </Grid>
   ));
+
+  if (!loaded) {
+    return <LoadingUsers />;
+  }
 
   return (
     <Container maxWidth="lg">

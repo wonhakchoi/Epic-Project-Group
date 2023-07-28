@@ -16,7 +16,7 @@ const FriendSearch = () => {
     const [name, setName] = useState("");
     const searchResults = useDebounce(name, 500);
     const filteredUsers = usersSlice.users.filter(
-        (user) => user.name.toLowerCase().includes(searchResults.toLowerCase()) && user._id !== authenticationSlice.user
+        (user) => user.firstName.toLowerCase().includes(searchResults.toLowerCase()) && user._id !== authenticationSlice.user
     );
 
     // logic for the pagination
@@ -53,7 +53,7 @@ const FriendSearch = () => {
                         <UserSearchResult
                             key={user._id}
                             id={user._id}
-                            name={user.name}
+                            name={user.firstName}
                             status={determineStatus(
                                 user._id,
                                 friendsSlice.friends,

@@ -13,6 +13,7 @@ returnNewDocument: true - Set the `new` option to true to return the updated use
 /* GET users listing */
 router.get("/", async (req, res, next) => {
     try {
+        // const users = await User.find({}).select("_id name biography ratedRestaurants");
         const users = await User.find({});
         res.send(users);
     } catch (error) {

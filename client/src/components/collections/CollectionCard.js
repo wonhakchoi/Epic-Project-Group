@@ -1,30 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import {
-  getCollectionDetailsAsync,
-  getRestaurantsAsync,
-} from "../../redux/thunks/collectionsThunks";
 import {
   Card,
   CardContent,
   CardMedia,
   Typography,
-  Button,
 } from "@mui/material";
-// import {clickCollection} from "../../redux/reducers/collectionsSlice";
-// import {getCollectionDetails} from "../../redux/services/collectionsService";
 
 // Component for each Collection Card
 export default function CollectionCard({ collectionId, collection }) {
-  // const collectionDetails = useSelector(state => state.collections.currCollectionDetails);
-  const dispatch = useDispatch();
-
-  function handleCollectionClick() {
-    // dispatch(clickCollection(collectionId))
-    dispatch(getCollectionDetailsAsync(collectionId));
-    dispatch(getRestaurantsAsync(collectionId));
-  }
 
   return (
     <Card
@@ -41,7 +25,6 @@ export default function CollectionCard({ collectionId, collection }) {
     >
       <Link
         to={"/collections/" + collectionId}
-        onClick={handleCollectionClick}
         style={{ textDecoration: "none" }}
       >
         <CardMedia
