@@ -26,10 +26,12 @@ const userSchema = new mongoose.Schema(
         },
         biography: {
             type: String,
+            default: "",
         },
         ratedRestaurants: {
             type: Map,
             of: Number,
+            default: {},
         },
         friends: {
             type: [String],
