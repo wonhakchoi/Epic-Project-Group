@@ -12,7 +12,6 @@ import LoadingUsers from "../components/users/LoadingUsers";
 
 // Page for displaying all the user made collections of restaurants
 export default function Collections() {
-  // const [collections, setCollections] = useState(sampleCollections);
   const collections = useSelector((state) => state.collections.collections);
   const dispatch = useDispatch();
 
@@ -56,7 +55,6 @@ export default function Collections() {
   }, [cookies, navigate, removeCookie]);
 
   const handleAddCollection = () => {
-    // dispatch(addCollection({id: uuid(), name: "New Collection", img: COLLECTION_IMG}));
     dispatch(showForm());
   };
 

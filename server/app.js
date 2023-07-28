@@ -1,9 +1,9 @@
 // var createError = require('http-errors');
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
-const cors = require("cors");
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors')
 
 const mongoose = require("mongoose");
 require("dotenv").config();
@@ -20,7 +20,7 @@ const authRouter = require("./routes/auth");
 const mapsRouter = require("./routes/maps_api");
 const { generateRestaurants, clearDatabase, generateCauliflowers } = require("./database/utils");
 
-// mongoose setup for atlas cloud
+// mongoose setup for cloud cluster
 mongoose
     .connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`, {
         useNewUrlParser: true,
@@ -37,7 +37,6 @@ mongoose
 //     .catch((error) => console.error("MongoDB Connection Error:", error));
 
 // populate db with collection and restaurant data
-
 clearDatabase()
     .then(() => {
         console.log("Database cleared");
