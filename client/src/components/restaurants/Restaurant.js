@@ -4,7 +4,6 @@ import {useDispatch} from "react-redux";
 import {displayAddToCollection, setRestaurant} from "../../redux/reducers/collectionPopupSlice";
 
 const Restaurant = ({restaurant}) => {
-    // console.log(JSON.stringify(restaurant));
     const {place_id, name, formatted_address, opening_hours, rating, user_ratings_total} = restaurant;
     let YesOrNo;
     let ratingWithColour;

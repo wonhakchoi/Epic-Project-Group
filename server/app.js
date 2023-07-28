@@ -17,7 +17,7 @@ const authRouter = require("./routes/auth")
 const mapsRouter = require("./routes/maps_api")
 const {generateRestaurants, clearDatabase, generateCauliflowers} = require("./database/utils");
 
-// mongoose setup for atlas cloud
+// mongoose setup for cloud cluster
 // mongoose
 // .connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`, {
 //     useNewUrlParser: true,
