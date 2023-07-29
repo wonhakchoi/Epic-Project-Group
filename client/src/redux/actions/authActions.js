@@ -1,9 +1,10 @@
 import axios from 'axios';
+import {baseURL} from "../services/backendURL";
 
 export const signup = (email, password, firstName, lastName) => {
     return dispatch => {
         axios
-            .post('http://localhost:3001/auth/signup', { email, password, firstName, lastName }, { withCredentials: true })
+            .post(baseURL + '/auth/signup', { email, password, firstName, lastName }, { withCredentials: true })
             .then(response => {
                 if (response.data.success) {
                     let userID = response.data.user._id;
