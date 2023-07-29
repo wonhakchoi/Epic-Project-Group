@@ -15,6 +15,7 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
+import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from "react-cookie";
@@ -77,20 +78,26 @@ export default function ButtonAppBar() {
         onClose={toggleDrawer(false)} // Close the side menu on click
       >
         <List sx={{ marginTop: 2 }}>
-          <ListItem button component={Link} to="/profile" onClick={handleCloseDrawer}>
-            <ListItemIcon>
+        <ListItem component={Link} to="/search" onClick={handleCloseDrawer}>
+            <ListItemIcon sx={{color: "#000000"}}>
+              <SearchIcon />
+            </ListItemIcon>
+            <ListItemText primary="Search" />
+          </ListItem>
+          <ListItem component={Link} to="/profile" onClick={handleCloseDrawer}>
+            <ListItemIcon sx={{color: "#000000"}}>
               <AccountCircleIcon />
             </ListItemIcon>
             <ListItemText primary="Profile" />
           </ListItem>
-          <ListItem button component={Link} to="/friends" onClick={handleCloseDrawer}>
-            <ListItemIcon>
+          <ListItem component={Link} to="/friends" onClick={handleCloseDrawer}>
+            <ListItemIcon sx={{color: "#000000"}}>
               <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Friends" />
           </ListItem>
-          <ListItem button component={Link} to="/collections" onClick={handleCloseDrawer}>
-            <ListItemIcon>
+          <ListItem component={Link} to="/collections" onClick={handleCloseDrawer}>
+            <ListItemIcon sx={{color: "#000000"}}>
               <ShoppingBagIcon />
             </ListItemIcon>
             <ListItemText primary="Collections" />
@@ -98,8 +105,8 @@ export default function ButtonAppBar() {
           
           {
             isLoggedIn ?
-              (<ListItem button component={Link} to="/login" onClick={handleLogout}>
-                <ListItemIcon>
+              (<ListItem component={Link} to="/login" onClick={handleLogout}>
+                <ListItemIcon sx={{color: "#000000"}}>
                   <LockOpenIcon />
                 </ListItemIcon>
                 <ListItemText primary="Log out" />
