@@ -1,6 +1,6 @@
 // temporary sample data for collections
 
-const COLLECTION_IMG = "https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=580&q=80"
+// const COLLECTION_IMG = "https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=580&q=80"
 
 const COLLECTION_IMG1 = "https://pbs.twimg.com/profile_images/1174018931532550144/jRmFjhVX_400x400.png";
 const COLLECTION_IMG2 = "https://img.freepik.com/free-vector/beer-mug-pretzel-signboard-neon-sign_1262-20705.jpg?w=360";
@@ -32,13 +32,23 @@ const sampleUserCollections = [{
     }]
 },]
 
+// const sampleCauliflowers =
+//     [
+//         {
+//             name: "UBC Food Places", img: COLLECTION_IMG1, restaurants: ['64b1a56b637046211569d760', '64b1a56b637046211569d762']
+//         },
+//         {
+//             name: "Dinner", img: COLLECTION_IMG2, restaurants: ['64b1a56b637046211569d764']
+//         }
+//     ]
+
 const sampleCauliflowers =
     [
         {
-            name: "UBC Food Places", img: COLLECTION_IMG1, restaurants: ['64b1a56b637046211569d760', '64b1a56b637046211569d762']
+            name: "UBC Food Places", img: COLLECTION_IMG1, restaurants: ['ChIJw-s4pFdxhlQRh2jK22eXlnU']
         },
         {
-            name: "Dinner", img: COLLECTION_IMG2, restaurants: ['64b1a56b637046211569d764']
+            name: "Dinner", img: COLLECTION_IMG2, restaurants: []
         }
     ]
 
