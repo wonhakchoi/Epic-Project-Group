@@ -23,7 +23,8 @@ export const addNewCollection = async ({name, img}) => {
     const data = (await axios.post(`${baseCollectionsUrl}`,
         {
             name: name,
-            img: img
+            img: img,
+            pinned: false,
         })).data
     return data;
 

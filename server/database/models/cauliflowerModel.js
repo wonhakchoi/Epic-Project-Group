@@ -18,6 +18,11 @@ const cauliflowerSchema = new mongoose.Schema(
         userId: {
             type: String,
             required: false
+        },
+        pinned: {
+            type: Boolean,
+            default: false,
+            required: true
         }
     },
     { collection: "cauliflowers" }
