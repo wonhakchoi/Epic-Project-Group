@@ -24,7 +24,7 @@ export default function CollectionPage() {
     ));
 
     return (
-        <Box sx={{maxWidth: "500px", margin: "0 auto"}}>
+        <Box sx={{maxWidth: "500px", margin: "25px auto"}}>
             <Typography variant="h4" component="h1" sx={{marginBottom: "20px"}}>
                 {collectionDetails.name}
             </Typography>
