@@ -55,13 +55,13 @@ const Friends = () => {
 
     return (
         <div className="friends-container">
-            {!loaded ? (
-                <LoadingUsers />
-            ) : (
-                <div>
+            {/*{!loaded ? (*/}
+            {/*    <LoadingUsers />*/}
+            {/*) : (*/}
+            {/*    <div>*/}
                     <ProfilePage />
-                </div>
-            )}
+                {/*</div>*/}
+            {/*)}*/}
             
         </div>
     );

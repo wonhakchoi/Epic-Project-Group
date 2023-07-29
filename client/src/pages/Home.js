@@ -120,11 +120,11 @@ const Home = () => {
         marginTop: "10px",
     };
 
-    if (state == STATES.LOADING) {
-        return (
-            <LoadingUsers/>
-        );
-    }
+    // if (state == STATES.LOADING) {
+    //     return (
+    //         <LoadingUsers/>
+    //     );
+    // }
 
     return (
         <Box sx={{height: "calc(100vw / 3)"}}>

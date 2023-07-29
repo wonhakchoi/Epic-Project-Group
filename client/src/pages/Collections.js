@@ -67,9 +67,9 @@ export default function Collections() {
     </Grid>
   ));
 
-  if (!loaded) {
-    return <LoadingUsers />;
-  }
+  // if (!loaded) {
+  //   return <LoadingUsers />;
+  // }
 
   return (
     <Container maxWidth="lg">
