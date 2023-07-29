@@ -1,10 +1,9 @@
 import axios from 'axios';
-import {baseURL} from "../services/backendURL";
 
 export const signup = (email, password, firstName, lastName) => {
     return dispatch => {
         axios
-            .post(baseURL + '/auth/signup', { email, password, firstName, lastName }, { withCredentials: true })
+            .post('https://easy-eats-backend-9u5y.onrender.com/auth/signup', { email, password, firstName, lastName }, { withCredentials: true })
             .then(response => {
                 if (response.data.success) {
                     let userID = response.data.user._id;
@@ -25,7 +24,7 @@ export const signup = (email, password, firstName, lastName) => {
 export const login = (email, password) => {
     return dispatch => {
         axios
-            .post(baseURL + '/auth/login', { email, password }, { withCredentials: true })
+            .post('https://easy-eats-backend-9u5y.onrender.com/auth/login', { email, password }, { withCredentials: true })
             .then(response => {
                 if (response.data.success) {
                     let userID = response.data.user._id;
@@ -48,7 +47,7 @@ export const verifySession = (cookies) => {
         }
 
         // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
-        axios(baseURL + "/auth/", {
+        axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
             method: 'POST',
             mode: 'no-cors',
             headers: {

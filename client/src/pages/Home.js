@@ -30,7 +30,7 @@ const Home = () => {
   };
 
   const [state, setState] = useState(STATES.LOADING);
-  
+
   useEffect(() => {
         const verifyCookie = async () => {
             if (!cookies.token) {
@@ -39,7 +39,7 @@ const Home = () => {
             }
             try {
                 // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
-                return axios(baseURL + "/auth/", {
+                return axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
@@ -74,8 +74,8 @@ const Home = () => {
         };
         verifyCookie();
     }, [cookies, navigate, removeCookie]);
-  
-  
+
+
   const settings = {
     dots: true,
     infinite: true,
@@ -116,7 +116,7 @@ const Home = () => {
     borderRadius: "20px",
     marginTop: "10px",
   };
-  
+
   if (state == STATES.LOADING) {
         return (
             <LoadingUsers />

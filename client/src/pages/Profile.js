@@ -21,7 +21,7 @@ const Friends = () => {
             }
             try {
                 // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
-                return axios(baseURL + "/auth/", {
+                return axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
