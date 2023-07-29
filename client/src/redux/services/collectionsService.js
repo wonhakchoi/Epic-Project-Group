@@ -4,6 +4,7 @@ import {baseURL} from "./backendURL";
 const baseCollectionsUrl = baseURL + "/collections";
 // requests for collections
 export const getCollections = async () => {
+    console.log("GET collections")
     let data = (await axios.get(baseCollectionsUrl)).data;
     return data;
 }

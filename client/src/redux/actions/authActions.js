@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const signup = (email, password, firstName, lastName) => {
+    console.log("POST signup")
     return dispatch => {
         axios
             .post('https://easy-eats-backend-9u5y.onrender.com/auth/signup', { email, password, firstName, lastName }, { withCredentials: true })
@@ -22,6 +23,7 @@ export const signup = (email, password, firstName, lastName) => {
 };
 
 export const login = (email, password) => {
+    console.log("POST login")
     return dispatch => {
         axios
             .post('https://easy-eats-backend-9u5y.onrender.com/auth/login', { email, password }, { withCredentials: true })
@@ -41,6 +43,7 @@ export const login = (email, password) => {
 };
 
 export const verifySession = (cookies) => {
+    console.log("POST verify session")
     return dispatch => {
         if (!cookies.token) {
             dispatch({ type: 'LOGOUT' });
