@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import "./LeaveReviewModal.css";
-import { Typography, Box, TextField, Grid, Button } from '@mui/material';
+import { Typography, Box, TextField, Grid, Button, Rating } from '@mui/material';
 import { postUserRatingsAsync } from '../../redux/thunks/ratingsThunks';
 
 export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal }) => {
@@ -44,7 +44,42 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal }) => {
                         <Typography component="h1" variant="h5">
                             Leave Review
                         </Typography>
-                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                        <Box component="form" onSubmit={handleSubmit} noValidate>
+                            <Grid container spacing={2}
+                                direction="row"
+                                justifyContent="flex-start"
+                                alignItems="center"
+                            >
+                                <Grid item xs={8}>
+                                    <Rating
+                                        name="simple-controlled"
+                                        value={score}
+                                        precision={0.5}
+                                        defaultValue={2.5}
+                                        size="large"
+                                        onChange={(event, newValue) => {
+                                            event.preventDefault();
+                                            if (newValue < 0) {
+                                                setScore(0);
+                                            }
+                                            setScore(newValue);
+                                        }}
+                                        onChangeActive={(event, newHover) => {
+                                            event.preventDefault();
+                                            if (newHover < 0) {
+                                                setScore(0);
+                                            }
+                                            setScore(newHover);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={2}>
+                                    {score}
+                                </Grid>
+                                <Grid item xs={2}>
+
+                                </Grid>
+                            </Grid>
                             <TextField
                                 margin="normal"
                                 required
@@ -61,7 +96,7 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal }) => {
                                 margin="normal"
                                 fullWidth
                                 id="comment"
-                                label="Your comment" 
+                                label="Your comment"
                                 name="comment"
                                 autoComplete="current-password"
                                 autoFocus
