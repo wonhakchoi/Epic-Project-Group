@@ -1,7 +1,7 @@
 import axios from "axios";
 import {baseURL} from "./backendURL";
 
-const baseCollectionsUrl = baseURL + "/collections";
+const baseCollectionsUrl = "https://easy-eats-backend-9u5y.onrender.com/collections";
 // requests for collections
 export const getCollections = async () => {
     console.log("GET collections")
