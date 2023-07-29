@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { signup, setMessage, clearMessage } from '../../redux/actions/authActions';
+import { signup, setMessage, clearMessage, verifySession } from '../../redux/actions/authActions';
+import { useCookies } from "react-cookie";
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -39,9 +41,11 @@ const SignupForm = () => {
     const { error, user, isLoggedIn } = useSelector((state) => state.authentication.authentication);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [cookies, removeCookie] = useCookies([]);
 
     useEffect(() => {
         return () => {
+            dispatch(verifySession(cookies));
             // Clear the error message when the component unmounts
             dispatch(clearMessage());
         };

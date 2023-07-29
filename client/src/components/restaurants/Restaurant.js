@@ -1,16 +1,26 @@
+
 import React, { useState } from "react";
 import "./Restaurant.css";
 import {useDispatch} from "react-redux";
 import {displayAddToCollection, setRestaurant} from "../../redux/reducers/collectionPopupSlice";
 import { getMapPhoto } from "../../redux/services/mapService"
+import { LeaveReviewModal } from "../ratings/LeaveReviewModal";
+import { Typography, Box, TextField, Grid, Button } from '@mui/material';
 
 const Restaurant = ({restaurant}) => {
     const dispatch = useDispatch();
+
+    const [showReviewModal, setShowReviewModal] = useState(false);
+
+    const openModal = () => {
+        setShowReviewModal(showReviewModal => !showReviewModal);
+    };
 
     const handleAddToCollection = () => {
         dispatch(displayAddToCollection())
         dispatch(setRestaurant(restaurant))
     }
+
 
     let [imgsrc, setImgsrc] = useState("")
 
@@ -36,6 +46,8 @@ const Restaurant = ({restaurant}) => {
                     <p className="info"><span className="opening-hours">Open Now? {YesOrNo}</span></p>
                     <p className="info">Rating: {ratingWithColour} by <span className="rating">{user_ratings_total}</span> users</p>
                     <button className="add-to-collection-button" onClick={handleAddToCollection}>Add to Collection</button>
+                    <Button variant="contained" onClick={openModal}>Leave Review</Button>
+                    <LeaveReviewModal showReviewModal={showReviewModal} setShowReviewModal={setShowReviewModal} />
                 </div>
             </div>
         );
