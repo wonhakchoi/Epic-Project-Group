@@ -1,15 +1,23 @@
 import React from "react";
+import { useState } from "react";
 import "./Restaurant.css";
-import {useDispatch} from "react-redux";
-import {displayAddToCollection, setRestaurant} from "../../redux/reducers/collectionPopupSlice";
+import { useDispatch } from "react-redux";
+import { displayAddToCollection, setRestaurant } from "../../redux/reducers/collectionPopupSlice";
+import { LeaveReviewModal } from "../ratings/LeaveReviewModal";
 
-const Restaurant = ({restaurant}) => {
-    const {name, formatted_address, opening_hours, rating, user_ratings_total} = restaurant;
+const Restaurant = ({ restaurant }) => {
+    const { name, formatted_address, opening_hours, rating, user_ratings_total } = restaurant;
     let YesOrNo;
     let ratingWithColour;
     opening_hours["open_now"] ? YesOrNo = <span className="yesString">Yes</span> : YesOrNo = <span className="noString">No</span>
     rating < 2 ? ratingWithColour = <span className="noString">{rating}</span> : rating < 4 ? ratingWithColour = <span className="midString">{rating}</span> : ratingWithColour = <span className="yesString">{rating}</span>
     const dispatch = useDispatch();
+
+    const [showReviewModal, setShowReviewModal] = useState(false);
+
+    const openModal = () => {
+        setShowReviewModal(showReviewModal => !showReviewModal);
+    };
 
     const handleAddToCollection = () => {
         dispatch(displayAddToCollection())
@@ -31,6 +39,9 @@ const Restaurant = ({restaurant}) => {
             <button className="add-to-collection-button" onClick={handleAddToCollection}>
                 Add to Collection
             </button>
+
+            <button onClick={openModal}>Leave Review</button>
+            <LeaveReviewModal showReviewModal={showReviewModal} setShowReviewModal={setShowReviewModal} />
         </div>
     );
 };

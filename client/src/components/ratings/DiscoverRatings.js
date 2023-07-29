@@ -9,7 +9,7 @@ import { Typography, Grid, Container } from '@mui/material';
 
 // Discover page for users to see ratings from other people
 const DiscoverRatings = () => {
-    const ratingsSlice = useSelector((state) => state.ratings);
+    const ratingsSlice = useSelector((state) => state.ratings.allRatings);
     const dispatch = useDispatch();
 
     const resultsPerPage = 4;
@@ -37,7 +37,7 @@ const DiscoverRatings = () => {
     return (
         <div id="ratings-container">
             <Typography variant="h2" sx={{ marginTop: '30px' }}>
-                Friends' Reviews
+                Reviews
             </Typography>
             {ratingsSlice.ratings.map((rating) => (
                 <RatingCard
@@ -46,7 +46,7 @@ const DiscoverRatings = () => {
                     name={rating.userID}
                     restaurant={rating.restaurantID}
                     score={rating.score}
-                    comment={rating.comments}
+                    comment={rating.comments ? rating.comments : ""}
                     date={rating.updatedAt}
                 />
                 // <div className="rating" key={rating._id}>
