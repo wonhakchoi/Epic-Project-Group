@@ -18,9 +18,9 @@ const Friends = () => {
         const verifyCookie = async () => {
             console.log("POST auth Profile")
 
-            if (!cookies.token) {
-                navigate("/login");
-            }
+            // if (!cookies.token) {
+            //     navigate("/login");
+            // }
             try {
                 // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
                 return axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
@@ -37,12 +37,12 @@ const Friends = () => {
                     let data = response.data
                     const { status, user } = data;
 
-                    if (status) {
-                        setLoaded(true);
-                    } else {
-                        setLoaded(true);
-                        return (removeCookie("token"), navigate("/login"));
-                    }
+                    // if (status) {
+                    //     setLoaded(true);
+                    // } else {
+                    //     setLoaded(true);
+                    //     return (removeCookie("token"), navigate("/login"));
+                    // }
                 })
 
             } catch (err) {
@@ -55,13 +55,13 @@ const Friends = () => {
 
     return (
         <div className="friends-container">
-            {!loaded ? (
-                <LoadingUsers />
-            ) : (
-                <div>
+            {/*{!loaded ? (*/}
+            {/*    <LoadingUsers />*/}
+            {/*) : (*/}
+            {/*    <div>*/}
                     <ProfilePage />
-                </div>
-            )}
+            {/*    </div>*/}
+            {/*)}*/}
             
         </div>
     );
