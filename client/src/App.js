@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {BrowserRouter, Routes, Route, HashRouter} from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
@@ -25,7 +25,7 @@ function App() {
 
     return (
         <div className="App">
-            <BrowserRouter>
+            <HashRouter>
                 <NavigationBar />
                 <Routes>
                     <Route exact path="/" element={<Home />}></Route>
@@ -39,7 +39,7 @@ function App() {
                     <Route path={"/discover"} element={<Discover />}></Route>
                     <Route path="/*" element={<NotFound />}></Route>
                 </Routes>
-            </BrowserRouter>
+            </HashRouter>
         </div>
     );
 }
