@@ -25,7 +25,7 @@ function App() {
 
     return (
         <div className="App">
-            <HashRouter>
+            <BrowserRouter>
                 <NavigationBar />
                 <Routes>
                     <Route exact path="/" element={<Home />}></Route>
@@ -39,7 +39,7 @@ function App() {
                     <Route path={"/discover"} element={<Discover />}></Route>
                     <Route path="/*" element={<NotFound />}></Route>
                 </Routes>
-            </HashRouter>
+            </BrowserRouter>
         </div>
     );
 }
