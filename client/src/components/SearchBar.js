@@ -51,7 +51,6 @@ const SearchBar = () => {
             <Restaurant key={result.place_id} restaurant={result} />
           ))}
         </div>
-      )}
     </div>
   );
 };
