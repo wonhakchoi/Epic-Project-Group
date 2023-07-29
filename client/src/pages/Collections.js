@@ -25,7 +25,7 @@ export default function Collections() {
       if (!cookies.token) {
         navigate("/login");
       }
-      console.log("POST auth")
+      console.log("POST auth Collections")
       try {
         // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
         return axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {

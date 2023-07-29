@@ -37,16 +37,17 @@ const Home = () => {
                 setState(STATES.COMPLETE);
             }
             try {
-                console.log("POST auth")
+                console.log("POST auth HOME")
                 // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
                 return axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
                 // return axios("http://localhost:3001/auth/", {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
-                        'Access-Control-Allow-Origin': 'https://easy-eats-frontend.onrender.com/',
-                        'Access-Control-Allow-Headers': "Origin, X-Requested-With, Content-Type, Accept",
-                        'Content-Type': 'application/json'
+                        'Access-Control-Allow-Origin': '*',
+                        'Content-Type': 'application/json',
+                        // 'Access-Control-Allow-Origin': 'https://easy-eats-frontend.onrender.com/',
+                        // 'Access-Control-Allow-Headers': "Origin, X-Requested-With, Content-Type, Accept",
                     },
                     credentials: 'same-origin',
                     withCredentials: true

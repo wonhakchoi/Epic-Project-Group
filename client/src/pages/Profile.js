@@ -16,7 +16,7 @@ const Friends = () => {
 
     useEffect(() => {
         const verifyCookie = async () => {
-            console.log("POST auth")
+            console.log("POST auth Profile")
 
             if (!cookies.token) {
                 navigate("/login");
