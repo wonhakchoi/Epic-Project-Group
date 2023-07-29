@@ -1,5 +1,9 @@
 # Easy Eats
 
+## High-level Description
+
+EasyEats is a social media platform centered around food, where users can create profiles, connect with friends, and share restaurant reviews. With the ability to rate restaurants and view friends' reviews, it provides a seamless and engaging experience for food enthusiasts to discover and explore new culinary delights together.
+
 ## Project Description
 
 Easy Eats is for anyone who wants to look for a place to eat. The application will be able to search restaurants, save your favourite restaurants, and view your friends' restaurant lists. The types of data that will store are: friends list, restaurants names that a user and their friends added, personal information, login information, and location. The users will be able to view details such as locations, rating, description, contact information, opening hours, sort by proximity to location, etc. for each restaurant. Some additional functionality we can add or remove based on time constraints include: a recommender system to suggest restaurants based on history similar to Spotify's playlist suggestion, allowing users to post photos of food from restaurants they went to, reviewing system where you can write reviews of restaurants, integration with other social media apps, reading menu items off of photos in Google Maps, and integration of Uber Eats or other delivery apps for pricing and menu and allow users to order.
