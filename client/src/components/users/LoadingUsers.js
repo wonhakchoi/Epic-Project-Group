@@ -6,9 +6,10 @@ import "./LoadingUsers.css";
 // https://github.com/venushadilshan/react-spinner-animated?ref=reactjsexample.com
 const LoadingUsers = () => {
     return (
-        <div className="loading-container">
-            <DoubleBubble text="Loading..." center={true} width={120} height={120} />
-        </div>
+        // <div className="loading-container">
+        //     <DoubleBubble text="Loading..." center={true} width={120} height={120} />
+        // </div>
+        <></>
     );
 };
 
