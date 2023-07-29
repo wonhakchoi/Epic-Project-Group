@@ -1,56 +1,59 @@
-import React from "react";
+
+import React, { useState } from "react";
 import "./Restaurant.css";
-import { useDispatch } from "react-redux";
-import { displayAddToCollection, setRestaurant } from "../../redux/reducers/collectionPopupSlice";
-import { Card, CardContent, Typography, Button } from "@mui/material";
+import {useDispatch} from "react-redux";
+import {displayAddToCollection, setRestaurant} from "../../redux/reducers/collectionPopupSlice";
+import { getMapPhoto } from "../../redux/services/mapService"
+import { LeaveReviewModal } from "../ratings/LeaveReviewModal";
+import { Typography, Box, TextField, Grid, Button } from '@mui/material';
 
-const Restaurant = ({ restaurant }) => {
-  const { place_id, name, formatted_address, opening_hours, rating, user_ratings_total } = restaurant;
-  let YesOrNo;
-  let ratingWithColour;
-  opening_hours["open_now"] ? (YesOrNo = <span className="yesString">Yes</span>) : (YesOrNo = <span className="noString">No</span>);
-  rating < 2
-    ? (ratingWithColour = <span className="noString">{rating}</span>)
-    : rating < 4
-    ? (ratingWithColour = <span className="midString">{rating}</span>)
-    : (ratingWithColour = <span className="yesString">{rating}</span>);
-  const dispatch = useDispatch();
+const Restaurant = ({restaurant}) => {
+    const dispatch = useDispatch();
 
-  const handleAddToCollection = () => {
-    dispatch(displayAddToCollection());
-    dispatch(setRestaurant(restaurant));
-  };
+    const [showReviewModal, setShowReviewModal] = useState(false);
 
-  return (
-    <Card
-    className="restaurant-card"
-    sx={{
-      backgroundColor: "#ffffff",
-      margin: "10px", 
-      borderRadius: "15px",
-      marginLeft: "80px", 
-      marginRight: "80px", 
-    }}
-  >
-      <CardContent>
-        <Typography variant="h5" component="h3">
-          {name}
-        </Typography>
-        <Typography variant="body2" component="p" className="formatted_address">
-          {formatted_address}
-        </Typography>
-        <Typography variant="body2" component="p" className="opening-hours">
-          Open Now? {YesOrNo}
-        </Typography>
-        <Typography variant="body2" component="p">
-          Rating: {ratingWithColour} by <span className="rating">{user_ratings_total}</span> users
-        </Typography>
-        <Button variant="contained" onClick={handleAddToCollection} style={{ marginTop: "10px", backgroundColor: "#FFF4BB", color: "#000000" }}>
-          Add to Collection
-        </Button>
-      </CardContent>
-    </Card>
-  );
+    const openModal = () => {
+        setShowReviewModal(showReviewModal => !showReviewModal);
+    };
+
+    const handleAddToCollection = () => {
+        dispatch(displayAddToCollection())
+        dispatch(setRestaurant(restaurant))
+    }
+
+
+    let [imgsrc, setImgsrc] = useState("")
+
+    const {name, formatted_address, opening_hours, rating, user_ratings_total, picture_icon, types} = restaurant;
+    if (name && formatted_address && opening_hours && rating && user_ratings_total && picture_icon) {
+        if (!types.includes("food") && !types.includes("restaurant")) {
+            return <></>
+        }
+        let YesOrNo = <span className="midString">Undisclosed</span>;
+        let ratingWithColour;
+        if ("open_now" in opening_hours) {
+            opening_hours["open_now"] ? YesOrNo = <span className="yesString">Yes</span> : YesOrNo = <span className="noString">No</span>
+        } else {
+            console.log(opening_hours)
+        }
+        rating < 2 ? ratingWithColour = <span className="noString">{rating}</span> : rating < 4 ? ratingWithColour = <span className="midString">{rating}</span> : ratingWithColour = <span className="yesString">{rating}</span>
+        return (
+            <div className={'restaurant-card'}>
+                <img className="restaurant-img"src={picture_icon} alt="URL not found"></img>
+                <div className="descriptor">
+                    <h3>{name}</h3>
+                    <p className="info"><span className="formatted_address">{formatted_address}</span></p>
+                    <p className="info"><span className="opening-hours">Open Now? {YesOrNo}</span></p>
+                    <p className="info">Rating: {ratingWithColour} by <span className="rating">{user_ratings_total}</span> users</p>
+                    <button className="add-to-collection-button" onClick={handleAddToCollection}>Add to Collection</button>
+                    <Button variant="contained" onClick={openModal}>Leave Review</Button>
+                    <LeaveReviewModal showReviewModal={showReviewModal} setShowReviewModal={setShowReviewModal} />
+                </div>
+            </div>
+        );
+    } else {
+        return <></>
+    }
 };
 
 export default Restaurant;

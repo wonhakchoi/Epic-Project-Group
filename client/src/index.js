@@ -8,7 +8,8 @@ import { enableMapSet } from "immer";
 import collectionsReducer from "./redux/reducers/collectionsSlice";
 import collectionsPopupReducer from "./redux/reducers/collectionPopupSlice";
 import usersReducer from "./redux/reducers/userReducer";
-import ratingsReducer from "./redux/reducers/allRatingsSlice";
+// import ratingsReducer from "./redux/reducers/allRatingsSlice";
+import ratingsReducer from "./redux/reducers/ratingReducer";
 import restaurantsReducer from "./redux/reducers/restaurantReducer";
 import authenticationReducer from "./redux/reducers/authenticationReducer";
 

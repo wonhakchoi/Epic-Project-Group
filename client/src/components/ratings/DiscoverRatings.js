@@ -3,10 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { getRatingsAsync } from "../../redux/thunks/ratingsThunks";
 import { REQUEST_STATE } from "../../redux/requestStates";
 import "./DiscoverRatings.css";
+import RatingCard from "./RatingCard";
+import { Typography, Grid, Container } from '@mui/material';
+
 
 // Discover page for users to see ratings from other people
 const DiscoverRatings = () => {
-    const ratingsSlice = useSelector((state) => state.ratings);
+    const ratingsSlice = useSelector((state) => state.ratings.allRatings);
     const dispatch = useDispatch();
 
     const resultsPerPage = 4;
@@ -33,19 +36,38 @@ const DiscoverRatings = () => {
 
     return (
         <div id="ratings-container">
+            <Typography variant="h2" sx={{ marginTop: '30px' }}>
+                Reviews
+            </Typography>
             {ratingsSlice.ratings.map((rating) => (
-                <div className="rating" key={rating._id}>
-                    <strong>Rating:</strong> {rating.score} - <strong>Comment:</strong> {rating.comments}
-                </div>
+                <RatingCard
+                    key={rating._id}
+                    id={rating._id}
+                    name={rating.userID}
+                    restaurant={rating.restaurantID}
+                    score={rating.score}
+                    comment={rating.comments ? rating.comments : ""}
+                    date={rating.updatedAt}
+                />
+                // <div className="rating" key={rating._id}>
+                //     <strong>Rating:</strong> {rating.score} - <strong>Comment:</strong> {rating.comments}
+                //     <strong>{rating.userID}</strong>
+                // </div>
             ))}
             {ratingsSlice.getRatings === REQUEST_STATE.PENDING && <div>Loading...</div>}
             <section className="ratings-navigation">
-                <h3 className="load-more" onClick={fetchMoreRatings}>
+                {/* <h3 className="load-more" onClick={fetchMoreRatings}>
                     See More Ratings
-                </h3>
-                <h5>
+                </h3> */}
+                {/* <h5>
                     Loaded {ratingsSlice.ratings.length} out of {ratingsSlice.databaseSize} results
-                </h5>
+                </h5> */}
+                <Typography variant="h6" component="div" onClick={fetchMoreRatings} sx={{ marginTop: '30px' }}>
+                    See More Ratings
+                </Typography>
+                <Typography variant="body2" component="div" sx={{ marginTop: '10px', marginBottom: '30px' }}>
+                    Loaded {ratingsSlice.ratings.length} out of {ratingsSlice.databaseSize} results
+                </Typography>
             </section>
         </div>
     );

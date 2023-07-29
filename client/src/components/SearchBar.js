@@ -17,9 +17,10 @@ const SearchBar = () => {
     event.preventDefault();
     if (searchTerm && searchTerm.replace(/\s/g, '').length) {
       getMap(searchTerm).then((res) => {
+        // console.log(res.data.results)
         setResults(res.data.results);
         setShowResults(true);
-      });
+      })
     } else {
       alert('Invalid search, try again');
     }
@@ -43,7 +44,7 @@ const SearchBar = () => {
           Search
         </Button>
       </form>
-      {showResults && (
+
         <div style={{ marginTop: '50px' }}>
           <h2 style={{ textAlign: "left", marginLeft: "100px" }}>All Results For: {searchTerm}</h2>
           {results.map((result) => (
