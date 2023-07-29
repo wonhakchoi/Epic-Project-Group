@@ -4,6 +4,7 @@ import "./Restaurant.css";
 import { useDispatch } from "react-redux";
 import { displayAddToCollection, setRestaurant } from "../../redux/reducers/collectionPopupSlice";
 import { LeaveReviewModal } from "../ratings/LeaveReviewModal";
+import { Typography, Box, TextField, Grid, Button } from '@mui/material';
 
 const Restaurant = ({ restaurant }) => {
     const { name, formatted_address, opening_hours, rating, user_ratings_total } = restaurant;
@@ -40,7 +41,7 @@ const Restaurant = ({ restaurant }) => {
                 Add to Collection
             </button>
 
-            <button onClick={openModal}>Leave Review</button>
+            <Button variant="contained" onClick={openModal}>Leave Review</Button>
             <LeaveReviewModal showReviewModal={showReviewModal} setShowReviewModal={setShowReviewModal} />
         </div>
     );
