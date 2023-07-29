@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import LoadingUsers from "../components/users/LoadingUsers";
-import {baseURL} from "../redux/services/backendURL";
 
 // Page for displaying all the user made collections of restaurants
 export default function Collections() {
@@ -61,12 +60,16 @@ export default function Collections() {
     dispatch(showForm());
   };
 
-  const displayCollections = collections.map((collection) => (
-    <Grid item key={collection._id} xs={12} sm={6} md={4} lg={3}>
-      <CollectionCard collectionId={collection._id} collection={collection} />
-    </Grid>
-  ));
-  //
+const pinnedCollections = collections.filter((collection) => collection.pinned);
+  const allCollections = collections.filter((collection) => !collection.pinned);
+
+  const displayCollections = (collectionList) =>
+    collectionList.map((collection) => (
+      <Grid item key={collection._id} xs={12} sm={6} md={4} lg={3}>
+        <CollectionCard collectionId={collection._id} collection={collection} />
+      </Grid>
+    ));
+
   // if (!loaded) {
   //   return <LoadingUsers />;
   // }
@@ -87,9 +90,39 @@ export default function Collections() {
         My Collections
       </Typography>
 
+      {/* Box for Pinned Collections */}
+      <Typography
+        variant="h5"
+        sx={{
+          marginTop: "20px",
+          marginBottom: "30px",
+          backgroundColor: "#f0f8ff", // Set the background color here
+          padding: "20px",
+          textAlign: "left"
+        }}
+      >
+        Pinned
+
       <Grid container spacing={2}>
-        {displayCollections}
+        {displayCollections(pinnedCollections)}
       </Grid>
+      </Typography>
+      {/* Box for All Collections */}
+      <Typography
+        variant="h5"
+        sx={{
+          marginTop: "20px",
+          backgroundColor: "#f5f5f5", // Set the background color here
+          padding: "20px",
+          textAlign: "left"
+        }}
+      >
+        All
+      {/* </Typography> */}
+      <Grid container spacing={2}>
+        {displayCollections(allCollections)}
+      </Grid>
+      </Typography>
       <Button
         variant="contained"
         onClick={handleAddCollection}

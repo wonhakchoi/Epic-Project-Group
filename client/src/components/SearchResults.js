@@ -5,7 +5,7 @@ const SearchResults = (searchTerm, results) => {
   // Simulated search results data
   return (
     <div>
-      <h2>All Results For: {searchTerm}</h2>
+      <h2 style={{textAlign: "left"}}>All Results For: {searchTerm}</h2>
       {results.map((result) => (
         <Restaurant key={result.id} restaurant={result} />
       ))}

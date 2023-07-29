@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import './SearchBar.css';
-import { getMap } from "../redux/services/mapService"
-import Restaurant from "./restaurants/Restaurant";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { getMap } from '../redux/services/mapService';
+import Restaurant from './restaurants/Restaurant';
 
 const SearchBar = () => {
-  let [results, setResults] = useState([])
-  let [searchTerm, setSearchTerm] = useState('');
-  let [showResults, setShowResults] = useState(false);
+  const [results, setResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showResults, setShowResults] = useState(false);
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
@@ -21,30 +22,34 @@ const SearchBar = () => {
         setShowResults(true);
       })
     } else {
-      alert("invalid search, try again");
+      alert('Invalid search, try again');
     }
   };
 
   return (
-    <div className="search-bar-container">
-      <form className="search-bar" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Search..."
+    <div style={{ margin: '20px' }}>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Search Restaurant..."
+          variant="outlined"
           value={searchTerm}
           onChange={handleInputChange}
-          className="search-input"
+          fullWidth
         />
-        <button type="submit" className="search-button">
+        <Button
+          variant="contained"
+          type="submit"
+          style={{ marginTop: '10px', backgroundColor: '#D19BE8', color: '#000' }}
+        >
           Search
-        </button>
+        </Button>
       </form>
-      {showResults && (
-        <div>
-          <h2>All Results For: {searchTerm}</h2>
-            {results.map((result) => (
-                <Restaurant key={result.place_id} restaurant={result} />
-            ))}
+
+        <div style={{ marginTop: '50px' }}>
+          <h2 style={{ textAlign: "left", marginLeft: "100px" }}>All Results For: {searchTerm}</h2>
+          {results.map((result) => (
+            <Restaurant key={result.place_id} restaurant={result} />
+          ))}
         </div>
       )}
     </div>

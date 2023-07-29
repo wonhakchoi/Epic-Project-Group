@@ -16,6 +16,7 @@ const INITIAL_STATE = {
     formVisible: false,
     newCollectionName: "",
     newCollectionImg: "",
+    newCollectionPin: false,
     getCollections: REQUEST_STATE.IDLE,
     getCollectionDetails: REQUEST_STATE.IDLE,
     getRestaurants: REQUEST_STATE.IDLE,
@@ -41,6 +42,9 @@ const collectionsSlice = createSlice({
         },
         setCollectionImg: (state, action) => {
             state.newCollectionImg = action.payload;
+        },
+        setCollectionPin: (state, action) => {
+            state.newCollectionPin = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -100,6 +104,7 @@ export const {
     showForm,
     hideForm,
     setCollectionName,
-    setCollectionImg
+    setCollectionImg,
+    setCollectionPin,
 } = collectionsSlice.actions;
 export default collectionsSlice.reducer;
