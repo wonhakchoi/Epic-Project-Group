@@ -16,12 +16,10 @@ const SearchBar = () => {
     event.preventDefault();
     if (searchTerm && searchTerm.replace(/\s/g, '').length) {
       getMap(searchTerm).then((res) => {
+        // console.log(res.data.results)
         setResults(res.data.results);
         setShowResults(true);
       })
-      // const result = await getMap(searchTerm);
-      // results = result.data.results;
-      // setShowResults(true);
     } else {
       alert("invalid search, try again");
     }
