@@ -14,6 +14,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import LoadingUsers from "../components/users/LoadingUsers";
 import RedirectLoading from "../components/login/redirectLoading";
+import {baseURL} from "../redux/services/backendURL";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Home = () => {
             }
             try {
                 // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
-                return axios("http://localhost:3001/auth/", {
+                return axios(baseURL + "/auth/", {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
