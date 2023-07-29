@@ -1,13 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {REQUEST_STATE} from "../requestStates";
 import {
-    addNewCollectionAsync,
+    addNewCollectionAsync, deleteRestaurantCollectionAsync,
     getCollectionDetailsAsync,
     getCollectionsAsync,
     getRestaurantsAsync
 } from "../thunks/collectionsThunks";
-
-import {v4 as uuid} from "uuid";
 
 // reducer logic for collections
 
@@ -21,38 +19,16 @@ const INITIAL_STATE = {
     getCollections: REQUEST_STATE.IDLE,
     getCollectionDetails: REQUEST_STATE.IDLE,
     getRestaurants: REQUEST_STATE.IDLE,
-    addCollection: REQUEST_STATE.IDLE
+    addCollection: REQUEST_STATE.IDLE,
+    deleteRestaurant: REQUEST_STATE.IDLE
 }
 
 const collectionsSlice = createSlice({
     name: 'collections',
     initialState: INITIAL_STATE,
     reducers: {
-        addCollection: (state) => {
-            let newCollection = {
-                id: uuid(),
-                name: state.newCollectionName,
-                img: state.newCollectionImg,
-                restaurants: []
-            }
-            state.collections = [...state.collections, newCollection];
-        },
         clickCollection: (state, action) => {
             state.currCollectionDetails = action.payload;
-        },
-        addRestaurantToCollection: (state, action) => {
-            let id = action.payload.collectionId;
-            let currCollection = state.collections.find(element => element.id === id);
-            currCollection.restaurants.push(action.payload.restaurant);
-        },
-        deleteRestaurantFromCollection: (state, action) => {
-            let restaurantId = action.payload.id;
-            let collectionId = state.currCollectionDetails.id;
-            let currCollection = state.collections.find(element => element.id === collectionId);
-            let cIndex = state.collections.indexOf(currCollection)
-            currCollection.restaurants = currCollection.restaurants.filter(element => element.id !== restaurantId);
-            state.collections[cIndex] = currCollection;
-            state.currCollectionDetails = currCollection;
         },
         showForm: (state) => {
             state.formVisible = true;
@@ -108,9 +84,22 @@ const collectionsSlice = createSlice({
             .addCase(addNewCollectionAsync.rejected, (state) => {
                 state.addCollection = REQUEST_STATE.REJECTED;
             })
+            .addCase(deleteRestaurantCollectionAsync.rejected, (state) => {
+                state.deleteRestaurant = REQUEST_STATE.REJECTED;
+            })
+            .addCase(deleteRestaurantCollectionAsync.pending, (state) => {
+                state.deleteRestaurant = REQUEST_STATE.PENDING;
+            })
+            .addCase(deleteRestaurantCollectionAsync.fulfilled, (state) => {
+                state.deleteRestaurant = REQUEST_STATE.FULFILLED;
+            })
     }
 })
 
-export const {addCollection, clickCollection, addRestaurantToCollection, deleteRestaurantFromCollection,
-    showForm, hideForm, setCollectionName, setCollectionImg} = collectionsSlice.actions;
+export const {
+    showForm,
+    hideForm,
+    setCollectionName,
+    setCollectionImg
+} = collectionsSlice.actions;
 export default collectionsSlice.reducer;
