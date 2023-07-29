@@ -6,7 +6,7 @@ import {
   setRestaurant,
 } from "../../redux/reducers/collectionPopupSlice";
 import { LeaveReviewModal } from "../ratings/LeaveReviewModal";
-import { Typography, Box, TextField, Grid, Button } from "@mui/material";
+import { Typography, Box, Button } from "@mui/material";
 
 const Restaurant = ({ restaurant }) => {
   const dispatch = useDispatch();
