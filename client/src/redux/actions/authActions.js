@@ -26,6 +26,7 @@ export const login = (email, password) => {
     console.log("POST login")
     return dispatch => {
         axios
+            // .post('https://localhost:3001/auth/login', { email, password }, { withCredentials: true })
             .post('https://easy-eats-backend-9u5y.onrender.com/auth/login', { email, password }, { withCredentials: true })
             .then(response => {
                 if (response.data.success) {
