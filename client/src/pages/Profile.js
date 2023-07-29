@@ -14,43 +14,43 @@ const Friends = () => {
     const navigate = useNavigate();
     const [cookies, removeCookie] = useCookies([]);
 
-    // useEffect(() => {
-    //     const verifyCookie = async () => {
-    //         console.log("POST auth Profile")
-    //
-    //         if (!cookies.token) {
-    //             navigate("/login");
-    //         }
-    //         try {
-    //             // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
-    //             return axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
-    //             // return axios("http://localhost:3001/auth/", {
-    //                 method: 'POST',
-    //                 mode: 'no-cors',
-    //                 headers: {
-    //                     'Access-Control-Allow-Origin': '*',
-    //                     'Content-Type': 'application/json',
-    //                 },
-    //                 credentials: 'same-origin',
-    //                 withCredentials: true
-    //             }).then(response => {
-    //                 let data = response.data
-    //                 const { status, user } = data;
-    //
-    //                 if (status) {
-    //                     setLoaded(true);
-    //                 } else {
-    //                     setLoaded(true);
-    //                     return (removeCookie("token"), navigate("/login"));
-    //                 }
-    //             })
-    //
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     };
-    //     verifyCookie();
-    // }, [cookies, navigate, removeCookie]);
+    useEffect(() => {
+        const verifyCookie = async () => {
+            console.log("POST auth Profile")
+
+            if (!cookies.token) {
+                navigate("/login");
+            }
+            try {
+                // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
+                return axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
+                // return axios("http://localhost:3001/auth/", {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'same-origin',
+                    withCredentials: true
+                }).then(response => {
+                    let data = response.data
+                    const { status, user } = data;
+
+                    if (status) {
+                        setLoaded(true);
+                    } else {
+                        setLoaded(true);
+                        return (removeCookie("token"), navigate("/login"));
+                    }
+                })
+
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        verifyCookie();
+    }, [cookies, navigate, removeCookie]);
 
 
     return (
