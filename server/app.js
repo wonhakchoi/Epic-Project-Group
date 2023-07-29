@@ -58,7 +58,7 @@ app.set("view engine", "jade");
 
 // app.use(cors());
 // https://stackoverflow.com/questions/19743396/cors-cannot-use-wildcard-in-access-control-allow-origin-when-credentials-flag-i
-app.use(cors({credentials: true, origin: 'https://easy-eats-frontend.onrender.com'}));
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
 app.use(logger("dev"));
 app.use(express.json());
