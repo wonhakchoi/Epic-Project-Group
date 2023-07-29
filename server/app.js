@@ -37,18 +37,18 @@ mongoose
 //     .catch((error) => console.error("MongoDB Connection Error:", error));
 
 // populate db with collection and restaurant data
-clearDatabase()
-    .then(() => {
-        console.log("Database cleared");
-        return generateRestaurants();
-    })
-    .then(() => {
-        console.log("Database populated with restaurants");
-        return generateCauliflowers();
-    })
-    .then(() => {
-        console.log("Database populated with cauliflowers");
-    });
+// clearDatabase()
+//     .then(() => {
+//         console.log("Database cleared");
+//         return generateRestaurants();
+//     })
+//     .then(() => {
+//         console.log("Database populated with restaurants");
+//         return generateCauliflowers();
+//     })
+//     .then(() => {
+//         console.log("Database populated with cauliflowers");
+//     });
 
 const app = express();
 
