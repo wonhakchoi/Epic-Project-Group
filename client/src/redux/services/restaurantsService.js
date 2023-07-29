@@ -1,7 +1,8 @@
 import axios from "axios";
+import {baseURL} from "./backendURL";
 
 const getRestaurants = async () => {
-    const restaurants = await axios.get("http://localhost:3001/restaurants");
+    const restaurants = await axios.get(baseURL + "/restaurants");
     return restaurants;
 };
 

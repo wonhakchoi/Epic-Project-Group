@@ -1,6 +1,7 @@
 import axios from "axios";
+import {baseURL} from "./backendURL";
 
-const baseRatingUrl = "http://localhost:3001/ratings";
+const baseRatingUrl = baseURL + "/ratings";
 
 // gets the next subset of ratings
 const getRatings = async (skipAmount, resultsToGet) => {

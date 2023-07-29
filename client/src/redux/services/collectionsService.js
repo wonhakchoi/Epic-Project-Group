@@ -1,6 +1,7 @@
 import axios from "axios";
+import {baseURL} from "./backendURL";
 
-const baseCollectionsUrl = "http://localhost:3001/collections";
+const baseCollectionsUrl = baseURL + "/collections";
 // requests for collections
 export const getCollections = async () => {
     let data = (await axios.get(baseCollectionsUrl)).data;

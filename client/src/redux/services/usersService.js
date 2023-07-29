@@ -1,6 +1,7 @@
 import axios from "axios";
+import {baseURL} from "./backendURL";
 
-const baseUserUrl = "http://localhost:3001/users";
+const baseUserUrl = baseURL + "/users";
 
 // get users from database
 const getUsers = async () => {
