@@ -1,0 +1,24 @@
+{
+  "name": "easy-eats",
+  "version": "1.0.0",
+  "description": "Easy Eats is for anyone who wants to look for a place to eat. The application will be able to search restaurants, save your favourite restaurants, and view your friends' restaurant lists. The types of data that will store are: friends list, restaurants names that a user and their friends added, personal information, login information, and location. The users will be able to view details such as locations, rating, description, contact information, opening hours, sort by proximity to location, etc. for each restaurant. Some additional functionality we can add or remove based on time constraints include: a recommender system to suggest restaurants based on history similar to Spotify's playlist suggestion, allowing users to post photos of food from restaurants they went to, reviewing system where you can write reviews of restaurants, integration with other social media apps, reading menu items off of photos in Google Maps, and integration of Uber Eats or other delivery apps for pricing and menu and allow users to order.",
+  "main": "index.js",
+  "scripts": {
+    "install-server": "cd server && npm install",
+    "start-server": "cd server && npm run start",
+    "install-client": "cd client && npm install",
+    "build-client": "cd client && npm run build",
+    "start-client": "cd client && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wonhakchoi/Epic-Project-Group.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wonhakchoi/Epic-Project-Group/issues"
+  },
+  "homepage": "https://github.com/wonhakchoi/Epic-Project-Group#readme"
+}

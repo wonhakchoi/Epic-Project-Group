@@ -1,22 +1,22 @@
 import axios from "axios";
+import {baseURL} from "./backendURL";
 
-const baseCollectionsUrl = "http://localhost:3001/collections";
+const baseCollectionsUrl = baseURL + "/collections";
 // requests for collections
 export const getCollections = async () => {
+    console.log("GET collections")
     let data = (await axios.get(baseCollectionsUrl)).data;
-    // console.log(data)
     return data;
 }
 
 export const getCollectionDetails = async (collectionId) => {
     const data = (await axios.get(`${baseCollectionsUrl}/${collectionId}`)).data;
-    // console.log(data)
     return data;
 }
 
 export const getRestaurants = async (collectionId) => {
     const data = (await axios.get(`${baseCollectionsUrl}/${collectionId}/restaurants`)).data;
-    // console.log(data);
+    // console.log(data[0].result);
     return data;
 
 }
@@ -27,9 +27,16 @@ export const addNewCollection = async ({name, img}) => {
             name: name,
             img: img
         })).data
-    console.log(data)
     return data;
 
+}
+
+export const deleteRestaurantCollection = async ({collectionId, restaurantId}) => {
+    await axios.delete(`${baseCollectionsUrl}/${collectionId}/${restaurantId}`)
+}
+
+export const addRestaurantCollection = async ({collectionId, restaurantId}) => {
+    await axios.put(`${baseCollectionsUrl}/${collectionId}/${restaurantId}`)
 }
 
 export default getCollections;

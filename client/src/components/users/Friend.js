@@ -19,16 +19,19 @@ const Friend = ({ id, name, biography, ratedRestaurants }) => {
             </section>
             <section className="rated-restaurants">
                 <b>Rated Restaurants</b>
-                {Object.entries(ratedRestaurants).map(([id, rating]) => {
-                    const restaurant = restaurantsSlice.restaurants.filter((restaurant) => restaurant._id === id)[0];
-                    return (
-                        <div key={id}>
-                            <p className="restaurant-info">
-                                {restaurant.name} ~ {rating}⭐
-                            </p>
-                        </div>
-                    );
-                })}
+                {ratedRestaurants &&
+                    Object.entries(ratedRestaurants).map(([id, rating]) => {
+                        const restaurant = restaurantsSlice.restaurants.filter(
+                            (restaurant) => restaurant._id === id
+                        )[0];
+                        return (
+                            <div key={id}>
+                                <p className="restaurant-info">
+                                    {restaurant.name} ~ {rating}⭐
+                                </p>
+                            </div>
+                        );
+                    })}
             </section>
             <section className="friend-buttons">
                 <button
