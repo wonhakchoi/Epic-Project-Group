@@ -44,6 +44,7 @@ const SearchBar = () => {
       {showResults && (
         <div>
           <h2>All Results For: {searchTerm}</h2>
+          {/* {console.log(results)}; */}
             {results.map((result) => (
                 <Restaurant key={result.place_id} restaurant={result} />
             ))}
