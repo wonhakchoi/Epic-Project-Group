@@ -4,8 +4,7 @@ import { getRatingsAsync } from "../../redux/thunks/ratingsThunks";
 import { REQUEST_STATE } from "../../redux/requestStates";
 import "./DiscoverRatings.css";
 import RatingCard from "./RatingCard";
-import { Typography, Grid, Container } from '@mui/material';
-
+import { Typography, Grid, Container } from "@mui/material";
 
 // Discover page for users to see ratings from other people
 const DiscoverRatings = () => {
@@ -36,7 +35,7 @@ const DiscoverRatings = () => {
 
     return (
         <div id="ratings-container">
-            <Typography variant="h2" sx={{ marginTop: '30px' }}>
+            <Typography variant="h2" sx={{ marginTop: "30px" }}>
                 Reviews
             </Typography>
             {ratingsSlice.ratings.map((rating) => (
@@ -62,10 +61,16 @@ const DiscoverRatings = () => {
                 {/* <h5>
                     Loaded {ratingsSlice.ratings.length} out of {ratingsSlice.databaseSize} results
                 </h5> */}
-                <Typography variant="h6" component="div" onClick={fetchMoreRatings} sx={{ marginTop: '30px' }}>
+                <Typography
+                    className="load-more"
+                    variant="h6"
+                    component="div"
+                    onClick={fetchMoreRatings}
+                    sx={{ marginTop: "30px" }}
+                >
                     See More Ratings
                 </Typography>
-                <Typography variant="body2" component="div" sx={{ marginTop: '10px', marginBottom: '30px' }}>
+                <Typography variant="body2" component="div" sx={{ marginTop: "10px", marginBottom: "30px" }}>
                     Loaded {ratingsSlice.ratings.length} out of {ratingsSlice.databaseSize} results
                 </Typography>
             </section>
