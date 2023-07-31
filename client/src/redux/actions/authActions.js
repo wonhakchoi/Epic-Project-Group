@@ -68,7 +68,7 @@ export const verifySession = (cookies) => {
             const { status, user } = data;
 
             if (status) {
-                console.log(user);
+                // console.log(user);
                 dispatch({ type: 'LOGIN_SUCCESS', payload: user });
                 // return <div>Hello {user}</div>
             } else {
@@ -92,3 +92,7 @@ export const setMessage = (message) => ({
 export const clearMessage = () => ({
     type: 'CLEAR_MESSAGE',
 });
+
+export const verifyCookie = () => ({
+
+})

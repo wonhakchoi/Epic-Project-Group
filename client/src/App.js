@@ -18,10 +18,10 @@ import { useDispatch } from "react-redux";
 function App() {
     const dispatch = useDispatch();
 
-    // get collections on app load
-    useEffect(() => {
-        dispatch(getCollectionsAsync());
-    }, [dispatch]);
+    // // get collections on app load
+    // useEffect(() => {
+    //     dispatch(getCollectionsAsync());
+    // }, [dispatch]);
 
     return (
         <div className="App">
