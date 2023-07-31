@@ -47,7 +47,7 @@ const LoginForm = () => {
 
     useEffect(() => {
         return () => {
-            dispatch(verifySession(cookies));
+            // dispatch(verifySession(cookies));
             // Clear the error message when the component unmounts
             dispatch(clearMessage());
             setLoaded(true);

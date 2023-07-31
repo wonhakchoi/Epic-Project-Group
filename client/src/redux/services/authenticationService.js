@@ -1,11 +1,13 @@
 import axios from "axios";
 
-// const baseCollectionsUrl = "https://easy-eats-backend-9u5y.onrender.com/collections";
-const baseAuthUrl = "http://localhost:3001/auth";
+// const baseAuthUrl = "http://localhost:3001/auth";
+const baseAuthUrl = "https://easy-eats-backend-local.onrender.com/auth";
+
+
 
 // requests for auth
 export const postAuth = async () => {
-    let response = await axios("http://localhost:3001/auth/", {
+    let response = await axios(`${baseAuthUrl}`, {
         method: 'POST',
         mode: 'no-cors',
         headers: {

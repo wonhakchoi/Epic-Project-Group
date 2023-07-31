@@ -85,6 +85,7 @@ const Home = () => {
         dispatch(postAuthAsync())
             .then((data) => {
                 const s = data.payload.status;
+                console.log("post auth data: \n" + JSON.stringify(data.payload))
                 if (s) {
                     setState(STATES.COMPLETE);
                 } else {
