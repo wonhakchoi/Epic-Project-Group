@@ -45,19 +45,9 @@ const DiscoverRatings = () => {
                     comment={rating.comments ? rating.comments : ""}
                     date={rating.updatedAt}
                 />
-                // <div className="rating" key={rating._id}>
-                //     <strong>Rating:</strong> {rating.score} - <strong>Comment:</strong> {rating.comments}
-                //     <strong>{rating.userID}</strong>
-                // </div>
             ))}
             {ratingsSlice.getRatings === REQUEST_STATE.PENDING && <div>Loading...</div>}
             <section className="ratings-navigation">
-                {/* <h3 className="load-more" onClick={fetchMoreRatings}>
-                    See More Ratings
-                </h3> */}
-                {/* <h5>
-                    Loaded {ratingsSlice.ratings.length} out of {ratingsSlice.databaseSize} results
-                </h5> */}
                 <Typography
                     className="load-more"
                     variant="h6"
