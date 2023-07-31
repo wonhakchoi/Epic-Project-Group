@@ -28,7 +28,6 @@ router.get("/friendRatings/:skip/:limit", async (req, res, next) => {
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit);
-        console.log(ratingSection);
         const count = await Rating.countDocuments({ userID: { $in: friendIDs } });
         res.status(200).send({ ratings: ratingSection, databaseSize: count });
     } catch (error) {

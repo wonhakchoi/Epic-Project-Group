@@ -16,7 +16,15 @@ const FriendRequests = () => {
                 <div className="requests">
                     {outRequestsSlice.outgoingRequests.map((id) => {
                         const user = usersSlice.users.filter((user) => user._id === id)[0];
-                        return <OutgoingRequest key={id} id={id} name={user.firstName} biography={user.biography} />;
+                        return (
+                            <OutgoingRequest
+                                key={id}
+                                id={id}
+                                icon={user.icon}
+                                name={user.firstName}
+                                biography={user.biography}
+                            />
+                        );
                     })}
                 </div>
             </section>
@@ -25,7 +33,15 @@ const FriendRequests = () => {
                 <div className="requests">
                     {inRequestsSlice.incomingRequests.map((id) => {
                         const user = usersSlice.users.filter((user) => user._id === id)[0];
-                        return <IncomingRequest key={id} id={id} name={user.firstName} biography={user.biography} />;
+                        return (
+                            <IncomingRequest
+                                key={id}
+                                id={id}
+                                icon={user.icon}
+                                name={user.firstName}
+                                biography={user.biography}
+                            />
+                        );
                     })}
                 </div>
             </section>
