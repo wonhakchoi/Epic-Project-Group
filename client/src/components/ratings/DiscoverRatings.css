@@ -4,5 +4,12 @@
 }
 
 .load-more {
+    color: purple;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.load-more:hover {
+    color: black;
+    transition: all 0.3s ease-in-out;
 }

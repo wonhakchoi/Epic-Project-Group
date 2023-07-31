@@ -4,7 +4,7 @@ import { unfriendAsync } from "../../redux/thunks/usersThunks";
 import "./Friend.css";
 import "./Buttons.css";
 
-const Friend = ({ id, name, biography, ratedRestaurants }) => {
+const Friend = ({ id, icon, name, biography, ratedRestaurants }) => {
     const icons = useSelector((state) => state.users.iconLocations);
     const restaurantsSlice = useSelector((state) => state.restaurants.allRestaurants);
     const authenticationSlice = useSelector((state) => state.authentication.authentication);
@@ -13,7 +13,7 @@ const Friend = ({ id, name, biography, ratedRestaurants }) => {
     return (
         <div className="friend-container">
             <section className="friend-header">
-                <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
+                <img className="user-icon" src={icons[icon]} alt={name} />
                 <h3>{name}</h3>
                 <p className="biography">{biography}</p>
             </section>

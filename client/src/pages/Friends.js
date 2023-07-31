@@ -3,9 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import { Routes, Route } from "react-router-dom";
+import FriendNavbar from "../components/users/FriendNavbar";
 import FriendsList from "../components/users/FriendsList";
 import FriendSearch from "../components/users/FriendSearch";
 import FriendRequests from "../components/users/FriendRequests";
+import FriendRatings from "../components/ratings/FriendRatings";
 import LoadingUsers from "../components/users/LoadingUsers";
 import { REQUEST_STATE } from "../redux/requestStates";
 import { getUsersAsync } from "../redux/thunks/usersThunks";
@@ -36,7 +39,6 @@ const Friends = () => {
         ) {
             return;
         }
-        // console.log();
         const signedInUser = usersSlice.users.filter((user) => user._id === authenticationSlice.user)[0];
         console.log("signedInUser");
         console.log(signedInUser);
@@ -61,26 +63,25 @@ const Friends = () => {
                 // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
                 // return axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
                 return axios("http://localhost:3001/auth/", {
-                    method: 'POST',
-                    mode: 'no-cors',
+                    method: "POST",
+                    mode: "no-cors",
                     headers: {
-                        'Access-Control-Allow-Origin': '*',
-                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "application/json",
                     },
-                    credentials: 'same-origin',
-                    withCredentials: true
-                }).then(response => {
-                    let data = response.data
+                    credentials: "same-origin",
+                    withCredentials: true,
+                }).then((response) => {
+                    let data = response.data;
                     const { status, user } = data;
 
                     if (status) {
                         setLoaded(true);
                     } else {
                         setLoaded(true);
-                        return (removeCookie("token"), navigate("/login"));
+                        return removeCookie("token"), navigate("/login");
                     }
-                })
-
+                });
             } catch (err) {
                 console.log(err);
             }
@@ -94,9 +95,28 @@ const Friends = () => {
                 <LoadingUsers />
             ) : (
                 <div>
-                    <FriendRequests />
-                    <FriendSearch />
-                    <FriendsList />
+                    <FriendNavbar />
+                    <Routes>
+                        <Route
+                            exact
+                            path="/"
+                            element={
+                                <section>
+                                    <FriendsList />
+                                    <FriendRatings />
+                                </section>
+                            }
+                        ></Route>
+                        <Route
+                            path="/requests"
+                            element={
+                                <section>
+                                    <FriendRequests />
+                                    <FriendSearch />
+                                </section>
+                            }
+                        ></Route>
+                    </Routes>
                 </div>
             )}
         </div>

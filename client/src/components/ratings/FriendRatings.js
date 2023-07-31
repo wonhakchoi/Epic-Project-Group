@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getRatingsAsync } from "../../redux/thunks/ratingsThunks";
+import { getFriendRatingsAsync } from "../../redux/thunks/ratingsThunks";
 import { REQUEST_STATE } from "../../redux/requestStates";
-import "./DiscoverRatings.css";
 import RatingCard from "./RatingCard";
-import { Typography, Grid, Container } from "@mui/material";
+import { Typography } from "@mui/material";
+import "./DiscoverRatings.css";
 
-// Discover page for users to see ratings from other people
-const DiscoverRatings = () => {
-    const ratingsSlice = useSelector((state) => state.ratings.allRatings);
+const FriendRatings = () => {
+    const ratingsSlice = useSelector((state) => state.ratings.friendRatings);
+    const friendsSlice = useSelector((state) => state.users.userFriends);
+    const usersSlice = useSelector((state) => state.users.allUsers);
     const dispatch = useDispatch();
 
     const resultsPerPage = 4;
@@ -18,7 +19,14 @@ const DiscoverRatings = () => {
     useEffect(() => {
         if (shouldFetch.current) {
             shouldFetch.current = false;
-            dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
+            console.log(friendsSlice.friends);
+            dispatch(
+                getFriendRatingsAsync({
+                    skipAmount: ratingsSlice.ratings.length,
+                    resultsToGet: resultsPerPage,
+                    friendIDs: friendsSlice.friends,
+                })
+            );
         }
     }, []);
 
@@ -27,14 +35,18 @@ const DiscoverRatings = () => {
         if (ratingsSlice.ratings.length >= ratingsSlice.databaseSize) {
             return;
         }
-        dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
+        dispatch(
+            getFriendRatingsAsync({
+                skipAmount: ratingsSlice.ratings.length,
+                resultsToGet: resultsPerPage,
+                friendIDs: friendsSlice.friends,
+            })
+        );
     };
 
     return (
         <div id="ratings-container">
-            <Typography variant="h2" sx={{ marginTop: "30px" }}>
-                Reviews
-            </Typography>
+            <h2>Ratings from Your Friends</h2>
             {ratingsSlice.ratings.map((rating) => (
                 <RatingCard
                     key={rating._id}
@@ -65,7 +77,4 @@ const DiscoverRatings = () => {
     );
 };
 
-export default DiscoverRatings;
-
-// https://stackoverflow.com/questions/73002902/api-getting-called-twice-in-react#:~:text=The%20cause%20of%20the%20issue,which%20call%20the%20API%20twice.
-// shouldFetch ref hook called due to React StrictMode
+export default FriendRatings;
