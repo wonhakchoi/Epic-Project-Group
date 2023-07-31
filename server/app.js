@@ -56,10 +56,6 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
-// https://stackoverflow.com/questions/75842913/cookie-not-being-stored-in-browser-even-after-logging-in-react-nodejs-app-deploy
-app.set("trust proxy", 1);
-
-
 // app.use(cors());
 // https://stackoverflow.com/questions/19743396/cors-cannot-use-wildcard-in-access-control-allow-origin-when-credentials-flag-i
 app.use(cors({credentials: true, origin: "http://localhost:3000"}));
