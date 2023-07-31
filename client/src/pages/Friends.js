@@ -11,7 +11,6 @@ import { REQUEST_STATE } from "../redux/requestStates";
 import { getUsersAsync } from "../redux/thunks/usersThunks";
 import { getRestaurantsAsync } from "../redux/thunks/restaurantsThunks";
 import { setFriendsLists } from "../redux/actions/userActions";
-import {baseURL} from "../redux/services/backendURL";
 
 const Friends = () => {
     const usersSlice = useSelector((state) => state.users.allUsers);
@@ -55,13 +54,13 @@ const Friends = () => {
     useEffect(() => {
         console.log("POST auth Friends")
         const verifyCookie = async () => {
-            // if (!cookies.token) {
-            //     navigate("/login");
-            // }
+            if (!cookies.token) {
+                navigate("/login");
+            }
             try {
                 // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
-                return axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
-                // return axios("http://localhost:3001/auth/", {
+                // return axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
+                return axios("http://localhost:3001/auth/", {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
@@ -74,12 +73,12 @@ const Friends = () => {
                     let data = response.data
                     const { status, user } = data;
 
-                    // if (status) {
-                    //     setLoaded(true);
-                    // } else {
-                    //     setLoaded(true);
-                    //     return (removeCookie("token"), navigate("/login"));
-                    // }
+                    if (status) {
+                        setLoaded(true);
+                    } else {
+                        setLoaded(true);
+                        return (removeCookie("token"), navigate("/login"));
+                    }
                 })
 
             } catch (err) {
@@ -91,15 +90,15 @@ const Friends = () => {
 
     return (
         <div className="friends-container">
-            {/*{!loaded ? (*/}
-            {/*    <LoadingUsers />*/}
-            {/*) : (*/}
-            {/*    <div>*/}
+            {!loaded ? (
+                <LoadingUsers />
+            ) : (
+                <div>
                     <FriendRequests />
                     <FriendSearch />
                     <FriendsList />
-            {/*    </div>*/}
-            {/*)}*/}
+                </div>
+            )}
         </div>
     );
 };
