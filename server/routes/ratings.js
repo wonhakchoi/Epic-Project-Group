@@ -4,12 +4,32 @@ var mongoose = require("mongoose");
 var { Rating } = require("../database/models/ratingModel");
 
 /* GET all ratings, sorted from latest to earliest creation */
-router.get("/:skip/:limit", async (req, res, next) => {
+router.get("/allRatings/:skip/:limit", async (req, res, next) => {
     const { skip, limit } = req.params;
     try {
-        // const ratingSection = await Rating.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit);
-        const ratingSection = await Rating.find({}).sort({ _id: -1 }).skip(skip).limit(limit);
+        const ratingSection = await Rating.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit);
         const count = await Rating.countDocuments();
+        res.status(200).send({ ratings: ratingSection, databaseSize: count });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
+});
+
+/* GET only ratings of friends, sorted from latest to earliest creation */
+router.get("/friendRatings/:skip/:limit", async (req, res, next) => {
+    const { skip, limit } = req.params;
+    const friendIDs = req.query.friendIDs;
+
+    console.log(friendIDs);
+
+    try {
+        const ratingSection = await Rating.find({ userID: { $in: friendIDs } })
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+        console.log(ratingSection);
+        const count = await Rating.countDocuments({ userID: { $in: friendIDs } });
         res.status(200).send({ ratings: ratingSection, databaseSize: count });
     } catch (error) {
         console.error(error);
@@ -71,28 +91,7 @@ router.post("/:ratingID", async (req, res, next) => {
             {
                 $set: { score: score },
                 $set: { comments: comments },
-            },
-            { new: true, upsert: false }
-        );
-        const updatedRating = await updatedRatingQuery.exec();
-        res.status(201).json(updatedRating);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Server error");
-    }
-});
-
-/* UPDATE existing rating */
-router.put("/:ratingID", async (req, res, next) => {
-    let { ratingID } = req.params;
-    ratingObjectID = new mongoose.Types.ObjectId(ratingID.toString());
-    let { score, comments } = req.body;
-    try {
-        const updatedRatingQuery = Rating.findOneAndUpdate(
-            { _id: ratingObjectID },
-            {
-                $set: { score: score },
-                $set: { comments: comments },
+                $set: { createdAt: new Date() },
             },
             { new: true, upsert: false }
         );

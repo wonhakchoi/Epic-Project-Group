@@ -8,6 +8,7 @@ import FriendNavbar from "../components/users/FriendNavbar";
 import FriendsList from "../components/users/FriendsList";
 import FriendSearch from "../components/users/FriendSearch";
 import FriendRequests from "../components/users/FriendRequests";
+import FriendRatings from "../components/ratings/FriendRatings";
 import LoadingUsers from "../components/users/LoadingUsers";
 import { REQUEST_STATE } from "../redux/requestStates";
 import { getUsersAsync } from "../redux/thunks/usersThunks";
@@ -100,6 +101,7 @@ const Friends = () => {
                             element={
                                 <section>
                                     <FriendsList />
+                                    <FriendRatings />
                                 </section>
                             }
                         ></Route>

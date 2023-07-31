@@ -5,6 +5,13 @@ export const getRatingsAsync = createAsyncThunk("ratings/getNextRatings", async 
     return await RatingService.getRatings(skipAmount, resultsToGet);
 });
 
+export const getFriendRatingsAsync = createAsyncThunk(
+    "ratings/getNextFriendRatings",
+    async ({ skipAmount, resultsToGet, friendIDs }) => {
+        return await RatingService.getFriendRatings(skipAmount, resultsToGet, friendIDs);
+    }
+);
+
 export const getUserRatingsAsync = createAsyncThunk("ratings/getUserRatings", async ({ userID }) => {
     return await RatingService.getUserRatings(userID);
 });
@@ -13,9 +20,12 @@ export const getRestaurantRatingsAsync = createAsyncThunk("ratings/getRestaurant
     return await RatingService.getRestaurantRatings(restaurantID);
 });
 
-export const postUserRatingsAsync = createAsyncThunk("ratings/postUserRatings", async ({ userID, restaurantID, body }) => {
-    return await RatingService.postUserRatings(userID, restaurantID, body);
-});
+export const postUserRatingsAsync = createAsyncThunk(
+    "ratings/postUserRatings",
+    async ({ userID, restaurantID, body }) => {
+        return await RatingService.postUserRatings(userID, restaurantID, body);
+    }
+);
 
 export const updateRatingsAsync = createAsyncThunk("ratings/updateRatings", async ({ ratingID, body }) => {
     return await RatingService.updateRatings(ratingID, body);

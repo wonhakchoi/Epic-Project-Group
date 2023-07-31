@@ -4,7 +4,16 @@ const baseRatingUrl = "http://localhost:3001/ratings";
 
 // gets the next subset of ratings
 const getRatings = async (skipAmount, resultsToGet) => {
-    const response = await axios.get(`${baseRatingUrl}/${skipAmount}/${resultsToGet}`);
+    const response = await axios.get(`${baseRatingUrl}/allRatings/${skipAmount}/${resultsToGet}`);
+    return response;
+};
+
+// gets the next subset of friend ratings
+const getFriendRatings = async (skipAmount, resultsToGet, friendIDs) => {
+    const response = await axios.get(`${baseRatingUrl}/friendRatings/${skipAmount}/${resultsToGet}`, {
+        params: { friendIDs: friendIDs },
+    });
+    console.log(friendIDs);
     return response;
 };
 
@@ -38,9 +47,9 @@ const deleteRatings = async (ratingID) => {
     return deletedRating;
 };
 
-
 const RatingService = {
     getRatings,
+    getFriendRatings,
     getUserRatings,
     getRestaurantRatings,
     postUserRatings,
