@@ -77,9 +77,9 @@ const LoginForm = () => {
         // dispatch(setMessage());
     };
 
-    if (!loaded) {
-        return <LoadingUsers/>;
-    }
+    // if (!loaded) {
+    //     return <LoadingUsers/>;
+    // }
 
     if (isLoggedIn) {
         return (
