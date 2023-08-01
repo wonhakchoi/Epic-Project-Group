@@ -46,14 +46,14 @@ const LoginForm = () => {
 
     const [cookies, setCookie] = useCookies(['token']);
 
-    useEffect(() => {
-        return () => {
-            // dispatch(verifySession(cookies));
-            // Clear the error message when the component unmounts
-            dispatch(clearMessage());
-            setLoaded(true);
-        };
-    }, [dispatch]);
+    // useEffect(() => {
+    //     return () => {
+    //         // dispatch(verifySession(cookies));
+    //         // Clear the error message when the component unmounts
+    //         dispatch(clearMessage());
+    //         setLoaded(true);
+    //     };
+    // }, [dispatch]);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -74,7 +74,7 @@ const LoginForm = () => {
             })
         dispatch(login(email, password))
 
-        dispatch(setMessage());
+        // dispatch(setMessage());
     };
 
     if (!loaded) {
