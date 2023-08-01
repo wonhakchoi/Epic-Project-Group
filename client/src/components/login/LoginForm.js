@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { login, setMessage, clearMessage, verifySession } from '../../redux/actions/authActions';
-import { useCookies } from "react-cookie";
+import React, {useState, useEffect} from 'react';
+import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from 'react-redux';
+import {login, setMessage, clearMessage, verifySession} from '../../redux/actions/authActions';
+import {useCookies} from "react-cookie";
 import LoadingUsers from '../users/LoadingUsers';
 
 import Avatar from '@mui/material/Avatar';
@@ -16,8 +16,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import RestaurantMenuOutlinedIcon from '@mui/icons-material/RestaurantMenuOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Alert } from '@mui/material';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {Alert} from '@mui/material';
+import {loginAsync} from "../../redux/thunks/authenticationThunks";
 
 // resource used: https://mui.com/material-ui/getting-started/templates/
 
@@ -37,13 +38,13 @@ function Copyright(props) {
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { error, user, isLoggedIn } = useSelector((state) => state.authentication.authentication);
+    const {error, user, isLoggedIn} = useSelector((state) => state.authentication.authentication);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [loaded, setLoaded] = useState(false);
 
-    const [cookies, removeCookie] = useCookies([]);
+    const [cookies, setCookie] = useCookies(['token']);
 
     useEffect(() => {
         return () => {
@@ -65,12 +66,19 @@ const LoginForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Dispatch login action with email and password
-        dispatch(login(email, password));
+        dispatch(loginAsync({email: email, password: password}))
+            .then((data) => {
+                let token = data.payload.token;
+                console.log("token: " + token);
+                setCookie('token', token);
+            })
+       dispatch(login(email, password))
+
         dispatch(setMessage());
     };
 
     if (!loaded) {
-        return <LoadingUsers />;
+        return <LoadingUsers/>;
     }
 
     if (isLoggedIn) {
@@ -83,17 +91,17 @@ const LoginForm = () => {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'success.main' }}>
-                    <RestaurantMenuOutlinedIcon />
+                <Avatar sx={{m: 1, bgcolor: 'success.main'}}>
+                    <RestaurantMenuOutlinedIcon/>
                 </Avatar>
 
                 <Alert
                     action={
-                        <Button href="/" color="inherit" size="small" >
+                        <Button href="/" color="inherit" size="small">
                             HOME
                         </Button>
                     }
-                    sx={{ mt: 4 }}
+                    sx={{mt: 4}}
                 >
                     You have logged in successfully! Go to home page.
                 </Alert>
@@ -107,7 +115,7 @@ const LoginForm = () => {
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
-                <CssBaseline />
+                <CssBaseline/>
                 <Box
                     sx={{
                         marginTop: 8,
@@ -116,15 +124,15 @@ const LoginForm = () => {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'success.main' }}>
+                    <Avatar sx={{m: 1, bgcolor: 'success.main'}}>
                         {/* <LockOutlinedIcon /> */}
-                        <RestaurantMenuOutlinedIcon />
+                        <RestaurantMenuOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Log in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                        <Grid item xs={12} >
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+                        <Grid item xs={12}>
                             {error && <Alert severity="error">{error}</Alert>}
                         </Grid>
                         <TextField
@@ -156,10 +164,10 @@ const LoginForm = () => {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{mt: 3, mb: 2}}
                         >
                             Log In
-                        </Button >
+                        </Button>
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
@@ -174,7 +182,7 @@ const LoginForm = () => {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
+                <Copyright sx={{mt: 8, mb: 4}}/>
             </Container>
         </ThemeProvider>
     );

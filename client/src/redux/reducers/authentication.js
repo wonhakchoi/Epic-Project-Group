@@ -2,6 +2,7 @@ const initialState = {
     user: null,
     error: null,
     isLoggedIn: false,
+    // token: null
 };
 
 const authentication = (state = initialState, action) => {
@@ -25,6 +26,7 @@ const authentication = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload._id,
+                // token: action.payload.token,
                 error: null,
                 isLoggedIn: true,
             };

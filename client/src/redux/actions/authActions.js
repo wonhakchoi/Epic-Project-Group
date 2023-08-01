@@ -34,7 +34,10 @@ export const login = (email, password) => {
             .then(response => {
                 if (response.data.success) {
                     let userID = response.data.user._id;
-                    dispatch({ type: 'LOGIN_SUCCESS', payload: userID });
+                    let token = response.data.token;
+                    // dispatch({ type: 'LOGIN_SUCCESS', payload: {_id: userID, token: token}});
+                    dispatch({ type: 'LOGIN_SUCCESS', payload: userID});
+                    console.log('post token: ' + token)
                 } else {
                     dispatch({ type: 'SET_MESSAGE', payload: response.data.message });
                 }

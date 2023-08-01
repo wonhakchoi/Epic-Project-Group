@@ -84,12 +84,10 @@ const Home = () => {
         // verifyCookie();
         dispatch(postAuthAsync())
             .then((data) => {
-                const token = data.payload.token;
                 const s = data.payload.status;
                 console.log("post auth data: \n" + JSON.stringify(data.payload))
                 if (s) {
                     setState(STATES.COMPLETE);
-                    setCookie('token', token);
                 } else {
                     return (setCookie('token', null), navigate("/login"));
                 }
