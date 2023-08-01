@@ -2,7 +2,7 @@ import axios from "axios";
 
 // const baseAuthUrl = "http://localhost:3001/auth";
 const baseAuthUrl = "https://easy-eats-backend-local.onrender.com/auth";
-
+// const baseAuthUrl = "https://easy-eats-backend-9u5y.onrender.com/auth"
 
 // requests for auth
 export const postAuth = async (token) => {
@@ -36,7 +36,7 @@ export const doLogin = async ({email, password}) => {
 export const doSignup = async ({email, password, firstName, lastName}) => {
     let response = await axios
         // .post('https://easy-eats-backend-9u5y.onrender.com/auth/signup', { email, password, firstName, lastName }, { withCredentials: true })
-        .post('https://easy-eats-backend-local.onrender.com/auth/signup', {
+        .post(`${baseAuthUrl}/signup`, {
             email,
             password,
             firstName,
