@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // const baseRatingUrl = "http://localhost:3001/ratings";
-// const baseRatingUrl = "https://easy-eats-backend-9u5y.onrender.com/ratings";
-const baseRatingUrl = "https://easy-eats-backend-local.onrender.com/ratings";
+const baseRatingUrl = "https://easy-eats-backend-9u5y.onrender.com/ratings";
+// const baseRatingUrl = "https://easy-eats-backend-local.onrender.com/ratings";
 
 // gets the next subset of ratings
 const getRatings = async (skipAmount, resultsToGet) => {

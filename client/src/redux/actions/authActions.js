@@ -4,8 +4,8 @@ export const signup = (email, password, firstName, lastName) => {
     console.log("POST signup")
     return dispatch => {
         axios
-            // .post('https://easy-eats-backend-9u5y.onrender.com/auth/signup', { email, password, firstName, lastName }, { withCredentials: true })
-            .post('https://easy-eats-backend-local.onrender.com/auth/signup', { email, password, firstName, lastName }, { withCredentials: true })
+            .post('https://easy-eats-backend-9u5y.onrender.com/auth/signup', { email, password, firstName, lastName }, { withCredentials: true })
+            // .post('https://easy-eats-backend-local.onrender.com/auth/signup', { email, password, firstName, lastName }, { withCredentials: true })
             // .post('http://localhost:3001/auth/signup', { email, password, firstName, lastName }, { withCredentials: true })
             .then(response => {
                 if (response.data.success) {
@@ -29,8 +29,8 @@ export const login = (email, password) => {
     return dispatch => {
         axios
             // .post('http://localhost:3001/auth/login', { email, password }, { withCredentials: true })
-            .post('https://easy-eats-backend-local.onrender.com/auth/login', { email, password }, { withCredentials: true })
-            // .post('https://easy-eats-backend-9u5y.onrender.com/auth/login', { email, password }, { withCredentials: true })
+            // .post('https://easy-eats-backend-local.onrender.com/auth/login', { email, password }, { withCredentials: true })
+            .post('https://easy-eats-backend-9u5y.onrender.com/auth/login', { email, password }, { withCredentials: true })
             .then(response => {
                 if (response.data.success) {
                     let userID = response.data.user._id;
@@ -57,8 +57,8 @@ export const verifySession = (cookies) => {
         }
 
         // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
-        // axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
-        axios("https://easy-eats-backend-local.onrender.com/auth/", {
+        axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
+        // axios("https://easy-eats-backend-local.onrender.com/auth/", {
         // axios("http://localhost:3001/auth/", {
             method: 'POST',
             mode: 'no-cors',

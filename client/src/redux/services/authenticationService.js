@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // const baseAuthUrl = "http://localhost:3001/auth";
-const baseAuthUrl = "https://easy-eats-backend-local.onrender.com/auth";
-// const baseAuthUrl = "https://easy-eats-backend-9u5y.onrender.com/auth"
+// const baseAuthUrl = "https://easy-eats-backend-local.onrender.com/auth";
+const baseAuthUrl = "https://easy-eats-backend-9u5y.onrender.com/auth";
 
 // requests for auth
 export const postAuth = async (token) => {
