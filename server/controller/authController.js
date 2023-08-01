@@ -73,7 +73,7 @@ module.exports.Login = async (req, res, next) => {
         });
         console.log("authController.js");
         console.log(user);
-        res.status(201).json({ message: "User logged in successfully", success: true, user, token: token});
+        res.status(201).json({ message: "User logged in successfully", success: true, user,  token: token});
         next()
     } catch (error) {
         console.error(error);
