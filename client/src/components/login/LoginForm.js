@@ -72,7 +72,7 @@ const LoginForm = () => {
                 console.log("token: " + token);
                 setCookie('token', token);
             })
-       dispatch(login(email, password))
+        dispatch(login(email, password))
 
         dispatch(setMessage());
     };
@@ -110,10 +110,10 @@ const LoginForm = () => {
         )
     }
 
-    // const defaultTheme = createTheme();
+    const defaultTheme = createTheme();
 
     return (
-        // <ThemeProvider theme={defaultTheme}>
+        <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
                 <Box
@@ -184,7 +184,7 @@ const LoginForm = () => {
                 </Box>
                 <Copyright sx={{mt: 8, mb: 4}}/>
             </Container>
-        // </ThemeProvider>
+        </ThemeProvider>
     );
 
     //   return (
