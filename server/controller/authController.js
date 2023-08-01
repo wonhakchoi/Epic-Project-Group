@@ -21,7 +21,7 @@ module.exports.Signup = async (req, res, next) => {
                 .status(401)
                 .json({
                     message: 'This email is already in use! Log in or sign up with a new email.'
-                });;
+                })
         }
 
         const user = await User.create({ email, password, firstName, lastName, createdAt });
@@ -73,7 +73,7 @@ module.exports.Login = async (req, res, next) => {
         });
         console.log("authController.js");
         console.log(user);
-        res.status(201).json({ message: "User logged in successfully", success: true, user });
+        res.status(201).json({ message: "User logged in successfully", success: true, user, token: token});
         next()
     } catch (error) {
         console.error(error);

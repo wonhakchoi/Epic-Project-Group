@@ -18,7 +18,7 @@ import {postAuthAsync} from "../redux/thunks/authenticationThunks";
 
 const Home = () => {
     const navigate = useNavigate();
-    const [cookies, removeCookie] = useCookies([]);
+    const [cookies, setCookie] = useCookies(['token']);
 
     const [username, setUserName] = useState("");
 
@@ -84,15 +84,17 @@ const Home = () => {
         // verifyCookie();
         dispatch(postAuthAsync())
             .then((data) => {
+                const token = data.payload.token;
                 const s = data.payload.status;
                 console.log("post auth data: \n" + JSON.stringify(data.payload))
                 if (s) {
                     setState(STATES.COMPLETE);
+                    setCookie('token', token);
                 } else {
-                    return (removeCookie("token"), navigate("/login"));
+                    return (setCookie('token', null), navigate("/login"));
                 }
             })
-    }, [cookies, navigate, removeCookie]);
+    }, [cookies, navigate, setCookie]);
 
 
     const settings = {
@@ -136,7 +138,7 @@ const Home = () => {
         marginTop: "10px",
     };
 
-    if (state == STATES.LOADING) {
+    if (state === STATES.LOADING) {
         return (
             <LoadingUsers/>
         );

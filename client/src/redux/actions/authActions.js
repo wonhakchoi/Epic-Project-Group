@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const url = "https://easy-eats-backend-local.onrender.com/auth"
-
 export const signup = (email, password, firstName, lastName) => {
     console.log("POST signup")
     return dispatch => {
@@ -68,7 +66,7 @@ export const verifySession = (cookies) => {
             credentials: 'same-origin',
             withCredentials: true
         }).then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             let data = response.data
             const { status, user } = data;
 
