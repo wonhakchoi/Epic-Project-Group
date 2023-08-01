@@ -3,8 +3,8 @@ import {doLogin, doSignup, postAuth} from "../services/authenticationService";
 
 export const postAuthAsync = createAsyncThunk(
     'authentication/postAuth',
-    async () => {
-        return await postAuth();
+    async (token) => {
+        return await postAuth(token);
     }
 )
 

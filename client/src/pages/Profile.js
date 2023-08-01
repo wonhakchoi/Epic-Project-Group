@@ -52,7 +52,7 @@ const Friends = () => {
         //     }
         // };
         // verifyCookie();
-        dispatch(postAuthAsync())
+        dispatch(postAuthAsync(cookies.token))
             .then((data) => {
                 const s = data.payload.status;
                 if (s) {

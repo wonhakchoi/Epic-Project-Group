@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from "react-cookie";
 import { verifySession } from '../redux/actions/authActions';
+import {postAuthAsync} from "../redux/thunks/authenticationThunks";
 
 export default function ButtonAppBar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -32,6 +33,7 @@ export default function ButtonAppBar() {
     return () => {
       dispatch(verifySession(cookies));
     };
+    // dispatch(postAuthAsync(cookies.token));
   }, [dispatch]);
 
   const toggleDrawer = (open) => () => {
@@ -44,7 +46,7 @@ export default function ButtonAppBar() {
 
   const handleLogout = () => {
     setIsDrawerOpen(false);
-    removeCookie("token");
+    removeCookie("token", null);
     navigate("/signup");
   };
 

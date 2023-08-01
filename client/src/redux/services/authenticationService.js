@@ -5,7 +5,7 @@ const baseAuthUrl = "https://easy-eats-backend-local.onrender.com/auth";
 
 
 // requests for auth
-export const postAuth = async () => {
+export const postAuth = async (token) => {
     let response = await axios(`${baseAuthUrl}`, {
         method: 'POST',
         mode: 'no-cors',
@@ -14,12 +14,13 @@ export const postAuth = async () => {
             'Content-Type': 'application/json',
         },
         // credentials: 'same-origin',
-        withCredentials: true
+        withCredentials: true,
+        data: {
+            token: token
+        }
     })
-    // if (!response.ok) {
-    //     throw new Error(response.data?.message);
-    // }
-    // console.log("auth \n" + JSON.stringify(response.data))
+
+    console.log("auth \n" + JSON.stringify(response.data))
     return response.data;
 }
 
