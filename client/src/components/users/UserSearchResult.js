@@ -4,14 +4,14 @@ import { Status } from "../../utils/userUtils";
 import { acceptIncomingAsync, sendOutgoingAsync } from "../../redux/thunks/usersThunks";
 import "./UserSearchResult.css";
 
-const UserSearchResult = ({ id, name, status }) => {
+const UserSearchResult = ({ id, icon, name, status }) => {
     const icons = useSelector((state) => state.users.iconLocations);
     const authenticationSlice = useSelector((state) => state.sauth);
     const dispatch = useDispatch();
 
     return (
         <div className="search-result-container">
-            <img className="user-search-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
+            <img className="user-search-icon" src={icons[icon]} alt={name} />
             <h3 className="user-search-name">{name}</h3>
             {status === Status.FRIEND ? (
                 <div className="user-container">
