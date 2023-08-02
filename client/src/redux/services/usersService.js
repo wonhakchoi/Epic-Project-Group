@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const baseUserUrl = "http://localhost:3001/users";
-// const baseUserUrl = "https://easy-eats-backend-9u5y.onrender.com/users";
+// const baseUserUrl = "http://localhost:3001/users";
+const baseUserUrl = "https://easy-eats-backend-9u5y.onrender.com/users";
 // const baseUserUrl = "https://easy-eats-backend-local.onrender.com/users";
 
 // get users from database

@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const baseCollectionsUrl = "https://easy-eats-backend-9u5y.onrender.com/collections";
-const baseCollectionsUrl = "http://localhost:3001/collections";
+const baseCollectionsUrl = "https://easy-eats-backend-9u5y.onrender.com/collections";
+// const baseCollectionsUrl = "http://localhost:3001/collections";
 // const baseCollectionsUrl = "https://easy-eats-backend-local.onrender.com/collections";
 
 // requests for collections
