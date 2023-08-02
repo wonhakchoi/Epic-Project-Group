@@ -15,22 +15,22 @@ export const postAuthAsync = createAsyncThunk(
 
 export const loginAsync = createAsyncThunk(
     'authentication/loginAsync',
-    async ({email, password}) => {
+    async ({email, password}, {rejectWithValue}) => {
         try {
             return await doLogin({email: email, password: password});
         } catch (e) {
-            throw new Error(e);
+            return rejectWithValue(e.message);
         }
     }
 )
 
 export const signupAsync = createAsyncThunk(
     'authentication/signUpAsync',
-    async ({email, password, firstName, lastName}) => {
+    async ({email, password, firstName, lastName}, {rejectWithValue}) => {
         try {
             return await doSignup({email: email, password: password, firstName: firstName, lastName: lastName});
         } catch (e) {
-            throw new Error(e);
+            return rejectWithValue(e.message);
         }
     }
 )

@@ -20,7 +20,6 @@ import ExploreIcon from "@mui/icons-material/Explore";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
-import { verifySession } from "../redux/actions/authActions";
 import {postAuthAsync} from "../redux/thunks/authenticationThunks";
 import {doLogout} from "../redux/reducers/authenticationSlice";
 
