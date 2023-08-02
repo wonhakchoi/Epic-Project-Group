@@ -16,9 +16,10 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import SearchIcon from "@mui/icons-material/Search";
-import {useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from 'react-redux';
-import {useCookies} from "react-cookie";
+import ExploreIcon from "@mui/icons-material/Explore";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
 import {postAuthAsync} from "../redux/thunks/authenticationThunks";
 import {doLogout} from "../redux/reducers/authenticationSlice";
 
@@ -42,13 +43,13 @@ export default function ButtonAppBar() {
     }, [cookies, navigate, setCookie]);
 
 
-    const toggleDrawer = (open) => () => {
-        setIsDrawerOpen(open);
-    };
+  const toggleDrawer = (open) => () => {
+    setIsDrawerOpen(open);
+  };
 
-    const handleCloseDrawer = () => {
-        setIsDrawerOpen(false);
-    };
+  const handleCloseDrawer = () => {
+    setIsDrawerOpen(false);
+  };
 
     const handleLogout = () => {
         removeCookie('token')
@@ -58,27 +59,30 @@ export default function ButtonAppBar() {
     };
 
     return (
-        <Box sx={{flexGrow: 1}}>
-            <AppBar position="static" sx={{backgroundColor: "#FFF4BB"}}>
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static" sx={{ backgroundColor: "#FFF4BB" }}>
                 <Toolbar>
                     <IconButton
                         size="large"
                         edge="start"
                         color="#ffffff"
                         aria-label="menu"
-                        sx={{mr: 2}}
+                        sx={{ mr: 2 }}
                         onClick={toggleDrawer(true)} // Open the side menu on click
                     >
-                        <MenuIcon/>
+                        <MenuIcon />
                     </IconButton>
                     <Typography
                         variant="h6"
                         component={Link}
                         to="/"
-                        sx={{textDecoration: "none", color: "inherit", flexGrow: 1}}
+                        sx={{ textDecoration: "none", color: "inherit", flexGrow: 1 }}
                     >
-                        <img src="/images/logo/logo.png" alt="Logo"
-                             style={{height: 62, marginRight: 10, marginTop: 10}}/>
+                        <img
+                            src="/images/logo/logo.png"
+                            alt="Logo"
+                            style={{ height: 62, marginRight: 10, marginTop: 10 }}
+                        />
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -87,55 +91,59 @@ export default function ButtonAppBar() {
                 open={isDrawerOpen}
                 onClose={toggleDrawer(false)} // Close the side menu on click
             >
-                <List sx={{marginTop: 2}}>
+                <List sx={{ marginTop: 2 }}>
                     <ListItem component={Link} to="/search" onClick={handleCloseDrawer}>
-                        <ListItemIcon sx={{color: "#000000"}}>
-                            <SearchIcon/>
+                        <ListItemIcon sx={{ color: "#000000" }}>
+                            <SearchIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Search"/>
+                        <ListItemText primary="Search" />
                     </ListItem>
                     <ListItem component={Link} to="/profile" onClick={handleCloseDrawer}>
-                        <ListItemIcon sx={{color: "#000000"}}>
-                            <AccountCircleIcon/>
+                        <ListItemIcon sx={{ color: "#000000" }}>
+                            <AccountCircleIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Profile"/>
+                        <ListItemText primary="Profile" />
                     </ListItem>
                     <ListItem component={Link} to="/friends" onClick={handleCloseDrawer}>
-                        <ListItemIcon sx={{color: "#000000"}}>
-                            <PeopleIcon/>
+                        <ListItemIcon sx={{ color: "#000000" }}>
+                            <PeopleIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Friends"/>
+                        <ListItemText primary="Friends" />
+                    </ListItem>
+                    <ListItem component={Link} to="/discover" onClick={handleCloseDrawer}>
+                        <ListItemIcon sx={{ color: "#000000" }}>
+                            <ExploreIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Discover" />
                     </ListItem>
                     <ListItem component={Link} to="/collections" onClick={handleCloseDrawer}>
-                        <ListItemIcon sx={{color: "#000000"}}>
-                            <ShoppingBagIcon/>
+                        <ListItemIcon sx={{ color: "#000000" }}>
+                            <ShoppingBagIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Collections"/>
+                        <ListItemText primary="Collections" />
                     </ListItem>
 
-                    {
-                        isLoggedIn ?
-                            (<ListItem component={Link} onClick={() => {handleLogout()}}>
-                                <ListItemIcon sx={{color: "#000000"}}>
-                                    <LockOpenIcon/>
-                                </ListItemIcon>
-                                <ListItemText primary="Log out"/>
-                            </ListItem>) :
-                            <ListItem button component={Link} to="/login" onClick={handleCloseDrawer}>
-                                <ListItemIcon>
-                                    <LockOpenIcon/>
-                                </ListItemIcon>
-                                <ListItemText primary="Login"/>
-                            </ListItem>
-
-                    }
+                    {isLoggedIn ? (
+                        <ListItem component={Link} to="/login" onClick={handleLogout}>
+                            <ListItemIcon sx={{ color: "#000000" }}>
+                                <LockOpenIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Log out" />
+                        </ListItem>
+                    ) : (
+                        <ListItem button component={Link} to="/login" onClick={handleCloseDrawer}>
+                            <ListItemIcon>
+                                <LockOpenIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Login" />
+                        </ListItem>
+                    )}
                     {/* <ListItem button component={Link} to="/login" onClick={handleLogout}>
             <ListItemIcon>
               <LockOpenIcon />
             </ListItemIcon>
             <ListItemText primary="Login" />
           </ListItem> */}
-
                 </List>
             </Drawer>
         </Box>

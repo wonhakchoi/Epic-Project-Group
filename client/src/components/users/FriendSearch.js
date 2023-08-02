@@ -53,6 +53,7 @@ const FriendSearch = () => {
                         <UserSearchResult
                             key={user._id}
                             id={user._id}
+                            icon={user.icon}
                             name={user.firstName}
                             status={determineStatus(
                                 user._id,

@@ -50,7 +50,7 @@ const sauthSlice = createSlice({
             })
             .addCase(loginAsync.rejected, (state, action) => {
                 state.login = REQUEST_STATE.REJECTED;
-                state.error = action.error.message;
+                state.error = action.payload;
             })
             .addCase(signupAsync.pending, (state) => {
                 state.signup = REQUEST_STATE.PENDING;
@@ -60,8 +60,9 @@ const sauthSlice = createSlice({
                 state.isLoggedIn = true;
                 state.currUser = action.payload.user._id;
             })
-            .addCase(signupAsync.rejected, (state) => {
+            .addCase(signupAsync.rejected, (state, action) => {
                 state.signup = REQUEST_STATE.REJECTED;
+                state.error = action.payload;
             })
     }
 })

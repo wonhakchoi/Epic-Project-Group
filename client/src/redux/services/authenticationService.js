@@ -7,8 +7,9 @@ const baseAuthUrl = "https://easy-eats-backend-9u5y.onrender.com/auth";
 // requests for auth
 export const postAuth = async (token) => {
     let response;
+    console.log(process.env.REACT_APP_BACKEND);
     try {
-        response = await axios(`${baseAuthUrl}`, {
+        response = await axios(`${process.env.REACT_APP_BACKEND}/auth`, {
             method: 'POST',
             mode: 'no-cors',
             headers: {
@@ -31,7 +32,7 @@ export const postAuth = async (token) => {
 export const doLogin = async ({email, password}) => {
     let response;
     try {
-        response = await axios.post(`${baseAuthUrl}/login`, {email, password}, {withCredentials: true});
+        response = await axios.post(`${process.env.REACT_APP_BACKEND}/auth/login`, {email, password}, {withCredentials: true});
     } catch (e) {
         throw new Error(e.response.data.message);
     }
@@ -43,7 +44,7 @@ export const doSignup = async ({email, password, firstName, lastName}) => {
     let response;
     try {
         response = await axios
-            .post(`${baseAuthUrl}/signup`, {
+            .post(`$${process.env.REACT_APP_BACKEND}/auth/signup`, {
                 email,
                 password,
                 firstName,

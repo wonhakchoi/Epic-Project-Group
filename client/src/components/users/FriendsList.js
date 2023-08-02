@@ -18,6 +18,7 @@ const FriendsList = () => {
                         <Friend
                             key={id}
                             id={id}
+                            icon={user.icon}
                             name={user.firstName}
                             biography={user.biography}
                             ratedRestaurants={user.ratedRestaurants}

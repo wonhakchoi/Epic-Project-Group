@@ -40,7 +40,7 @@ const SignupForm = () => {
     const error = useSelector((state) => state.sauth.error);
     const isLoggedIn = useSelector((state) => state.sauth.isLoggedIn);
     const dispatch = useDispatch();
-    const [setCookie] = useCookies([]);
+    const [cookies, setCookie] = useCookies([]);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -61,8 +61,6 @@ const SignupForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Dispatch login action with email and password
-        // dispatch(signup(email, password, firstName, lastName));
-        // dispatch(setMessage());
         dispatch(signupAsync({email: email, password: password, firstName: firstName, lastName: lastName}))
             .then((data) => {
                 let token = data.payload.token;

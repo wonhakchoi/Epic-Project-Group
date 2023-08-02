@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        icon: {
+            type: Number,
+        },
         biography: {
             type: String,
             default: "",
