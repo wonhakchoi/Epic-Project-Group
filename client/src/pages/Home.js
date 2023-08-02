@@ -19,10 +19,6 @@ import {postAuthAsync} from "../redux/thunks/authenticationThunks";
 const Home = () => {
     const navigate = useNavigate();
     const [cookies, setCookie] = useCookies(['token']);
-
-    const [username, setUserName] = useState("");
-
-    const {error, user, isLoggedIn} = useSelector((state) => state.authentication.authentication);
     const dispatch = useDispatch();
     const STATES = {
         LOADING: "loading",
@@ -33,64 +29,14 @@ const Home = () => {
     const [state, setState] = useState(STATES.LOADING);
 
     useEffect(() => {
-        // const verifyCookie = async () => {
-        if (!cookies.token) {
-            navigate("/login");
-            setState(STATES.COMPLETE);
-        }
-        //     if (!cookies.token) {
-        //         navigate("/login");
-        //         setState(STATES.COMPLETE);
-        //     }
-        //     try {
-        //         // console.log("POST auth HOME")
-        //         // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
-        //         // return axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
-        //         return axios("http://localhost:3001/auth/", {
-        //             method: 'POST',
-        //             mode: 'no-cors',
-        //             headers: {
-        //                 'Access-Control-Allow-Origin': '*',
-        //                 'Content-Type': 'application/json',
-        //                 // 'Access-Control-Allow-Origin': 'https://easy-eats-frontend.onrender.com/',
-        //                 // 'Access-Control-Allow-Headers': "Origin, X-Requested-With, Content-Type, Accept",
-        //             },
-        //             credentials: 'same-origin',
-        //             withCredentials: true
-        //         }).then(response => {
-        //             // console.log(response.data);
-        //             let data = response.data
-        //             const {status, user} = data;
-        //             // console.log(status);
-        //
-        //
-        //             // setUserName(user.firstName);
-        //
-        //             if (status) {
-        //                 setUserName(user.firstName);
-        //                 setState(STATES.COMPLETE);
-        //                 // console.log(user);
-        //                 return <div>Hello {user.firstName}</div>
-        //             } else {
-        //                 setState(STATES.COMPLETE);
-        //                 return (removeCookie("token"), navigate("/login"));
-        //             }
-        //         })
-        //
-        //     } catch (err) {
-        //         console.log(err);
-        //     }
-        // };
-        // verifyCookie();
         dispatch(postAuthAsync(cookies.token))
             .then((data) => {
                 const s = data.payload.status;
-                console.log("post auth data: \n" + JSON.stringify(data.payload))
-                if (s) {
-                    setState(STATES.COMPLETE);
-                } else {
-                    return (setCookie('token', null), navigate("/login"));
+                if (!s) {
+                    setCookie('token', null)
+                    navigate("/login");
                 }
+                setState(STATES.COMPLETE);
             })
     }, [cookies, navigate, setCookie]);
 

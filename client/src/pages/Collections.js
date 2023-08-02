@@ -15,66 +15,22 @@ import {getCollectionsAsync} from "../redux/thunks/collectionsThunks";
 // Page for displaying all the user made collections of restaurants
 export default function Collections() {
     const collections = useSelector((state) => state.collections.collections);
-
     const dispatch = useDispatch();
-
-    const [loaded, setLoaded] = useState(false);
     const navigate = useNavigate();
-    const [cookies, removeCookie] = useCookies([]);
+    const [cookies, setCookie] = useCookies([]);
 
     useEffect(() => {
-        if (!cookies.token) {
-            navigate("/login");
-        }
-        // const verifyCookie = async () => {
-        //     if (!cookies.token) {
-        //         navigate("/login");
-        //     }
-        //     console.log("POST auth Collections")
-        //     try {
-        //         // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
-        //         // return axios("https://easy-eats-backend-9u5y.onrender.com/auth/", {
-        //         return axios("http://localhost:3001/auth/", {
-        //             method: 'POST',
-        //             mode: 'no-cors',
-        //             headers: {
-        //                 'Access-Control-Allow-Origin': '*',
-        //                 'Content-Type': 'application/json',
-        //             },
-        //             credentials: 'same-origin',
-        //             withCredentials: true
-        //         }).then(response => {
-        //             let data = response.data
-        //             const {status, user} = data;
-        //
-        //             if (status) {
-        //                 setLoaded(true);
-        //             } else {
-        //                 setLoaded(true);
-        //                 return (removeCookie("token"), navigate("/login"));
-        //             }
-        //         })
-        //
-        //     } catch (err) {
-        //         console.log(err);
-        //     }
-        // };
-        // verifyCookie();
-
-
         dispatch(postAuthAsync(cookies.token))
             .then((data) => {
-                const s =  data.payload.status;
+                const s = data.payload.status;
                 if (s) {
                     dispatch(getCollectionsAsync());
-                    setLoaded(true);
                 } else {
-                    return (removeCookie("token"), navigate("/login"));
+                    setCookie('token', null);
+                    navigate("/login");
                 }
             })
-
-
-    }, [cookies, navigate, removeCookie]);
+    }, [cookies, navigate, setCookie]);
 
     const handleAddCollection = () => {
         dispatch(showForm());
@@ -89,10 +45,6 @@ export default function Collections() {
                 <CollectionCard collectionId={collection._id} collection={collection}/>
             </Grid>
         ));
-
-    if (!loaded) {
-        return <LoadingUsers/>;
-    }
 
     return (
         <Container maxWidth="lg">

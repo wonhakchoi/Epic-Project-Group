@@ -19,6 +19,7 @@ import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Alert} from '@mui/material';
 import {loginAsync} from "../../redux/thunks/authenticationThunks";
+import {setError} from "../../redux/reducers/authenticationSlice";
 
 // resource used: https://mui.com/material-ui/getting-started/templates/
 
@@ -38,22 +39,11 @@ function Copyright(props) {
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const {error, user, isLoggedIn} = useSelector((state) => state.authentication.authentication);
+    const error = useSelector((state) => state.sauth.error);
+    const isLoggedIn = useSelector((state) => state.sauth.isLoggedIn);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    const [loaded, setLoaded] = useState(false);
 
     const [cookies, setCookie] = useCookies(['token']);
-
-    // useEffect(() => {
-    //     return () => {
-    //         // dispatch(verifySession(cookies));
-    //         // Clear the error message when the component unmounts
-    //         dispatch(clearMessage());
-    //         setLoaded(true);
-    //     };
-    // }, [dispatch]);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -67,19 +57,20 @@ const LoginForm = () => {
         e.preventDefault();
         // Dispatch login action with email and password
         dispatch(loginAsync({email: email, password: password}))
+            .unwrap()
             .then((data) => {
+                // set cookie on fulfill
                 let token = data.payload.token;
-                console.log("token: " + token);
                 setCookie('token', token);
             })
-        dispatch(login(email, password))
-
-        // dispatch(setMessage());
+            .catch((e) => {
+                console.error(e.message);
+            })
+            .finally(() => {
+                setEmail('');
+                setPassword('');
+            })
     };
-
-    // if (!loaded) {
-    //     return <LoadingUsers/>;
-    // }
 
     if (isLoggedIn) {
         return (

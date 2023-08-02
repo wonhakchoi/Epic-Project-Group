@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const baseUserUrl = "http://localhost:3001/maps"
-const baseUserUrl = "https://easy-eats-backend-9u5y.onrender.com/maps";
+const baseUserUrl = "http://localhost:3001/maps"
+// const baseUserUrl = "https://easy-eats-backend-9u5y.onrender.com/maps";
 // const baseUserUrl = "https://easy-eats-backend-local.onrender.com/maps"
 
 export const getMap = async (searchTerm) => {

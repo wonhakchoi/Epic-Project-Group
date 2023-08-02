@@ -16,17 +16,31 @@ const INITIAL_STATE = {
 const sauthSlice = createSlice({
     name: 'sauth',
     initialState: INITIAL_STATE,
+    reducers: {
+        doLogout: (state) => {
+            state.isLoggedIn = false;
+            state.currUser = null;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(postAuthAsync.pending, (state) => {
                 state.postAuth = REQUEST_STATE.PENDING;
             })
-            .addCase(postAuthAsync.fulfilled, (state) => {
+            .addCase(postAuthAsync.fulfilled, (state, action) => {
                 state.postAuth = REQUEST_STATE.FULFILLED;
+                if (action.payload.status) {
+                    state.currUser = action.payload.user._id;
+                    state.isLoggedIn = true;
+                } else {
+                    state.currUser = null;
+                    state.isLoggedIn = false;
+                }
             })
-            .addCase(postAuthAsync.rejected, (state, action) => {
+            .addCase(postAuthAsync.rejected, (state) => {
                 state.postAuth = REQUEST_STATE.REJECTED;
-                state.error = action.error;
+                state.isLoggedIn = false;
+                state.currUser = null;
             })
             .addCase(loginAsync.pending, (state) => {
                 state.login = REQUEST_STATE.PENDING;
@@ -35,11 +49,11 @@ const sauthSlice = createSlice({
                 state.login = REQUEST_STATE.FULFILLED;
                 state.isLoggedIn = true;
                 // state.token = action.payload.token;
-                state.currUser = action.payload.user;
+                state.currUser = action.payload.user._id;
             })
             .addCase(loginAsync.rejected, (state, action) => {
                 state.login = REQUEST_STATE.REJECTED;
-                state.error = action.error;
+                state.error = action.error.message;
             })
             .addCase(signupAsync.pending, (state) => {
                 state.signup = REQUEST_STATE.PENDING;
@@ -48,13 +62,17 @@ const sauthSlice = createSlice({
                 state.signup = REQUEST_STATE.FULFILLED;
                 state.isLoggedIn = true;
                 // state.token = action.payload.token;
-                state.currUser = action.payload.user;
+                state.currUser = action.payload.user._id;
             })
             .addCase(signupAsync.rejected, (state, action) => {
                 state.signup = REQUEST_STATE.REJECTED;
-                state.error = action.error;
             })
     }
 })
+
+export const {
+    doLogout,
+    setError
+} = sauthSlice.actions;
 
 export default sauthSlice.reducer;

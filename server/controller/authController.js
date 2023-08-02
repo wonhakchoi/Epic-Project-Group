@@ -32,7 +32,7 @@ module.exports.Signup = async (req, res, next) => {
         });
         res
             .status(201)
-            .json({ message: "User signed in successfully", success: true, user });
+            .json({ message: "User signed in successfully", success: true, user, token: token});
         next();
     } catch (error) {
         console.error(error);
