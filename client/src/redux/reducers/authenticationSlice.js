@@ -7,7 +7,6 @@ const INITIAL_STATE = {
     isLoggedIn: false,
     currUser: null,
     error: null,
-    // token: null,
     postAuth: REQUEST_STATE.IDLE,
     login: REQUEST_STATE.IDLE,
     signup: REQUEST_STATE.IDLE
@@ -17,9 +16,8 @@ const sauthSlice = createSlice({
     name: 'sauth',
     initialState: INITIAL_STATE,
     reducers: {
-        doLogout: (state) => {
-            state.isLoggedIn = false;
-            state.currUser = null;
+        doLogout: (state ) => {
+            state.isLoggedIn = true;
         }
     },
     extraReducers: (builder) => {
@@ -48,7 +46,6 @@ const sauthSlice = createSlice({
             .addCase(loginAsync.fulfilled, (state, action) => {
                 state.login = REQUEST_STATE.FULFILLED;
                 state.isLoggedIn = true;
-                // state.token = action.payload.token;
                 state.currUser = action.payload.user._id;
             })
             .addCase(loginAsync.rejected, (state, action) => {
@@ -61,18 +58,16 @@ const sauthSlice = createSlice({
             .addCase(signupAsync.fulfilled, (state, action) => {
                 state.signup = REQUEST_STATE.FULFILLED;
                 state.isLoggedIn = true;
-                // state.token = action.payload.token;
                 state.currUser = action.payload.user._id;
             })
-            .addCase(signupAsync.rejected, (state, action) => {
+            .addCase(signupAsync.rejected, (state) => {
                 state.signup = REQUEST_STATE.REJECTED;
             })
     }
 })
 
 export const {
-    doLogout,
-    setError
+    doLogout
 } = sauthSlice.actions;
 
 export default sauthSlice.reducer;

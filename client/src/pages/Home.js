@@ -11,14 +11,13 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
-import axios from "axios";
 import LoadingUsers from "../components/users/LoadingUsers";
 import RedirectLoading from "../components/login/redirectLoading";
 import {postAuthAsync} from "../redux/thunks/authenticationThunks";
 
 const Home = () => {
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies(['token']);
+    const [cookies, removeCookie] = useCookies(['token']);
     const dispatch = useDispatch();
     const STATES = {
         LOADING: "loading",
@@ -33,12 +32,12 @@ const Home = () => {
             .then((data) => {
                 const s = data.payload.status;
                 if (!s) {
-                    setCookie('token', null)
-                    navigate("/login");
+                    removeCookie('token');
+                    navigate('/login');
                 }
                 setState(STATES.COMPLETE);
             })
-    }, [cookies, navigate, setCookie]);
+    }, [cookies, navigate, removeCookie]);
 
 
     const settings = {

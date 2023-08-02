@@ -12,7 +12,6 @@ import sauthReducer from "./redux/reducers/authenticationSlice"
 // import ratingsReducer from "./redux/reducers/allRatingsSlice";
 import ratingsReducer from "./redux/reducers/ratingReducer";
 import restaurantsReducer from "./redux/reducers/restaurantReducer";
-import authenticationReducer from "./redux/reducers/authenticationReducer";
 
 enableMapSet();
 
@@ -21,7 +20,7 @@ const store = configureStore({
         users: usersReducer,
         restaurants: restaurantsReducer,
         ratings: ratingsReducer,
-        authentication: authenticationReducer,
+        // authentication: authenticationReducer,
         collections: collectionsReducer,
         collectionPopup: collectionsPopupReducer,
         sauth: sauthReducer

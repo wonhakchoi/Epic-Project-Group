@@ -24,7 +24,7 @@ export const postAuth = async (token) => {
     } catch (e) {
         throw new Error(e.response.data.message)
     }
-    console.log("auth \n" + JSON.stringify(response.data))
+    // console.log("auth \n" + JSON.stringify(response.data))
     return response.data;
 }
 

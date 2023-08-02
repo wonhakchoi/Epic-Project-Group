@@ -6,7 +6,7 @@ import "./UserSearchResult.css";
 
 const UserSearchResult = ({ id, name, status }) => {
     const icons = useSelector((state) => state.users.iconLocations);
-    const authenticationSlice = useSelector((state) => state.authentication.authentication);
+    const authenticationSlice = useSelector((state) => state.sauth);
     const dispatch = useDispatch();
 
     return (

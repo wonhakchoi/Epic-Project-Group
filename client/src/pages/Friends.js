@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
-import axios from "axios";
 import FriendsList from "../components/users/FriendsList";
 import FriendSearch from "../components/users/FriendSearch";
 import FriendRequests from "../components/users/FriendRequests";
@@ -12,7 +11,6 @@ import {getUsersAsync} from "../redux/thunks/usersThunks";
 import {getRestaurantsAsync} from "../redux/thunks/restaurantsThunks";
 import {setFriendsLists} from "../redux/actions/userActions";
 import {postAuthAsync} from "../redux/thunks/authenticationThunks";
-import {getCollectionsAsync} from "../redux/thunks/collectionsThunks";
 
 const Friends = () => {
     const usersSlice = useSelector((state) => state.users.allUsers);
@@ -23,7 +21,7 @@ const Friends = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loaded, setLoaded] = useState(false);
-    const [cookies, setCookie] = useCookies(['token']);
+    const [cookies, removeCookie] = useCookies(['token']);
 
     // verifySession and setup page
     useEffect(() => {
@@ -35,11 +33,11 @@ const Friends = () => {
                     setUpInfo();
                     setLoaded(true);
                 } else {
-                    setCookie('token', null);
+                    removeCookie('token');
                     navigate("/login");
                 }
             })
-    }, [cookies, navigate, setCookie]);
+    }, [cookies, navigate, removeCookie]);
 
     function loadRestaurantsAndUsers() {
         dispatch(getUsersAsync());

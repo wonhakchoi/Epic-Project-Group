@@ -10,13 +10,13 @@ const FriendSearch = () => {
     const friendsSlice = useSelector((state) => state.users.userFriends);
     const outRequestsSlice = useSelector((state) => state.users.outgoingRequests);
     const inRequestsSlice = useSelector((state) => state.users.incomingRequests);
-    const authenticationSlice = useSelector((state) => state.authentication.authentication);
+    const sauthUser = useSelector((state) => state.sauth.currUser);
 
     // returns users whose name includes the given string
     const [name, setName] = useState("");
     const searchResults = useDebounce(name, 500);
     const filteredUsers = usersSlice.users.filter(
-        (user) => user.firstName.toLowerCase().includes(searchResults.toLowerCase()) && user._id !== authenticationSlice.user
+        (user) => user.firstName.toLowerCase().includes(searchResults.toLowerCase()) && user._id !== sauthUser
     );
 
     // logic for the pagination

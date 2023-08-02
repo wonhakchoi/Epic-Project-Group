@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {showForm} from "../redux/reducers/collectionsSlice";
 import CollectionCard from "../components/collections/CollectionCard";
@@ -7,7 +7,6 @@ import {Button, Typography, Container, Grid} from "@mui/material";
 
 import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
-import axios from "axios";
 import LoadingUsers from "../components/users/LoadingUsers";
 import {postAuthAsync} from "../redux/thunks/authenticationThunks";
 import {getCollectionsAsync} from "../redux/thunks/collectionsThunks";
@@ -17,7 +16,7 @@ export default function Collections() {
     const collections = useSelector((state) => state.collections.collections);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies([]);
+    const [cookies, removeCookie] = useCookies([]);
 
     useEffect(() => {
         dispatch(postAuthAsync(cookies.token))
@@ -26,11 +25,11 @@ export default function Collections() {
                 if (s) {
                     dispatch(getCollectionsAsync());
                 } else {
-                    setCookie('token', null);
+                    removeCookie('token');
                     navigate("/login");
                 }
             })
-    }, [cookies, navigate, setCookie]);
+    }, [cookies, navigate, removeCookie]);
 
     const handleAddCollection = () => {
         dispatch(showForm());

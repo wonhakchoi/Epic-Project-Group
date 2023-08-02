@@ -1,7 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {useNavigate} from "react-router-dom";
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {login, setMessage, clearMessage, verifySession} from '../../redux/actions/authActions';
 import {useCookies} from "react-cookie";
 import LoadingUsers from '../users/LoadingUsers';
 
@@ -19,7 +17,6 @@ import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Alert} from '@mui/material';
 import {loginAsync} from "../../redux/thunks/authenticationThunks";
-import {setError} from "../../redux/reducers/authenticationSlice";
 
 // resource used: https://mui.com/material-ui/getting-started/templates/
 
@@ -57,14 +54,10 @@ const LoginForm = () => {
         e.preventDefault();
         // Dispatch login action with email and password
         dispatch(loginAsync({email: email, password: password}))
-            .unwrap()
             .then((data) => {
                 // set cookie on fulfill
                 let token = data.payload.token;
                 setCookie('token', token);
-            })
-            .catch((e) => {
-                console.error(e.message);
             })
             .finally(() => {
                 setEmail('');

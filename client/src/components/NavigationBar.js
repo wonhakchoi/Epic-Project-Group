@@ -19,9 +19,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
 import {useCookies} from "react-cookie";
-import {verifySession} from '../redux/actions/authActions';
 import {postAuthAsync} from "../redux/thunks/authenticationThunks";
-import {getCollectionsAsync} from "../redux/thunks/collectionsThunks";
 import {doLogout} from "../redux/reducers/authenticationSlice";
 
 export default function ButtonAppBar() {
@@ -29,15 +27,16 @@ export default function ButtonAppBar() {
     const isLoggedIn = useSelector((state) => state.sauth.isLoggedIn);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies([]);
+    const [cookies, setCookie, removeCookie] = useCookies(['token']);
 
     useEffect(() => {
         dispatch(postAuthAsync(cookies.token))
             .then((data) => {
                 const s = data.payload.status;
-                if (!s) {
+                if (s) {
+                    setCookie('token', data.payload.token);
+                } else {
                     setCookie('token', null);
-                    navigate("/login");
                 }
             })
     }, [cookies, navigate, setCookie]);
@@ -52,9 +51,9 @@ export default function ButtonAppBar() {
     };
 
     const handleLogout = () => {
-        setIsDrawerOpen(false);
-        setCookie('token', null);
+        removeCookie('token')
         dispatch(doLogout());
+        setIsDrawerOpen(false);
         navigate("/login");
     };
 
@@ -116,7 +115,7 @@ export default function ButtonAppBar() {
 
                     {
                         isLoggedIn ?
-                            (<ListItem component={Link} onClick={handleLogout}>
+                            (<ListItem component={Link} onClick={() => {handleLogout()}}>
                                 <ListItemIcon sx={{color: "#000000"}}>
                                     <LockOpenIcon/>
                                 </ListItemIcon>

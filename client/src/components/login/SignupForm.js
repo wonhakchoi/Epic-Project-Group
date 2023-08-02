@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { signup, setMessage, clearMessage, verifySession } from '../../redux/actions/authActions';
-import { useCookies } from "react-cookie";
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useCookies} from "react-cookie";
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -15,8 +13,9 @@ import Box from '@mui/material/Box';
 import RestaurantMenuOutlinedIcon from '@mui/icons-material/RestaurantMenuOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Alert } from '@mui/material';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {Alert} from '@mui/material';
+import {signupAsync} from "../../redux/thunks/authenticationThunks";
 
 // resource used: https://mui.com/material-ui/getting-started/templates/ 
 
@@ -38,18 +37,10 @@ const SignupForm = () => {
     const [password, setPassword] = useState('');
     const [firstName, setFirstname] = useState('');
     const [lastName, setLastname] = useState('');
-    const { error, user, isLoggedIn } = useSelector((state) => state.authentication.authentication);
+    const error = useSelector((state) => state.sauth.error);
+    const isLoggedIn = useSelector((state) => state.sauth.isLoggedIn);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const [cookies, removeCookie] = useCookies([]);
-
-    useEffect(() => {
-        return () => {
-            dispatch(verifySession(cookies));
-            // Clear the error message when the component unmounts
-            dispatch(clearMessage());
-        };
-    }, [dispatch]);
+    const [setCookie] = useCookies([]);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -70,9 +61,13 @@ const SignupForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Dispatch login action with email and password
-        dispatch(signup(email, password, firstName, lastName));
-        dispatch(setMessage());
-        // navigate("/")
+        // dispatch(signup(email, password, firstName, lastName));
+        // dispatch(setMessage());
+        dispatch(signupAsync({email: email, password: password, firstName: firstName, lastName: lastName}))
+            .then((data) => {
+                let token = data.payload.token;
+                setCookie('token', token);
+            })
     };
 
 
@@ -86,17 +81,17 @@ const SignupForm = () => {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'success.main' }}>
-                    <RestaurantMenuOutlinedIcon />
+                <Avatar sx={{m: 1, bgcolor: 'success.main'}}>
+                    <RestaurantMenuOutlinedIcon/>
                 </Avatar>
 
                 <Alert
                     action={
-                        <Button href="/" color="inherit" size="small" >
+                        <Button href="/" color="inherit" size="small">
                             HOME
                         </Button>
                     }
-                    sx={{ mt: 4 }}
+                    sx={{mt: 4}}
                 >
                     You have registered successfully! Go to home page.
                 </Alert>
@@ -109,7 +104,7 @@ const SignupForm = () => {
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
-                <CssBaseline />
+                <CssBaseline/>
                 <Box
                     sx={{
                         marginTop: 8,
@@ -118,17 +113,17 @@ const SignupForm = () => {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'success.main' }}>
-                        <RestaurantMenuOutlinedIcon />
+                    <Avatar sx={{m: 1, bgcolor: 'success.main'}}>
+                        <RestaurantMenuOutlinedIcon/>
                     </Avatar>
 
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
 
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 3}}>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} >
+                            <Grid item xs={12}>
                                 {error && <Alert severity="error">{error}</Alert>}
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -186,7 +181,7 @@ const SignupForm = () => {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{mt: 3, mb: 2}}
                         >
                             Sign Up
                         </Button>
@@ -199,7 +194,7 @@ const SignupForm = () => {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 5 }} />
+                <Copyright sx={{mt: 5}}/>
             </Container>
         </ThemeProvider>
     );

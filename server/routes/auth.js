@@ -18,6 +18,7 @@ router.use(function (req, res, next) {
 router.post('/', userVerification);
 router.post('/login', Login);
 router.post("/signup", Signup);
+// router.post('/logout', Logout);
 
 // router.post("/login", async (req, res) => {
 //     const { email, password } = req.body
