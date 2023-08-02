@@ -14,7 +14,6 @@ const getFriendRatings = async (skipAmount, resultsToGet, friendIDs) => {
     const response = await axios.get(`${baseRatingUrl}/friendRatings/${skipAmount}/${resultsToGet}`, {
         params: { friendIDs: friendIDs },
     });
-    console.log(friendIDs);
     return response;
 };
 
