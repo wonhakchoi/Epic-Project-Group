@@ -65,7 +65,7 @@ const RestaurantSpotlight = () => {
                     <h3>
                         Google Ratings: {restaurant.rating} from {restaurant.user_ratings_total} users
                     </h3>
-                    <img className="restaurant-img" src={photos[1]} alt="URL not found"></img>
+                    <img className="restaurant-img" src={photos[0]} alt="URL not found"></img>
                     {ratings.map((rating) => (
                         <RestaurantRating
                             key={rating._id}
