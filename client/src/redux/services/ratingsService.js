@@ -8,10 +8,9 @@ const getRatings = async (skipAmount, resultsToGet) => {
 
 // gets the next subset of friend ratings
 const getFriendRatings = async (skipAmount, resultsToGet, friendIDs) => {
-    const response = await axios.get(`$${process.env.REACT_APP_BACKEND}/ratings/friendRatings/${skipAmount}/${resultsToGet}`, {
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND}/ratings/friendRatings/${skipAmount}/${resultsToGet}`, {
         params: { friendIDs: friendIDs },
     });
-    console.log(friendIDs);
     return response;
 };
 

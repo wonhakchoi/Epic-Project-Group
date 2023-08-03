@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, {useState, useEffect} from "react";
+import {useSelector} from "react-redux";
 import UserSearchResult from "./UserSearchResult";
 import useDebounce from "../../hooks/useDebounce";
-import { determineStatus } from "../../utils/userUtils";
+import {determineStatus} from "../../utils/userUtils";
 import "./FriendSearch.css";
 
 const FriendSearch = () => {
@@ -10,13 +10,13 @@ const FriendSearch = () => {
     const friendsSlice = useSelector((state) => state.users.userFriends);
     const outRequestsSlice = useSelector((state) => state.users.outgoingRequests);
     const inRequestsSlice = useSelector((state) => state.users.incomingRequests);
-    const sauthUser = useSelector((state) => state.sauth.currUser);
+    let currUser = useSelector((state) => state.sauth.currUser);
 
     // returns users whose name includes the given string
     const [name, setName] = useState("");
     const searchResults = useDebounce(name, 500);
     const filteredUsers = usersSlice.users.filter(
-        (user) => user.firstName.toLowerCase().includes(searchResults.toLowerCase()) && user._id !== sauthUser
+        (user) => user.firstName.toLowerCase().includes(searchResults.toLowerCase()) && user._id !== currUser
     );
 
     // logic for the pagination

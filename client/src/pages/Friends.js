@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
-import { Routes, Route } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {useCookies} from "react-cookie";
+import {Routes, Route} from "react-router-dom";
 import FriendNavbar from "../components/users/FriendNavbar";
 import FriendsList from "../components/users/FriendsList";
 import FriendSearch from "../components/users/FriendSearch";
@@ -18,37 +18,30 @@ import {postAuthAsync} from "../redux/thunks/authenticationThunks";
 const Friends = () => {
     const usersSlice = useSelector((state) => state.users.allUsers);
     const restaurantsSlice = useSelector((state) => state.restaurants.allRestaurants);
-    const isLoggedIn = useSelector(state => state.sauth.isLoggedIn);
-    const currUser = useSelector(state => state.sauth.currUser);
+    let isLoggedIn = useSelector((state) => state.sauth.isLoggedIn);
+    let currUser = useSelector((state) => state.sauth.currUser);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loaded, setLoaded] = useState(false);
     const [cookies, removeCookie] = useCookies(['token']);
 
-    // verifySession and setup page
+    // verify session and load users and restaurants
     useEffect(() => {
         dispatch(postAuthAsync(cookies.token))
             .then((data) => {
                 const s = data.payload.status;
-                if (s) {
-                    loadRestaurantsAndUsers();
-                    setUpInfo();
-                    setLoaded(true);
-                } else {
+                if (!s) {
                     removeCookie('token');
                     navigate("/login");
+                } else {
+                    dispatch(getUsersAsync());
+                    dispatch(getRestaurantsAsync());
                 }
             })
-    }, [cookies, navigate, removeCookie]);
+    }, [cookies, navigate, removeCookie, currUser]);
 
-    function loadRestaurantsAndUsers() {
-        dispatch(getUsersAsync());
-        dispatch(getRestaurantsAsync());
-    }
-
-    // // sets up user profile once user and restaurant information is finished loading
-    function setUpInfo() {
+    useEffect(() => {
         if (
             !isLoggedIn ||
             usersSlice.getUsers !== REQUEST_STATE.FULFILLED ||
@@ -57,10 +50,9 @@ const Friends = () => {
             return;
         }
         const signedInUser = usersSlice.users.filter((user) => user._id === currUser)[0];
-        console.log("signedInUser");
-        console.log(signedInUser);
         setFriendsLists(dispatch, signedInUser.friends, signedInUser.incomingRequests, signedInUser.outgoingRequests);
-    }
+        setLoaded(true);
+    }, [isLoggedIn, usersSlice.getUsers, restaurantsSlice.getRestaurants])
 
     return (
         <div className="friends-container">
@@ -68,15 +60,15 @@ const Friends = () => {
                 <LoadingUsers/>
             ) : (
                 <div>
-                    <FriendNavbar />
+                    <FriendNavbar/>
                     <Routes>
                         <Route
                             exact
                             path="/"
                             element={
                                 <section>
-                                    <FriendsList />
-                                    <FriendRatings />
+                                    <FriendsList/>
+                                    <FriendRatings/>
                                 </section>
                             }
                         ></Route>
@@ -84,8 +76,8 @@ const Friends = () => {
                             path="/requests"
                             element={
                                 <section>
-                                    <FriendRequests />
-                                    <FriendSearch />
+                                    <FriendRequests/>
+                                    <FriendSearch/>
                                 </section>
                             }
                         ></Route>

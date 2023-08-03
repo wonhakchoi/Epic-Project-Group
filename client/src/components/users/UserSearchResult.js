@@ -6,7 +6,7 @@ import "./UserSearchResult.css";
 
 const UserSearchResult = ({ id, icon, name, status }) => {
     const icons = useSelector((state) => state.users.iconLocations);
-    const authenticationSlice = useSelector((state) => state.sauth);
+    let currUser = useSelector((state) => state.sauth.currUser);
     const dispatch = useDispatch();
 
     return (
@@ -29,7 +29,7 @@ const UserSearchResult = ({ id, icon, name, status }) => {
                         className="friends-icon confirm-icon"
                         src="/images/web-icons/confirm.png"
                         alt="Requested"
-                        onClick={() => dispatch(acceptIncomingAsync({ userID: authenticationSlice.user, otherID: id }))}
+                        onClick={() => dispatch(acceptIncomingAsync({ userID: currUser, otherID: id }))}
                     ></img>
                     <p className="friend-text">Accept Request?</p>
                 </div>
@@ -39,7 +39,7 @@ const UserSearchResult = ({ id, icon, name, status }) => {
                         className="friends-icon add-friend-icon"
                         src="/images/web-icons/addFriend.png"
                         alt="Add Friend"
-                        onClick={() => dispatch(sendOutgoingAsync({ userID: authenticationSlice.user, otherID: id }))}
+                        onClick={() => dispatch(sendOutgoingAsync({ userID: currUser, otherID: id }))}
                     ></img>
                     <p className="friend-text">Add Friend</p>
                 </div>

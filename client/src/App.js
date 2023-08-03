@@ -1,5 +1,5 @@
 import "./App.css";
-import {BrowserRouter, Routes, Route, HashRouter} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
@@ -11,18 +11,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import Discover from "./pages/Discover";
-import { useEffect } from "react";
-import { getCollectionsAsync } from "./redux/thunks/collectionsThunks";
-import { useDispatch } from "react-redux";
-
 function App() {
-    const dispatch = useDispatch();
-
-    // // get collections on app load
-    // useEffect(() => {
-    //     dispatch(getCollectionsAsync());
-    // }, [dispatch]);
-
     return (
         <div className="App">
             <BrowserRouter>

@@ -18,6 +18,7 @@ const sauthSlice = createSlice({
     reducers: {
         doLogout: (state ) => {
             state.isLoggedIn = true;
+            state.currUser = null;
         }
     },
     extraReducers: (builder) => {
