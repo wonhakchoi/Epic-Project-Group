@@ -9,6 +9,12 @@ const getUsers = async () => {
     return users;
 };
 
+// get user by ID
+const getUserByID = async (userID) => {
+    const user = await axios.get(`${baseUserUrl}/${userID}`);
+    return user;
+};
+
 // accept incoming friend request
 const acceptIncoming = async (userID, otherID) => {
     const acceptRequest = await axios.put(`${baseUserUrl}/acceptIncoming/${userID}/${otherID}`);
@@ -41,6 +47,7 @@ const unfriend = async (userID, otherID) => {
 
 const UserService = {
     getUsers,
+    getUserByID,
     acceptIncoming,
     rejectIncoming,
     sendOutgoing,
