@@ -9,7 +9,7 @@ const getUsers = async () => {
 
 // get user by ID
 const getUserByID = async (userID) => {
-    const user = await axios.get(`${baseUserUrl}/${userID}`);
+    const user = await axios.get(`${process.env.REACT_APP_BACKEND}/users/${userID}`);
     return user;
 };
 

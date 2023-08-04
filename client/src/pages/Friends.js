@@ -50,7 +50,7 @@ const Friends = () => {
         ) {
             return;
         }
-        const signedInUser = usersSlice.users.filter((user) => user._id === authenticationSlice.user)[0];
+        const signedInUser = usersSlice.users.filter((user) => user._id === currUser)[0];
         // console.log("signedInUser");
         // console.log(signedInUser);
         setFriendsLists(dispatch, signedInUser.friends, signedInUser.incomingRequests, signedInUser.outgoingRequests);
