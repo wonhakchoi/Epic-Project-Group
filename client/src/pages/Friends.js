@@ -23,13 +23,10 @@ const Friends = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const [loaded, setLoaded] = useState(false);
     const [cookies, removeCookie] = useCookies(['token']);
 
- 
-    // loads initial users and restaurants information
-
+    // verify session and load users and restaurants
     useEffect(() => {
         dispatch(postAuthAsync(cookies.token))
             .then((data) => {
@@ -55,9 +52,7 @@ const Friends = () => {
         const signedInUser = usersSlice.users.filter((user) => user._id === currUser)[0];
         setFriendsLists(dispatch, signedInUser.friends, signedInUser.incomingRequests, signedInUser.outgoingRequests);
         setLoaded(true);
-
     }, [isLoggedIn, usersSlice.getUsers, restaurantsSlice.getRestaurants])
-
 
     return (
         <div className="friends-container">
