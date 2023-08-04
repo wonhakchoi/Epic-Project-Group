@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,7 +9,7 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import PeopleIcon from "@mui/icons-material/People";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -20,33 +20,42 @@ import ExploreIcon from "@mui/icons-material/Explore";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
-import { verifySession } from "../redux/actions/authActions";
+import {postAuthAsync} from "../redux/thunks/authenticationThunks";
+import {doLogout} from "../redux/reducers/authenticationSlice";
 
 export default function ButtonAppBar() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const { error, user, isLoggedIn } = useSelector((state) => state.authentication.authentication);
+    const isLoggedIn = useSelector((state) => state.sauth.isLoggedIn);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [cookies, removeCookie] = useCookies([]);
+    const [cookies, setCookie, removeCookie] = useCookies(['token']);
 
     useEffect(() => {
-        return () => {
-            dispatch(verifySession(cookies));
-        };
-    }, [dispatch]);
+        dispatch(postAuthAsync(cookies.token))
+            .then((data) => {
+                const s = data.payload.status;
+                if (s) {
+                    setCookie('token', data.payload.token);
+                } else {
+                    setCookie('token', null);
+                }
+            })
+    }, [cookies, navigate, setCookie]);
 
-    const toggleDrawer = (open) => () => {
-        setIsDrawerOpen(open);
-    };
 
-    const handleCloseDrawer = () => {
-        setIsDrawerOpen(false);
-    };
+  const toggleDrawer = (open) => () => {
+    setIsDrawerOpen(open);
+  };
+
+  const handleCloseDrawer = () => {
+    setIsDrawerOpen(false);
+  };
 
     const handleLogout = () => {
+        removeCookie('token')
+        dispatch(doLogout());
         setIsDrawerOpen(false);
-        removeCookie("token");
-        navigate("/signup");
+        navigate("/login");
     };
 
     return (

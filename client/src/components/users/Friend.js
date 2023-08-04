@@ -8,7 +8,7 @@ import "./Buttons.css";
 const Friend = ({ id, icon, name, biography }) => {
     const icons = useSelector((state) => state.users.iconLocations);
     const restaurantsSlice = useSelector((state) => state.restaurants.allRestaurants);
-    const authenticationSlice = useSelector((state) => state.authentication.authentication);
+    let currUser = useSelector((state) => state.sauth.currUser);
     const dispatch = useDispatch();
     const [ratings, setRatings] = useState(null);
 
@@ -45,7 +45,7 @@ const Friend = ({ id, icon, name, biography }) => {
                 </button>
                 <button
                     className="reject-button friend-request-button"
-                    onClick={() => dispatch(unfriendAsync({ userID: authenticationSlice.user, otherID: id }))}
+                    onClick={() => dispatch(unfriendAsync({ userID: currUser, otherID: id }))}
                 >
                     Unfriend
                 </button>

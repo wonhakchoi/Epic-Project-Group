@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
@@ -17,16 +17,9 @@ import { getCollectionsAsync } from "./redux/thunks/collectionsThunks";
 import { useDispatch } from "react-redux";
 
 function App() {
-    const dispatch = useDispatch();
-
-    // get collections on app load
-    useEffect(() => {
-        dispatch(getCollectionsAsync());
-    }, [dispatch]);
-
     return (
         <div className="App">
-            <BrowserRouter basename={"/"}>
+            <BrowserRouter>
                 <NavigationBar />
                 <Routes>
                     <Route exact path="/" element={<Home />}></Route>
