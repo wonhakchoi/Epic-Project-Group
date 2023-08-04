@@ -1,29 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { unfriendAsync } from "../../redux/thunks/usersThunks";
-import RatingService from "../../redux/services/ratingsService";
 import "./Friend.css";
 import "./Buttons.css";
 
-const Friend = ({ id, icon, name, biography }) => {
+const Friend = ({ id, icon, name, biography, ratedRestaurants }) => {
     const icons = useSelector((state) => state.users.iconLocations);
     const restaurantsSlice = useSelector((state) => state.restaurants.allRestaurants);
-    const authenticationSlice = useSelector((state) => state.authentication.authentication);
+    let currUser = useSelector((state) => state.sauth.currUser);
     const dispatch = useDispatch();
-    const [ratings, setRatings] = useState(null);
-
-    useEffect(() => {
-        const fetchUserRatings = async () => {
-            try {
-                const userRatingsResult = await RatingService.getUserRatings(id);
-                setRatings(userRatingsResult.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchUserRatings();
-    }, []);
 
     return (
         <div className="friend-container">
@@ -34,7 +19,19 @@ const Friend = ({ id, icon, name, biography }) => {
             </section>
             <section className="rated-restaurants">
                 <b>Rated Restaurants</b>
-                {ratings ? ratings.map((rating) => <h3>{rating.restaurantID}</h3>) : <h3>Loading...</h3>}
+                {ratedRestaurants &&
+                    Object.entries(ratedRestaurants).map(([id, rating]) => {
+                        const restaurant = restaurantsSlice.restaurants.filter(
+                            (restaurant) => restaurant._id === id
+                        )[0];
+                        return (
+                            <div key={id}>
+                                <p className="restaurant-info">
+                                    {restaurant.name} ~ {rating}⭐
+                                </p>
+                            </div>
+                        );
+                    })}
             </section>
             <section className="friend-buttons">
                 <button
@@ -45,7 +42,7 @@ const Friend = ({ id, icon, name, biography }) => {
                 </button>
                 <button
                     className="reject-button friend-request-button"
-                    onClick={() => dispatch(unfriendAsync({ userID: authenticationSlice.user, otherID: id }))}
+                    onClick={() => dispatch(unfriendAsync({ userID: currUser, otherID: id }))}
                 >
                     Unfriend
                 </button>
