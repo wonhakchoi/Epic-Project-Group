@@ -23,7 +23,7 @@ const Friends = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [cookies, removeCookie] = useCookies([]);
-
+ 
     // loads initial users and restaurants information
     useEffect(() => {
         dispatch(getUsersAsync());
