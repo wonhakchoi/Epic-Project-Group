@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getFriendRatingsAsync } from "../../redux/thunks/ratingsThunks";
 import { REQUEST_STATE } from "../../redux/requestStates";
 import RatingCard from "./RatingCard";
-import { Typography } from "@mui/material";
+import { Typography, Divider } from "@mui/material";
 import "./DiscoverRatings.css";
 
 const FriendRatings = () => {
@@ -44,14 +44,27 @@ const FriendRatings = () => {
         );
     };
 
+    // find user by ID
+    const findUserByID = (userID) => {
+        const matchedUser = usersSlice.users.filter((user) => user._id === userID);
+        return `${matchedUser[0].firstName} ${matchedUser[0].lastName}`;
+    };
+
     return (
         <div id="ratings-container">
-            <h2>Ratings from Your Friends</h2>
+            <Divider variant="middle" />
+            <Typography
+                variant="h4"
+                component="div"
+                sx={{ mb: 5, mt: 6 }}
+            >
+                Ratings from Your Friends
+            </Typography>
             {ratingsSlice.ratings.map((rating) => (
                 <RatingCard
                     key={rating._id}
                     id={rating._id}
-                    name={rating.userID}
+                    name={findUserByID(rating.userID)}
                     restaurant={rating.restaurantID}
                     score={rating.score}
                     comment={rating.comments ? rating.comments : ""}

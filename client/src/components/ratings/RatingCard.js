@@ -46,12 +46,11 @@ const RatingCard = ({ id, name, restaurant, score, comment, date }) => {
                         avatar={
                             <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
                         }
-                        // action={
-                        //     <IconButton aria-label="settings">
-                        //         <MoreVertIcon />
-                        //     </IconButton>
-                        // }
-                        title={name}
+                        title={
+                            <Typography mr={6} gutterBottom variant="h6" component="h2">
+                               {name}
+                            </Typography>
+                        }
                         subheader={date}
                     />
                     <CardMedia
@@ -69,14 +68,6 @@ const RatingCard = ({ id, name, restaurant, score, comment, date }) => {
                             {comment}
                         </Typography>
                     </CardContent>
-                    {/* <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon />
-                </IconButton>
-            </CardActions> */}
                 </Card>
             </Container>
         </Grid >

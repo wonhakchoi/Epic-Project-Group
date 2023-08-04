@@ -10,6 +10,7 @@ import { Typography, Grid, Container } from "@mui/material";
 const DiscoverRatings = () => {
     const ratingsSlice = useSelector((state) => state.ratings.allRatings);
     const dispatch = useDispatch();
+    // const loggedInUser = useSelector((state) => state.sauth.currUser)
 
     const resultsPerPage = 4;
 
