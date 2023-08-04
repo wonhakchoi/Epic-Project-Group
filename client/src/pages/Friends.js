@@ -41,6 +41,7 @@ const Friends = () => {
             })
     }, [cookies, navigate, removeCookie, currUser]);
 
+    // sets up user profile once user and restaurant information is finished loading
     useEffect(() => {
         if (
             !isLoggedIn ||
@@ -50,6 +51,8 @@ const Friends = () => {
             return;
         }
         const signedInUser = usersSlice.users.filter((user) => user._id === currUser)[0];
+        // console.log("signedInUser");
+        // console.log(signedInUser);
         setFriendsLists(dispatch, signedInUser.friends, signedInUser.incomingRequests, signedInUser.outgoingRequests);
         setLoaded(true);
     }, [isLoggedIn, usersSlice.getUsers, restaurantsSlice.getRestaurants])

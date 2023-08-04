@@ -11,6 +11,11 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import Discover from "./pages/Discover";
+import RestaurantSpotlight from "./pages/RestaurantSpotlight";
+import { useEffect } from "react";
+import { getCollectionsAsync } from "./redux/thunks/collectionsThunks";
+import { useDispatch } from "react-redux";
+
 function App() {
     return (
         <div className="App">
@@ -21,6 +26,7 @@ function App() {
                     <Route path={"/search"} element={<Search />}></Route>
                     <Route path={"/collections"} element={<Collections />}></Route>
                     <Route path={"/collections/:collectionId"} element={<CollectionPage />}></Route>
+                    <Route path={"/restaurants/:placeID"} element={<RestaurantSpotlight />}></Route>
                     <Route path={"/friends/*"} element={<Friends />}></Route>
                     <Route path={"/login"} element={<Login />}></Route>
                     <Route path={"/signup"} element={<Signup />}></Route>

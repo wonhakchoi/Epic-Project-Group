@@ -25,7 +25,6 @@ const Friends = () => {
             })
     }, [cookies, navigate, removeCookie]);
 
-
     return (
         <div className="friends-container">
             {!loaded ? (
