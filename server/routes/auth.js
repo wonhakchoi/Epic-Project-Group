@@ -7,7 +7,7 @@ const cors = require('cors');
 
 router.options('*', cors())
 router.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
@@ -17,6 +17,7 @@ router.use(function (req, res, next) {
 router.post('/', userVerification);
 router.post('/login', Login);
 router.post("/signup", Signup);
+// router.post('/logout', Logout);
 
 // router.post("/login", async (req, res) => {
 //     const { email, password } = req.body

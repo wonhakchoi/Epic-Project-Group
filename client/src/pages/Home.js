@@ -2,78 +2,21 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Box, Button, Typography, styled } from "@mui/material";
-import { Link } from "react-router-dom";
+import {Box, Button, Typography, styled} from "@mui/material";
+import {Link} from "react-router-dom";
 
 import SearchBar from "../components/SearchBar";
 import CollectionPopup from "../components/collections/CollectionPopup";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
-import axios from "axios";
+
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from "react-router-dom";
+import {useCookies} from "react-cookie";
 import LoadingUsers from "../components/users/LoadingUsers";
 import RedirectLoading from "../components/login/redirectLoading";
+import {postAuthAsync} from "../redux/thunks/authenticationThunks";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies([]);
-
-  const [username, setUserName] = useState("");
-
-  const { error, user, isLoggedIn } = useSelector(
-    (state) => state.authentication.authentication
-  );
-  const STATES = {
-    LOADING: "loading",
-    REDIRECTING: "redirecting",
-    COMPLETE: "complete",
-  };
-
-  const [state, setState] = useState(STATES.LOADING);
-
-  useEffect(() => {
-    const verifyCookie = async () => {
-      if (!cookies.token) {
-        navigate("/login");
-        setState(STATES.COMPLETE);
-      }
-      try {
-        // https://stackoverflow.com/questions/42474262/cors-issue-with-external-api-works-via-postman-but-not-http-request-with-axios
-        return axios("http://localhost:3001/auth/", {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-          },
-          credentials: "same-origin",
-          withCredentials: true,
-        }).then((response) => {
-          console.log(response.data);
-          let data = response.data;
-          const { status, user } = data;
-          console.log(status);
-
-          // setUserName(user.firstName);
-
-          if (status) {
-            setUserName(user.firstName);
-            setState(STATES.COMPLETE);
-            // console.log(user);
-            return <div>Hello {user.firstName}</div>;
-          } else {
-            setState(STATES.COMPLETE);
-            return removeCookie("token"), navigate("/login");
-          }
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    verifyCookie();
-  }, [cookies, navigate, removeCookie]);
-
   const settings = {
     dots: true,
     infinite: true,
@@ -91,19 +34,29 @@ const Home = () => {
     position: "relative",
   };
 
-  const Overlay = styled("div")({
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "white",
-  });
+    const navigate = useNavigate();
+    const [cookies, removeCookie] = useCookies(['token']);
+    const dispatch = useDispatch();
+    const STATES = {
+        LOADING: "loading",
+        REDIRECTING: "redirecting",
+        COMPLETE: "complete",
+    };
+
+    const [state, setState] = useState(STATES.LOADING);
+
+    useEffect(() => {
+        dispatch(postAuthAsync(cookies.token))
+            .then((data) => {
+                const s = data.payload.status;
+                if (!s) {
+                    removeCookie('token');
+                    navigate('/login');
+                }
+                setState(STATES.COMPLETE);
+            })
+    }, [cookies, navigate, removeCookie]);
+
 
   const buttonStyle = {
     color: "white",

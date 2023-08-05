@@ -1,13 +1,7 @@
-import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  signup,
-  setMessage,
-  clearMessage,
-  verifySession,
-} from "../../redux/actions/authActions";
-import { useCookies } from "react-cookie";
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useCookies} from "react-cookie";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -17,11 +11,13 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
 import RestaurantMenuOutlinedIcon from "@mui/icons-material/RestaurantMenuOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Alert } from "@mui/material";
+import {signupAsync} from "../../redux/thunks/authenticationThunks";
 
 // resource used: https://mui.com/material-ui/getting-started/templates/
 
@@ -44,16 +40,18 @@ function Copyright(props) {
 }
 
 const SignupForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstname] = useState("");
-  const [lastName, setLastname] = useState("");
-  const { error, user, isLoggedIn } = useSelector(
-    (state) => state.authentication.authentication
-  );
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies([]);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [firstName, setFirstname] = useState('');
+    const [lastName, setLastname] = useState('');
+    const error = useSelector((state) => state.sauth.error);
+    const isLoggedIn = useSelector((state) => state.sauth.isLoggedIn);
+    const dispatch = useDispatch();
+    const [cookies, setCookie] = useCookies([]);
+
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    };
 
   useEffect(() => {
     return () => {
@@ -74,19 +72,21 @@ const SignupForm = () => {
   const handleFirstnameChange = (e) => {
     setFirstname(e.target.value);
   };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Dispatch login action with email and password
+        dispatch(signupAsync({email: email, password: password, firstName: firstName, lastName: lastName}))
+            .then((data) => {
+                let token = data.payload.token;
+                setCookie('token', token);
+            })
+    };
 
   const handleLastnameChange = (e) => {
     setLastname(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Dispatch login action with email and password
-    dispatch(signup(email, password, firstName, lastName));
-    dispatch(setMessage());
-    // navigate("/")
-  };
-
+  
   if (isLoggedIn) {
     return (
       <Box

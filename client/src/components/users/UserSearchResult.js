@@ -4,14 +4,14 @@ import { Status } from "../../utils/userUtils";
 import { acceptIncomingAsync, sendOutgoingAsync } from "../../redux/thunks/usersThunks";
 import "./UserSearchResult.css";
 
-const UserSearchResult = ({ id, name, status }) => {
+const UserSearchResult = ({ id, icon, name, status }) => {
     const icons = useSelector((state) => state.users.iconLocations);
-    const authenticationSlice = useSelector((state) => state.authentication.authentication);
+    let currUser = useSelector((state) => state.sauth.currUser);
     const dispatch = useDispatch();
 
     return (
         <div className="search-result-container">
-            <img className="user-search-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
+            <img className="user-search-icon" src={icons[icon]} alt={name} />
             <h3 className="user-search-name">{name}</h3>
             {status === Status.FRIEND ? (
                 <div className="user-container">
@@ -29,7 +29,7 @@ const UserSearchResult = ({ id, name, status }) => {
                         className="friends-icon confirm-icon"
                         src="/images/web-icons/confirm.png"
                         alt="Requested"
-                        onClick={() => dispatch(acceptIncomingAsync({ userID: authenticationSlice.user, otherID: id }))}
+                        onClick={() => dispatch(acceptIncomingAsync({ userID: currUser, otherID: id }))}
                     ></img>
                     <p className="friend-text">Accept Request?</p>
                 </div>
@@ -39,7 +39,7 @@ const UserSearchResult = ({ id, name, status }) => {
                         className="friends-icon add-friend-icon"
                         src="/images/web-icons/addFriend.png"
                         alt="Add Friend"
-                        onClick={() => dispatch(sendOutgoingAsync({ userID: authenticationSlice.user, otherID: id }))}
+                        onClick={() => dispatch(sendOutgoingAsync({ userID: currUser, otherID: id }))}
                     ></img>
                     <p className="friend-text">Add Friend</p>
                 </div>

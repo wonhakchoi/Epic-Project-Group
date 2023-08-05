@@ -1,0 +1,29 @@
+:root {
+    --background: #edede9;
+    --foreground: #d6ccc2;
+    --link: #d5bdaf;
+    --link-hover: #e3d5ca;
+}
+
+.friends-navbar {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--background);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.friends-navbar-link {
+    color: black;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: all 0.2s, transform 0.2s;
+}
+
+.friends-navbar-link:hover {
+    background-color: var(--link-hover);
+    transform: scale(1.1);
+}

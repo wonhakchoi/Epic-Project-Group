@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,7 +9,7 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import PeopleIcon from "@mui/icons-material/People";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -20,26 +20,31 @@ import ExploreIcon from "@mui/icons-material/Explore";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
-import { verifySession } from "../redux/actions/authActions";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import {postAuthAsync} from "../redux/thunks/authenticationThunks";
+import {doLogout} from "../redux/reducers/authenticationSlice";
 
 export default function ButtonAppBar() {
-  const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up("xs"));
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { error, user, isLoggedIn } = useSelector(
-    (state) => state.authentication.authentication
-  );
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies([]);
+    const theme = useTheme();
+    const isLargeScreen = useMediaQuery(theme.breakpoints.up("xs"));
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const isLoggedIn = useSelector((state) => state.sauth.isLoggedIn);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [cookies, setCookie, removeCookie] = useCookies(['token']);
 
-  useEffect(() => {
-    return () => {
-      dispatch(verifySession(cookies));
-    };
-  }, [dispatch]);
+    useEffect(() => {
+        dispatch(postAuthAsync(cookies.token))
+            .then((data) => {
+                const s = data.payload.status;
+                if (s) {
+                    setCookie('token', data.payload.token);
+                } else {
+                    setCookie('token', null);
+                }
+            })
+    }, [cookies, navigate, setCookie]);
 
   const toggleDrawer = (open) => () => {
     setIsDrawerOpen(open);
@@ -49,11 +54,12 @@ export default function ButtonAppBar() {
     setIsDrawerOpen(false);
   };
 
-  const handleLogout = () => {
-    setIsDrawerOpen(false);
-    removeCookie("token");
-    navigate("/signup");
-  };
+    const handleLogout = () => {
+        removeCookie('token')
+        dispatch(doLogout());
+        setIsDrawerOpen(false);
+        navigate("/login");
+    };
 
   return (
     <Box sx={{ flexGrow: 1, fontSize: "2rem" }}>

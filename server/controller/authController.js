@@ -21,7 +21,7 @@ module.exports.Signup = async (req, res, next) => {
                 .status(401)
                 .json({
                     message: 'This email is already in use! Log in or sign up with a new email.'
-                });;
+                })
         }
 
         const user = await User.create({ email, password, firstName, lastName, createdAt });
@@ -32,7 +32,7 @@ module.exports.Signup = async (req, res, next) => {
         });
         res
             .status(201)
-            .json({ message: "User signed in successfully", success: true, user });
+            .json({ message: "User signed in successfully", success: true, user, token: token});
         next();
     } catch (error) {
         console.error(error);
@@ -73,9 +73,16 @@ module.exports.Login = async (req, res, next) => {
         });
         console.log("authController.js");
         console.log(user);
-        res.status(201).json({ message: "User logged in successfully", success: true, user });
+        res.status(201).json({ message: "User logged in successfully", success: true, user,  token: token});
         next()
     } catch (error) {
         console.error(error);
     }
 }
+
+// // https://stackoverflow.com/questions/54861709/cookies-removeabc-not-working-in-reactjs
+// module.exports.Logout = async (req, res) => {
+//     res.cookie('token', 'none', {
+//         expires: new Date(Date)
+//     })
+// }

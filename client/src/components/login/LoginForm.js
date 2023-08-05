@@ -1,28 +1,23 @@
-import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  login,
-  setMessage,
-  clearMessage,
-  verifySession,
-} from "../../redux/actions/authActions";
-import { useCookies } from "react-cookie";
-import LoadingUsers from "../users/LoadingUsers";
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useCookies} from "react-cookie";
+import LoadingUsers from '../users/LoadingUsers';
 
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import RestaurantMenuOutlinedIcon from "@mui/icons-material/RestaurantMenuOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Alert } from "@mui/material";
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import RestaurantMenuOutlinedIcon from '@mui/icons-material/RestaurantMenuOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {Alert} from '@mui/material';
+import {loginAsync} from "../../redux/thunks/authenticationThunks";
 
 // resource used: https://mui.com/material-ui/getting-started/templates/
 
@@ -45,24 +40,16 @@ function Copyright(props) {
 }
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { error, user, isLoggedIn } = useSelector(
-    (state) => state.authentication.authentication
-  );
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const error = useSelector((state) => state.sauth.error);
+    const isLoggedIn = useSelector((state) => state.sauth.isLoggedIn);
+    const dispatch = useDispatch();
 
-  const [loaded, setLoaded] = useState(false);
+    const [cookies, setCookie] = useCookies(['token']);
 
-  const [cookies, removeCookie] = useCookies([]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(verifySession(cookies));
-      // Clear the error message when the component unmounts
-      dispatch(clearMessage());
-      setLoaded(true);
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
     };
   }, [dispatch]);
 
@@ -74,12 +61,49 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Dispatch login action with email and password
-    dispatch(login(email, password));
-    dispatch(setMessage());
-  };
+   const handleSubmit = (e) => {
+        e.preventDefault();
+        // Dispatch login action with email and password
+        dispatch(loginAsync({email: email, password: password}))
+            .then((data) => {
+                // set cookie on fulfill
+                let token = data.payload.token;
+                setCookie('token', token);
+            })
+            .finally(() => {
+                setEmail('');
+                setPassword('');
+            })
+    };
+
+    if (isLoggedIn) {
+        return (
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Avatar sx={{m: 1, bgcolor: 'success.main'}}>
+                    <RestaurantMenuOutlinedIcon/>
+                </Avatar>
+
+                <Alert
+                    action={
+                        <Button href="/" color="inherit" size="small">
+                            HOME
+                        </Button>
+                    }
+                    sx={{mt: 4}}
+                >
+                    You have logged in successfully! Go to home page.
+                </Alert>
+                {/* <button onClick={Logout}>LOGOUT</button> */}
+            </Box>
+        )
+    }
 
   if (!loaded) {
     return <LoadingUsers />;

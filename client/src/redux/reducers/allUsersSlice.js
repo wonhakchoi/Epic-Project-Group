@@ -21,6 +21,7 @@ const allUsersSlice = createSlice({
             .addCase(getUsersAsync.fulfilled, (state, action) => {
                 state.getUsers = REQUEST_STATE.FULFILLED;
                 state.users = action.payload.data;
+                // console.log(action.payload.data)
             })
             .addCase(getUsersAsync.rejected, (state, action) => {
                 state.getUsers = REQUEST_STATE.REJECTED;
