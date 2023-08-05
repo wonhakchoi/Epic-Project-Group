@@ -4,7 +4,7 @@ import { unfriendAsync } from "../../redux/thunks/usersThunks";
 import RatingService from "../../redux/services/ratingsService";
 import "./Friend.css";
 import "./Buttons.css";
-import { Box, Card, CardActions, CardContent, Button, Typography, Grid, Item } from '@mui/material';
+import { Box, Card, CardActions, CardContent, Button, Typography, Grid, Container } from '@mui/material';
 
 
 const Friend = ({ id, icon, name, biography }) => {
@@ -29,8 +29,8 @@ const Friend = ({ id, icon, name, biography }) => {
 
     return (
         // <Card sx={{ minWidth: 100, maxWidth: 500 }}>
-        <Grid item xs={2} sm={4} md={4}>
-            <Card sx={{ minWidth: 100, maxWidth: 300 }}>
+        <Grid>
+            <Card sx={{ minWidth: 100, maxWidth: 500}}>
                 <CardContent>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         Word of the Day

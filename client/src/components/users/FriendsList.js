@@ -2,7 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Friend from "./Friend";
 import "./FriendsList.css";
-import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box, Container } from "@mui/material";
+import { flexbox } from '@mui/system';
+
 
 const FriendsList = () => {
     const friendsSlice = useSelector((state) => state.users.userFriends);
@@ -19,6 +21,78 @@ const FriendsList = () => {
             </Typography>
 
             <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                minHeight="12vh"
+                // display="grid"
+                // gridTemplateColumns="repeat(12, 1fr)"
+                gap={5}
+                sx={{
+                    // display: 'flex',
+                    flexDirection: 'row',
+                    // p: 1,
+                    // m: 1,
+                    // bgcolor: 'background.paper',
+                    // borderRadius: 1,
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                    // ml: 5,
+                    // maxWidth: 800,
+                }}
+            >
+
+                <Friend
+                    key={123}
+                    id={usersSlice._id}
+                    icon={123}
+                    name={123}
+                    biography={123}
+                    ratedRestaurants={123}
+                />
+                <Friend
+                    key={123}
+                    id={usersSlice._id}
+                    icon={123}
+                    name={123}
+                    biography={123}
+                    ratedRestaurants={123}
+                />
+                <Friend
+                    key={123}
+                    id={usersSlice._id}
+                    icon={123}
+                    name={123}
+                    biography={123}
+                    ratedRestaurants={123}
+                />
+                <Friend
+                    key={123}
+                    id={usersSlice._id}
+                    icon={123}
+                    name={123}
+                    biography={123}
+                    ratedRestaurants={123}
+                />
+                <Friend
+                    key={123}
+                    id={usersSlice._id}
+                    icon={123}
+                    name={123}
+                    biography={123}
+                    ratedRestaurants={123}
+                />
+                <Friend
+                    key={123}
+                    id={usersSlice._id}
+                    icon={123}
+                    name={123}
+                    biography={123}
+                    ratedRestaurants={123}
+                />
+            </Box>
+
+            <Box
                 sx={{
                     display: 'flex',
                     flexDirection: 'row',
@@ -28,27 +102,10 @@ const FriendsList = () => {
                     borderRadius: 1,
                     flexWrap: 'wrap',
                     justifyContent: 'center',
+                    maxWidth: 800,
                 }}
             >
-                <Typography>Item 1</Typography>
-                <Typography>Item 2</Typography>
-                <Typography>Item 3</Typography>
-            </Box>
 
-            <Grid
-                container
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-
-                // container
-                // justifyContent="center"
-                // alignItems="center"
-                // spacing={1}
-                // rowSpacing={3}
-                spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}
-                sx={{ mb: 8 }}
-            >
                 {friendsSlice.friends.map((id) => {
                     const user = usersSlice.users.filter((user) => user._id === id)[0];
                     // console.log(user);
@@ -63,7 +120,8 @@ const FriendsList = () => {
                         />
                     );
                 })}
-            </Grid>
+                {/* </Grid> */}
+            </Box>
 
         </div>
     );
