@@ -6,7 +6,6 @@ import {
     getCollectionsAsync,
     getRestaurantsAsync
 } from "../thunks/collectionsThunks";
-import {postAuthAsync} from "../thunks/authenticationThunks";
 
 // reducer logic for collections
 
@@ -99,15 +98,6 @@ const collectionsSlice = createSlice({
             .addCase(deleteRestaurantCollectionAsync.fulfilled, (state) => {
                 state.deleteRestaurant = REQUEST_STATE.FULFILLED;
             })
-            // .addCase(postAuthAsync.pending, (state) => {
-            //     state.postAuth = REQUEST_STATE.PENDING;
-            // })
-            // .addCase(postAuthAsync.fulfilled, (state) => {
-            //     state.postAuth = REQUEST_STATE.FULFILLED;
-            // })
-            // .addCase(postAuthAsync.rejected, (state) => {
-            //     state.postAuth = REQUEST_STATE.REJECTED;
-            // })
     }
 })
 

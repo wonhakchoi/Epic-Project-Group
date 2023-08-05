@@ -9,8 +9,8 @@ import getCollections, {
 // thunks for collections actions
 export const getCollectionsAsync = createAsyncThunk(
     'collections/getCollections',
-    async () => {
-        return getCollections();
+    async (userId) => {
+        return getCollections(userId);
     }
 )
 
@@ -30,8 +30,8 @@ export const getRestaurantsAsync = createAsyncThunk(
 
 export const addNewCollectionAsync = createAsyncThunk(
     'collections/addNewCollection',
-    async ({name, img}) => {
-        return addNewCollection({name: name, img: img});
+    async ({name, img, userId}) => {
+        return addNewCollection({name: name, img: img, userId: userId});
     }
 )
 

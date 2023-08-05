@@ -1,8 +1,10 @@
 import axios from "axios";
 
 // requests for collections
-export const getCollections = async () => {
-    let data = (await axios.get(`${process.env.REACT_APP_BACKEND}/collections`)).data;
+export const getCollections = async (userId) => {
+    let data = (await axios.get(`${process.env.REACT_APP_BACKEND}/collections/${userId}`)).data;
+    console.log(userId);
+    console.log('collections\n' + JSON.stringify(data));
     return data;
 }
 
@@ -18,12 +20,13 @@ export const getRestaurants = async (collectionId) => {
 
 }
 
-export const addNewCollection = async ({name, img}) => {
+export const addNewCollection = async ({name, img, userId}) => {
     const data = (await axios.post(`${process.env.REACT_APP_BACKEND}/collections`,
         {
             name: name,
             img: img,
             pinned: false,
+            userId: userId
         })).data
     return data;
 

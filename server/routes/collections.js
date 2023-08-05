@@ -3,6 +3,36 @@ const {Cauliflower} = require("../database/models/cauliflowerModel");
 const router = express.Router();
 const axios = require("axios");
 
+// POST new collection
+router.post('/', async (req, res) => {
+
+    let collection = {
+        name: req.body.name,
+        img: req.body.img,
+        restaurants: [],
+        userId: req.body.userId
+    }
+    let newCauliflower = new Cauliflower(collection)
+    try {
+        newCauliflower.save();
+    } catch (e) {
+        console.error(e)
+    }
+    res.send(collection);
+})
+
+
+// GET user collections
+router.get('/:userId', async (req, res) => {
+    let collections = [];
+    const uId = req.params.userId;
+    try {
+        collections = await Cauliflower.find({userId: uId}).exec();
+    } catch (e) {
+        console.error(e)
+    }
+    return res.send(collections);
+})
 
 // GET all collections
 router.get('/', async (req, res) => {
@@ -79,21 +109,21 @@ router.delete('/:collectionId/:restaurantId/', async (req, res) => {
 })
 
 // POST make new collection
-router.post('/', async (req, res) => {
-
-    let collection = {
-        name: req.body.name,
-        img: req.body.img,
-        restaurants: []
-    }
-    let newCauliflower = new Cauliflower(collection)
-    try {
-        newCauliflower.save();
-    } catch (e) {
-        console.error(e)
-    }
-    res.send(collection);
-})
+// router.post('/', async (req, res) => {
+//
+//     let collection = {
+//         name: req.body.name,
+//         img: req.body.img,
+//         restaurants: []
+//     }
+//     let newCauliflower = new Cauliflower(collection)
+//     try {
+//         newCauliflower.save();
+//     } catch (e) {
+//         console.error(e)
+//     }
+//     res.send(collection);
+// })
 
 // PUT add restaurant to collection
 router.put('/:collectionId/:restaurantId/', async (req, res) => {
