@@ -22,68 +22,79 @@ const DiscoverRatings = () => {
     const resultsPerPage = 4;
 
     // make initial fetch when entering page
+    // const shouldFetch = useRef(true);
+    // useEffect(() => {
+    //     if (shouldFetch.current) {
+    //         shouldFetch.current = false;
+    //         dispatch(getUsersAsync());
+    //         dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }))
+    //             .then((data) => {
+    //                 setRatings(oldRatings => [...oldRatings, ...data.payload.data.ratings]);
+
+    //                 for (const rating of data.payload.data.ratings) {
+    //                     // console.log(rating.restaurantID);
+    //                     getRestaurantByPlaceID(rating.restaurantID).then((res) => {
+    //                         // console.log(res.data.result.name);
+    //                         setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: res.data.result.name }]);
+    //                         // setRestaurants(oldArray => [...oldArray, res.data.result.name]);
+    //                     })
+    //                     // const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
+    //                     // console.log(restaurantData.data.result.name);
+    //                 }
+
+    //             });
+
+    //     }
+    // }, []);
+
     const shouldFetch = useRef(true);
     useEffect(() => {
+        const fetchUserAndRestaurant = async () => {
+            try {
+                dispatch(getUsersAsync());
+                dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }))
+                    .then((data) => {
+                        setRatings(oldRatings => [...oldRatings, ...data.payload.data.ratings]);
+
+                        for (const rating of data.payload.data.ratings) {
+                            // console.log(rating.restaurantID);
+                            getRestaurantByPlaceID(rating.restaurantID).then((res) => {
+                                // console.log(res.data.result.name);
+                                setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: res.data.result.name }]);
+                                // setRestaurants(oldArray => [...oldArray, res.data.result.name]);
+                            })
+                            // const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
+                            // console.log(restaurantData.data.result.name);
+                        }
+                        // console.log("restaurants");
+                        // console.log(restaurants);
+
+                    });
+            } catch (err) {
+                console.log(err);
+            }
+        }
         if (shouldFetch.current) {
             shouldFetch.current = false;
-            dispatch(getUsersAsync());
-            dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }))
-                .then((data) => {
-                    setRatings(oldRatings => [...oldRatings, ...data.payload.data.ratings]);
-
-                    for (const rating of data.payload.data.ratings) {
-                        // console.log(rating.restaurantID);
-                        getRestaurantByPlaceID(rating.restaurantID).then((res) => {
-                            // console.log(res.data.result.name);
-                            setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: res.data.result.name }]);
-                            // setRestaurants(oldArray => [...oldArray, res.data.result.name]);
-                        })
-                        // const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                        // console.log(restaurantData.data.result.name);
-                    }
-
-                });
-
+            fetchUserAndRestaurant();
         }
-    }, []);
+        // fetchUserAndRestaurant();
+
+    }, [dispatch]);
 
     // sets 'loaded' to true only once the restaurant, ratings, and users are all loaded
     useEffect(() => {
+        console.log('restaurant length')
         console.log(restaurants.length);
-        console.log(restaurants);
-        if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || restaurants.length < resultsPerPage) {
+        // console.log(restaurants);
+        console.log(ratings.length);
+        const lengthOfLoadedRestaurant = ratings.length < resultsPerPage ? ratings.length : resultsPerPage;
+        if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || restaurants.length < resultsPerPage || !ratings) {
             return;
         }
         setLoaded(true);
-    }, [usersSlice.getUsers, usersSlice.users, restaurants, dispatch]);
+    }, [usersSlice.getUsers, usersSlice.users, restaurants, ratings, dispatch]);
 
-    useEffect(() => {
-        // { restaurantID: "", restaurantName: "" }
-        // setRestaurants(prevArray => [...prevArray, { restaurantID: "", restaurantName: "" }]);
-
-        // for (restaurant of )
-        // for each rating, get the restaurant ID, then use getRestaurantByPlcaeID to get restaurant name
-        // store it in restaurants
-        const fetchRestaurantName = async (placeID) => {
-            try {
-                const restaurantData = await getRestaurantByPlaceID(placeID);
-                return restaurantData.data.result.name;
-                // setRestaurants(restaurantData.data.result);
-                // console.log(restaurantData.data.result.name);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchRestaurantName("ChIJw-s4pFdxhlQRh2jK22eXlnU");
-
-        // console.log('hi')
-        // for (const rating of ratings) {
-        //     console.log(rating);
-        // }
-
-
-    }, [dispatch]);
 
     // fetches more ratings if not all already fetched
     const fetchMoreRatings = () => {
@@ -97,16 +108,17 @@ const DiscoverRatings = () => {
 
         dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }))
             .then((data) => {
-
+                setRatings(oldRatings => [...oldRatings, ...data.payload.data.ratings]);
                 for (const rating of data.payload.data.ratings) {
                     // console.log(rating.restaurantID);
-                    getRestaurantByPlaceID(rating.restaurantID).then((res) => {
-                        // console.log(res.data.result.name);
-                        setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: res.data.result.name }]);
-                        // setRestaurants(oldArray => [...oldArray, res.data.result.name]);
-                    }).catch((err) => {
-                        console.log(err);
-                    })
+                    getRestaurantByPlaceID(rating.restaurantID)
+                        .then((res) => {
+                            // console.log(res.data.result.name);
+                            setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: res.data.result.name }]);
+                            // setRestaurants(oldArray => [...oldArray, res.data.result.name]);
+                        }).catch((err) => {
+                            console.log(err);
+                        })
                     // const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
                     // console.log(restaurantData.data.result.name);
                 }
@@ -126,10 +138,11 @@ const DiscoverRatings = () => {
             const matchedRestaurant = restaurants.filter((restaurant) => restaurant.restaurantID === placeID);
             console.log(matchedRestaurant[0]);
             return matchedRestaurant[0].restaurantName;
-        } catch(err) {
-            console.log(err);
+        } catch (err) {
+            console.log('loading restaurant name');
+            // return "Loading Restaurant"
         }
-        
+
     };
 
     if (!loaded) {
