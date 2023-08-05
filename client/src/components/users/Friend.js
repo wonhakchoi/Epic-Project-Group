@@ -73,6 +73,7 @@ const Friend = ({ id, icon, name, biography }) => {
                             variant="outlined"
                             color="success"
                             sx={{ minWidth: '120px', minHeight: '30px' }}
+                            onClick={() => console.log(`View Profile ID ${id}`)}
                         >
                             View
                         </Button>

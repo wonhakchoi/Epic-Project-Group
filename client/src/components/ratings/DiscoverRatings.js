@@ -15,6 +15,7 @@ const DiscoverRatings = () => {
     const dispatch = useDispatch();
     const usersSlice = useSelector((state) => state.users.allUsers);
     const [loaded, setLoaded] = useState(false);
+    const [ratings, setRatings] = useState([]);
     const [restaurants, setRestaurants] = useState([]);
     // const loggedInUser = useSelector((state) => state.sauth.currUser)
 
@@ -26,7 +27,10 @@ const DiscoverRatings = () => {
         if (shouldFetch.current) {
             shouldFetch.current = false;
             dispatch(getUsersAsync());
-            dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
+            dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }))
+                .then((data) => {
+                    setRatings(oldRatings => [...oldRatings, ...data.payload.data.ratings]);
+                });
         }
     }, []);
 
@@ -46,7 +50,19 @@ const DiscoverRatings = () => {
         // for each rating, get the restaurant ID, then use getRestaurantByPlcaeID to get restaurant name
         // store it in restaurants
         const fetchRestaurantName = async (placeID) => {
-            console.log(ratingsSlice.ratings);
+            // dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }))
+            //     .then((data) => {
+            //         console.log(data.payload.data.ratings);
+            //         // const s = data.payload.status;
+            //         // if (!s) {
+            //         //     removeCookie('token');
+            //         //     navigate('/login');
+            //         // }
+            //         // setState(STATES.COMPLETE);
+            //     })
+            // const ratings = await ratingsSlice.ratings;
+            // console.log("ratings");
+            // console.log(ratings);
             try {
                 const restaurantData = await getRestaurantByPlaceID(placeID);
                 return restaurantData.data.result.name;
@@ -58,7 +74,6 @@ const DiscoverRatings = () => {
         };
 
         fetchRestaurantName("ChIJw-s4pFdxhlQRh2jK22eXlnU");
-        // fetchRestaurantName("testing");
 
 
     }, [dispatch]);
@@ -68,7 +83,10 @@ const DiscoverRatings = () => {
         if (ratingsSlice.ratings.length >= ratingsSlice.databaseSize) {
             return;
         }
-        dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
+        dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }))
+            .then((data) => {
+                setRatings(oldRatings => [...oldRatings, ...data.payload.data.ratings]);
+            });
     };
 
     // find user by ID
@@ -86,6 +104,8 @@ const DiscoverRatings = () => {
             <Typography variant="h2" sx={{ marginTop: "30px" }}>
                 All Reviews
             </Typography>
+            {console.log("hello")}
+            {console.log(ratings)}
             {ratingsSlice.ratings.map((rating) => (
                 <RatingCard
                     key={rating._id}

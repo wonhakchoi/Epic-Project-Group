@@ -48,10 +48,14 @@ const RatingCard = ({ id, name, restaurant, score, comment, date }) => {
                         }
                         title={
                             <Typography mr={6} gutterBottom variant="h6" component="h2">
-                               {name}
+                                {name}
                             </Typography>
                         }
-                        subheader={date}
+                        subheader={
+                            <Typography mr={6} gutterBottom variant="body2" color="text.secondary">
+                                {date}
+                            </Typography>
+                        }
                     />
                     <CardMedia
                         component="img"
