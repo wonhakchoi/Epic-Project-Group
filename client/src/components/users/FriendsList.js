@@ -25,7 +25,7 @@ const FriendsList = () => {
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
-                minHeight="12vh"
+                minHeight="10vh"
                 gap={5}
                 sx={{
                     flexDirection: 'row',

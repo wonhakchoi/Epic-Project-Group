@@ -4,7 +4,7 @@ import { unfriendAsync } from "../../redux/thunks/usersThunks";
 import RatingService from "../../redux/services/ratingsService";
 import "./Friend.css";
 import "./Buttons.css";
-import { Box, Card, CardActions, CardContent, Button, Typography, Grid, Container } from '@mui/material';
+import { Box, Card, CardActions, CardContent, Button, Typography, CardHeader, Divider, Grid } from '@mui/material';
 
 
 const Friend = ({ id, icon, name, biography }) => {
@@ -28,53 +28,68 @@ const Friend = ({ id, icon, name, biography }) => {
     }, []);
 
     return (
-        <Card sx={{ minWidth: 100, maxWidth: 500 }}>
+        <Card sx={{ minWidth: 120, maxWidth: 500, p: 1 }}>
+            <CardHeader
+                avatar={
+                    <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
+                }
+                title={
+                    <Typography mr={2} variant="h6" component="h2">
+                        {name}
+                    </Typography>
+                }
+            />
             <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Word of the Day
+                <Typography color="body2" variant="caption">
+                    {biography}
                 </Typography>
-                <Typography variant="h5" component="div">
-                    hello
+                <Divider variant="middle" sx={{ mt: 1, mb: 1 }} />
+                <Typography variant="h6" component="div">
+                    Rated Restaurants
                 </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    adjective
-                </Typography>
-                <Typography variant="body2">
-                    well meaning and kindly.
-                    <br />
-                    {'"a benevolent smile"'}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="small">Learn More</Button>
-            </CardActions>
-        </Card>
+                {ratings ?
+                    ratings.map((rating) =>
+                        // <h3>{rating.restaurantID}</h3>
+                        <Typography sx={{ mb: 1.5, fontSize: 14 }} color="text.secondary">
+                            {rating.restaurantID}
+                        </Typography>
+                    )
+                    :
+                    <Typography sx={{ mb: 1.5, fontSize: 14 }} color="text.secondary">
+                        Loading...
+                    </Typography>
+                }
 
-        // <div className="friend-container">
-        //     <section className="friend-header">
-        //         <img className="user-icon" src={icons[icon]} alt={name} />
-        //         <h3>{name}</h3>
-        //         <p className="biography">{biography}</p>
-        //     </section>
-        //     <section className="rated-restaurants">
-        //         <b>Rated Restaurants</b>
-        //         {ratings ? ratings.map((rating) => <h3>{rating.restaurantID}</h3>) : <h3>Loading...</h3>}
-        //     </section>
-        //     <section className="friend-buttons">
-        //         <button
-        //             className="accept-button friend-request-button"
-        //             onClick={() => console.log(`View Profile ID ${id}`)}
-        //         >
-        //             View
-        //         </button>
-        //         <button
-        //             className="reject-button friend-request-button"
-        //             onClick={() => dispatch(unfriendAsync({ userID: currUser, otherID: id }))}
-        //         >
-        //             Unfriend
-        //         </button>
-        //     </section>
-        // </div>
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={1}
+                    fullWidth
+                    sx={{ mt: 3 }}
+                >
+                    <Grid item xs={6}>
+                        <Button
+                            variant="outlined"
+                            color="success"
+                            sx={{ minWidth: '120px', minHeight: '30px' }}
+                        >
+                            View
+                        </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Button
+                            sx={{ minWidth: '120px', minHeight: '30px' }}
+                            variant="outlined"
+                            color="error"
+                            onClick={() => dispatch(unfriendAsync({ userID: currUser, otherID: id }))}>
+                            Unfriend
+                        </Button>
+                    </Grid>
+                </Grid>
+            </CardContent>
+        </Card>
     );
 };
 
