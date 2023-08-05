@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getRatingsAsync } from "../../redux/thunks/ratingsThunks";
 import { getUsersAsync } from "../../redux/thunks/usersThunks";
@@ -22,54 +22,21 @@ const DiscoverRatings = () => {
     const resultsPerPage = 4;
 
     // make initial fetch when entering page
-    // const shouldFetch = useRef(true);
-    // useEffect(() => {
-    //     if (shouldFetch.current) {
-    //         shouldFetch.current = false;
-    //         dispatch(getUsersAsync());
-    //         dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }))
-    //             .then((data) => {
-    //                 setRatings(oldRatings => [...oldRatings, ...data.payload.data.ratings]);
-
-    //                 for (const rating of data.payload.data.ratings) {
-    //                     // console.log(rating.restaurantID);
-    //                     getRestaurantByPlaceID(rating.restaurantID).then((res) => {
-    //                         // console.log(res.data.result.name);
-    //                         setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: res.data.result.name }]);
-    //                         // setRestaurants(oldArray => [...oldArray, res.data.result.name]);
-    //                     })
-    //                     // const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-    //                     // console.log(restaurantData.data.result.name);
-    //                 }
-
-    //             });
-
-    //     }
-    // }, []);
-
     const shouldFetch = useRef(true);
     useEffect(() => {
         const fetchUserAndRestaurant = async () => {
             try {
                 dispatch(getUsersAsync());
-                dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }))
-                    .then((data) => {
-                        setRatings(oldRatings => [...oldRatings, ...data.payload.data.ratings]);
+                const data = await dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
+                const ratingsArray = data.payload.data.ratings;
+                setRatings(oldRatings => [...oldRatings, ...ratingsArray]);
 
-                        for (const rating of data.payload.data.ratings) {
-                            // console.log(rating.restaurantID);
-                            getRestaurantByPlaceID(rating.restaurantID).then((res) => {
-                                // console.log(res.data.result.name);
-                                setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: res.data.result.name }]);
-                                // setRestaurants(oldArray => [...oldArray, res.data.result.name]);
-                            })
-                            // const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                            // console.log(restaurantData.data.result.name);
-                        }
-                        // console.log("restaurants");
-                        // console.log(restaurants);
-
-                    });
+                for (const rating of ratingsArray) {
+                    const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
+                    setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name }]);
+                }
+                console.log('setRestaurants');
+                console.log(restaurants);
             } catch (err) {
                 console.log(err);
             }
@@ -82,14 +49,51 @@ const DiscoverRatings = () => {
 
     }, [dispatch]);
 
+    const fetchRequest = useCallback(async () => {
+        if (ratingsSlice.ratings.length >= ratingsSlice.databaseSize) {
+            return;
+        }
+
+        try {
+            dispatch(getUsersAsync());
+            const data = await dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
+            const ratingsArray = data.payload.data.ratings;
+            setRatings(oldRatings => [...oldRatings, ...ratingsArray]);
+
+            for (const rating of ratingsArray) {
+                const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
+                setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name }]);
+            }
+
+            // await Promise.all(ratingsArray.map(async (rating) => {
+            //     const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
+            //     setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name }]);
+            // }))
+        } catch (err) {
+            console.log(err);
+        }
+    }, [restaurants, ratings, dispatch]);
+
+    // useEffect(() => {
+    //     // if (shouldFetch.current) {
+    //     //     shouldFetch.current = false;
+    //     //     fetchRequest();
+    //     // }
+    //     fetchRequest();
+
+    // }, [fetchRequest]);
+
+    
+
     // sets 'loaded' to true only once the restaurant, ratings, and users are all loaded
     useEffect(() => {
         console.log('restaurant length')
         console.log(restaurants.length);
-        // console.log(restaurants);
-        console.log(ratings.length);
+
         const lengthOfLoadedRestaurant = ratings.length < resultsPerPage ? ratings.length : resultsPerPage;
-        if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || restaurants.length < resultsPerPage || !ratings) {
+        // if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || restaurants.length < ratingsSlice.ratings.length || !ratings) {
+        // if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || restaurants.length < resultsPerPage || !ratings) {
+        if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || !restaurants || !ratings) {
             return;
         }
         setLoaded(true);
@@ -106,24 +110,26 @@ const DiscoverRatings = () => {
         //         setRatings(oldRatings => [...oldRatings, ...data.payload.data.ratings]);
         //     });
 
-        dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }))
-            .then((data) => {
-                setRatings(oldRatings => [...oldRatings, ...data.payload.data.ratings]);
-                for (const rating of data.payload.data.ratings) {
-                    // console.log(rating.restaurantID);
-                    getRestaurantByPlaceID(rating.restaurantID)
-                        .then((res) => {
-                            // console.log(res.data.result.name);
-                            setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: res.data.result.name }]);
-                            // setRestaurants(oldArray => [...oldArray, res.data.result.name]);
-                        }).catch((err) => {
-                            console.log(err);
-                        })
-                    // const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                    // console.log(restaurantData.data.result.name);
-                }
+        const fetchUserAndRestaurant = async () => {
+            try {
+                dispatch(getUsersAsync());
+                const data = await dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
+                const ratingsArray = data.payload.data.ratings;
+                setRatings(oldRatings => [...oldRatings, ...ratingsArray]);
+                // console.log('ratings')
+                // console.log(ratings)
+                await Promise.all(ratings.map(async (rating) => {
+                    const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
+                    setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name }]);
+                }))
 
-            });
+                console.log('setRestaurants');
+                console.log(restaurants);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchUserAndRestaurant();
     };
 
     // find user by ID
@@ -163,11 +169,11 @@ const DiscoverRatings = () => {
                 <RatingCard
                     key={rating._id}
                     id={rating._id}
-                    name={findUserByID(rating.userID).firstName ? findUserByID(rating.userID).firstName : ""}
+                    name={findUserByID(rating.userID).firstName ? findUserByID(rating.userID).firstName : "Name"}
                     // name={rating.userID}
                     // restaurant={restaurants[1].restaurantName}
                     // restaurant={rating.restaurantID}
-                    restaurant={findRestaurantByID(rating.restaurantID)}
+                    restaurant={findRestaurantByID(rating.restaurantID) ? findRestaurantByID(rating.restaurantID) : "Loading"}
                     score={rating.score}
                     comment={rating.comments ? rating.comments : ""}
                     date={rating.updatedAt}
@@ -179,7 +185,8 @@ const DiscoverRatings = () => {
                     className="load-more"
                     variant="h6"
                     component="div"
-                    onClick={fetchMoreRatings}
+                    // onClick={fetchMoreRatings}
+                    onClick={fetchRequest}
                     sx={{ marginTop: "30px" }}
                 >
                     See More Ratings
