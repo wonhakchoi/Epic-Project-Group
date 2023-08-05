@@ -12,7 +12,6 @@ export default function CollectionPopup() {
     const dispatch = useDispatch();
 
     function addToCollection(collection) {
-        // dispatch(addRestaurantToCollection({ collectionId: collection.id, restaurant: currRestaurant }));
         dispatch(addRestaurantCollectionAsync({collectionId: collection._id, restaurantId: currRestaurant.place_id}))
         handleClose();
     }
