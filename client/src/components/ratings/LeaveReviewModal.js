@@ -5,11 +5,12 @@ import "./LeaveReviewModal.css";
 import { Typography, Box, TextField, Grid, Button } from '@mui/material';
 import { postUserRatingsAsync } from '../../redux/thunks/ratingsThunks';
 
-export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal }) => {
+export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID }) => {
     const modalRef = useRef();
     const [score, setScore] = useState(0);
     const [comment, setComment] = useState('');
     const dispatch = useDispatch();
+    const loggedInUser = useSelector((state) => state.sauth.currUser)
 
     const closeModal = e => {
         if (modalRef.current === e.target) {
@@ -32,7 +33,7 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal }) => {
             comments: comment,
         }
         console.log(body);
-        dispatch(postUserRatingsAsync({ userID: "John Smith", restaurantID: "McDonald's", body: body }));
+        dispatch(postUserRatingsAsync({ userID: loggedInUser, restaurantID: placeID, body: body }));
         setShowReviewModal(false);
     };
 
@@ -81,16 +82,6 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal }) => {
                     </div>
                 </div>
             ) : null}
-            {/* <div className="modal">
-                <div className="modal-content">
-                    <span className="close" onClick={closeModal} ref={modalRef}>&times;</span>
-                    {showModal && (
-                        <div className="item-detail">
-                            hello
-                        </div>
-                    )}
-                </div>
-            </div> */}
         </>
     );
 };

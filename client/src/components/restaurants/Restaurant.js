@@ -93,7 +93,7 @@ const Restaurant = ({ restaurant }) => {
                                 </Button>
                             </Link>
                         </Box>
-                        <LeaveReviewModal showReviewModal={showReviewModal} setShowReviewModal={setShowReviewModal} />
+                        <LeaveReviewModal showReviewModal={showReviewModal} setShowReviewModal={setShowReviewModal} placeID={restaurant.place_id} />
                     </div>
                 </div>
             </Box>

@@ -49,7 +49,6 @@ const Friend = ({ id, icon, name, biography }) => {
                 </Typography>
                 {ratings ?
                     ratings.map((rating) =>
-                        // <h3>{rating.restaurantID}</h3>
                         <Typography sx={{ mb: 1.5, fontSize: 14 }} color="text.secondary">
                             {rating.restaurantID}
                         </Typography>
