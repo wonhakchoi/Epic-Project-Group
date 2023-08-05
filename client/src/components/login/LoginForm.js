@@ -21,16 +21,21 @@ import {loginAsync} from "../../redux/thunks/authenticationThunks";
 // resource used: https://mui.com/material-ui/getting-started/templates/
 
 function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Easy Eats
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Easy Eats
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
 }
 
 const LoginForm = () => {
@@ -42,13 +47,13 @@ const LoginForm = () => {
 
     const [cookies, setCookie] = useCookies(['token']);
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -65,119 +70,150 @@ const LoginForm = () => {
             })
     };
 
-    if (isLoggedIn) {
-        return (
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-                <Avatar sx={{m: 1, bgcolor: 'success.main'}}>
-                    <RestaurantMenuOutlinedIcon/>
-                </Avatar>
-
-                <Alert
-                    action={
-                        <Button href="/" color="inherit" size="small">
-                            HOME
-                        </Button>
-                    }
-                    sx={{mt: 4}}
-                >
-                    You have logged in successfully! Go to home page.
-                </Alert>
-                {/* <button onClick={Logout}>LOGOUT</button> */}
-            </Box>
-        )
-    }
-
-    const defaultTheme = createTheme();
-
+  if (isLoggedIn) {
     return (
-        <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline/>
-                <Box
-                    sx={{
-                        marginTop: 8,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Avatar sx={{m: 1, bgcolor: 'success.main'}}>
-                        {/* <LockOutlinedIcon /> */}
-                        <RestaurantMenuOutlinedIcon/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Log in
-                    </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
-                        <Grid item xs={12}>
-                            {error && <Alert severity="error">{error}</Alert>}
-                        </Grid>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                            onChange={handleEmailChange}
-                            value={email}
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                            onChange={handlePasswordChange}
-                            value={password}
-                        />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, color: "#A191EB" }}>
+          <RestaurantMenuOutlinedIcon />
+        </Avatar>
 
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{mt: 3, mb: 2}}
-                        >
-                            Log In
-                        </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="/signup" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </Box>
-                <Copyright sx={{mt: 8, mb: 4}}/>
-            </Container>
-        </ThemeProvider>
+        <Alert
+          action={
+            <Button href="/" color="inherit" size="small">
+              HOME
+            </Button>
+          }
+          sx={{ mt: 4 }}
+        >
+          You have logged in successfully! Go to home page.
+        </Alert>
+        {/* <button onClick={Logout}>LOGOUT</button> */}
+      </Box>
     );
+  }
 
-    //   return (
-    //     <form onSubmit={handleSubmit}>
-    //       <input type="email" value={email} onChange={handleEmailChange} />
-    //       <input type="password" value={password} onChange={handlePasswordChange} />
-    //       <button type="submit">Login</button>
-    //     </form>
-    //   );
+  const theme = createTheme();
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: "10vh",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Avatar
+            sx={{ m: 1, bgcolor: "#A586D5", height: "5vh", width: "5vh" }}
+          >
+            <RestaurantMenuOutlinedIcon
+              sx={{ color: "#FFF4BB", height: "4vh", width: "4vh" }}
+            />
+          </Avatar>
+          <Typography component="h1" variant="h5" sx={{ fontSize: "4vh" }}>
+            Sign In
+          </Typography>
+
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <Grid item xs={12}>
+              {error && <Alert severity="error">{error}</Alert>}
+            </Grid>
+            <TextField
+              margin="dense" // Use dense margin for compact spacing
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={handleEmailChange}
+              value={email}
+              sx={{
+                height: "7vh",
+                width: "60vh",
+                "& label": { fontSize: "2vh", marginBottom: "1vh" },
+                "& input": { fontSize: "2vh" },
+              }}
+            />
+            <TextField
+              margin="dense"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={handlePasswordChange}
+              value={password}
+              sx={{
+                height: "7vh",
+                width: "60vh",
+                "& label": { fontSize: "2vh", marginBottom: "1vh" },
+                "& input": { fontSize: "2vh" },
+              }}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: "2vh",
+                mb: "2vh",
+                backgroundColor: "#8B69C1",
+                height: "5vh",
+                width: "15vh",
+                fontSize: "2vh",
+                "&:hover": {
+                  backgroundColor: "#6B41AD",
+                },
+              }}
+            >
+              Login
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link
+                  href="#"
+                  variant="body2"
+                  sx={{ color: "#6B41AD", fontSize: "2vh" }}
+                >
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link
+                  href="/signup"
+                  variant="body2"
+                  sx={{ color: "#6B41AD", fontSize: "2vh" }}
+                >
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: "4vh", mb: "2vh", fontSize: "1.5vh" }} />
+      </Container>
+    </ThemeProvider>
+  );
 };
 
 export default LoginForm;
