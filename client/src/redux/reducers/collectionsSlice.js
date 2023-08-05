@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {REQUEST_STATE} from "../requestStates";
 import {
-    addNewCollectionAsync, deleteRestaurantCollectionAsync,
+    addNewCollectionAsync, deleteCollectionAsync, deleteRestaurantCollectionAsync,
     getCollectionDetailsAsync,
     getCollectionsAsync,
     getRestaurantsAsync
@@ -22,7 +22,7 @@ const INITIAL_STATE = {
     getRestaurants: REQUEST_STATE.IDLE,
     addCollection: REQUEST_STATE.IDLE,
     deleteRestaurant: REQUEST_STATE.IDLE,
-    // postAuth: REQUEST_STATE.IDLE
+    deleteCollection: REQUEST_STATE.IDLE
 }
 
 const collectionsSlice = createSlice({
@@ -97,6 +97,17 @@ const collectionsSlice = createSlice({
             })
             .addCase(deleteRestaurantCollectionAsync.fulfilled, (state) => {
                 state.deleteRestaurant = REQUEST_STATE.FULFILLED;
+            })
+            .addCase(deleteCollectionAsync.pending, (state) => {
+                state.deleteCollection = REQUEST_STATE.PENDING;
+            })
+            .addCase(deleteCollectionAsync.fulfilled, (state) => {
+                state.deleteCollection = REQUEST_STATE.FULFILLED;
+                state.currCollectionDetails = {};
+                state.currRestaurants = [];
+            })
+            .addCase(deleteCollectionAsync.rejected, (state) => {
+                state.deleteCollection = REQUEST_STATE.REJECTED;
             })
     }
 })

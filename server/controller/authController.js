@@ -79,10 +79,3 @@ module.exports.Login = async (req, res, next) => {
         console.error(error);
     }
 }
-
-// // https://stackoverflow.com/questions/54861709/cookies-removeabc-not-working-in-reactjs
-// module.exports.Logout = async (req, res) => {
-//     res.cookie('token', 'none', {
-//         expires: new Date(Date)
-//     })
-// }

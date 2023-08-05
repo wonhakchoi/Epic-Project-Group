@@ -1,10 +1,12 @@
 import axios from "axios";
 
 // requests for collections
+
+export const deleteCollection = async (collectionId) => {
+    await axios.delete(`${process.env.REACT_APP_BACKEND}/collections/${collectionId}`)
+}
 export const getCollections = async (userId) => {
-    let data = (await axios.get(`${process.env.REACT_APP_BACKEND}/collections/${userId}`)).data;
-    console.log(userId);
-    console.log('collections\n' + JSON.stringify(data));
+    let data = (await axios.get(`${process.env.REACT_APP_BACKEND}/collections/user/${userId}`)).data;
     return data;
 }
 
@@ -15,7 +17,6 @@ export const getCollectionDetails = async (collectionId) => {
 
 export const getRestaurants = async (collectionId) => {
     const data = (await axios.get(`${process.env.REACT_APP_BACKEND}/collections/${collectionId}/restaurants`)).data;
-    // console.log(data[0].result);
     return data;
 
 }

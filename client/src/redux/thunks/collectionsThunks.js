@@ -1,12 +1,19 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import getCollections, {
-    addNewCollection, addRestaurantCollection,
+    addNewCollection, addRestaurantCollection, deleteCollection,
     deleteRestaurantCollection,
     getCollectionDetails,
     getRestaurants
 } from "../services/collectionsService";
 
 // thunks for collections actions
+
+export const deleteCollectionAsync = createAsyncThunk (
+    'collections/deleteCollection',
+    async (collectionId) => {
+        await deleteCollection(collectionId);
+    }
+)
 export const getCollectionsAsync = createAsyncThunk(
     'collections/getCollections',
     async (userId) => {

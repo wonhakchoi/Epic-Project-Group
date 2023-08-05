@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
 
 
 // GET user collections
-router.get('/:userId', async (req, res) => {
+router.get('/user/:userId', async (req, res) => {
     let collections = [];
     const uId = req.params.userId;
     try {
@@ -45,6 +45,17 @@ router.get('/', async (req, res) => {
     return res.send(collections);
 })
 
+// DELETE collection
+router.delete('/:collectionId', async (req, res) => {
+    let cId = req.params.collectionId;
+    try {
+        await Cauliflower.findOneAndDelete({_id: cId});
+    } catch (e) {
+        console.error(e);
+    }
+    return res.send();
+})
+
 // GET information for a single collection
 router.get('/:collectionId', async function (req, res) {
     let cId = req.params.collectionId;
@@ -54,6 +65,7 @@ router.get('/:collectionId', async function (req, res) {
     } catch (e) {
         console.error(e);
     }
+
     return res.send(collection);
 
 })
@@ -76,7 +88,7 @@ router.get('/:collectionId/restaurants', async (req, res) => {
             restaurant = (await axios.get(
                 `https://maps.googleapis.com/maps/api/place/details/json?place_id=${r}&key=${process.env.GOOGLE_PLACES_API_KEY}`
             )).data.result
-            console.log(restaurant)
+            // console.log(restaurant)
         } catch (e) {
             console.error(e)
         }
