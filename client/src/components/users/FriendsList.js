@@ -20,89 +20,18 @@ const FriendsList = () => {
                 Your Friends
             </Typography>
 
+
             <Box
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
                 minHeight="12vh"
-                // display="grid"
-                // gridTemplateColumns="repeat(12, 1fr)"
                 gap={5}
                 sx={{
-                    // display: 'flex',
                     flexDirection: 'row',
-                    // p: 1,
-                    // m: 1,
-                    // bgcolor: 'background.paper',
-                    // borderRadius: 1,
                     flexWrap: 'wrap',
                     justifyContent: 'center',
-                    // ml: 5,
-                    // maxWidth: 800,
-                }}
-            >
-
-                <Friend
-                    key={123}
-                    id={usersSlice._id}
-                    icon={123}
-                    name={123}
-                    biography={123}
-                    ratedRestaurants={123}
-                />
-                <Friend
-                    key={123}
-                    id={usersSlice._id}
-                    icon={123}
-                    name={123}
-                    biography={123}
-                    ratedRestaurants={123}
-                />
-                <Friend
-                    key={123}
-                    id={usersSlice._id}
-                    icon={123}
-                    name={123}
-                    biography={123}
-                    ratedRestaurants={123}
-                />
-                <Friend
-                    key={123}
-                    id={usersSlice._id}
-                    icon={123}
-                    name={123}
-                    biography={123}
-                    ratedRestaurants={123}
-                />
-                <Friend
-                    key={123}
-                    id={usersSlice._id}
-                    icon={123}
-                    name={123}
-                    biography={123}
-                    ratedRestaurants={123}
-                />
-                <Friend
-                    key={123}
-                    id={usersSlice._id}
-                    icon={123}
-                    name={123}
-                    biography={123}
-                    ratedRestaurants={123}
-                />
-            </Box>
-
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    p: 1,
-                    m: 1,
-                    bgcolor: 'background.paper',
-                    borderRadius: 1,
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                    maxWidth: 800,
+                    mb: 8,
                 }}
             >
 

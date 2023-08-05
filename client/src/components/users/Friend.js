@@ -28,30 +28,28 @@ const Friend = ({ id, icon, name, biography }) => {
     }, []);
 
     return (
-        // <Card sx={{ minWidth: 100, maxWidth: 500 }}>
-        <Grid>
-            <Card sx={{ minWidth: 100, maxWidth: 500}}>
-                <CardContent>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        Word of the Day
-                    </Typography>
-                    <Typography variant="h5" component="div">
-                        hello
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        adjective
-                    </Typography>
-                    <Typography variant="body2">
-                        well meaning and kindly.
-                        <br />
-                        {'"a benevolent smile"'}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small">Learn More</Button>
-                </CardActions>
-            </Card>
-        </Grid>
+        <Card sx={{ minWidth: 100, maxWidth: 500 }}>
+            <CardContent>
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    Word of the Day
+                </Typography>
+                <Typography variant="h5" component="div">
+                    hello
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    adjective
+                </Typography>
+                <Typography variant="body2">
+                    well meaning and kindly.
+                    <br />
+                    {'"a benevolent smile"'}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button size="small">Learn More</Button>
+            </CardActions>
+        </Card>
+
         // <div className="friend-container">
         //     <section className="friend-header">
         //         <img className="user-icon" src={icons[icon]} alt={name} />
