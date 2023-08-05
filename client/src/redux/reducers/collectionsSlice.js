@@ -1,12 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {REQUEST_STATE} from "../requestStates";
 import {
-    addNewCollectionAsync, deleteRestaurantCollectionAsync,
+    addNewCollectionAsync, deleteCollectionAsync, deleteRestaurantCollectionAsync,
     getCollectionDetailsAsync,
     getCollectionsAsync,
     getRestaurantsAsync
 } from "../thunks/collectionsThunks";
-import {postAuthAsync} from "../thunks/authenticationThunks";
 
 // reducer logic for collections
 
@@ -23,7 +22,7 @@ const INITIAL_STATE = {
     getRestaurants: REQUEST_STATE.IDLE,
     addCollection: REQUEST_STATE.IDLE,
     deleteRestaurant: REQUEST_STATE.IDLE,
-    // postAuth: REQUEST_STATE.IDLE
+    deleteCollection: REQUEST_STATE.IDLE
 }
 
 const collectionsSlice = createSlice({
@@ -99,15 +98,17 @@ const collectionsSlice = createSlice({
             .addCase(deleteRestaurantCollectionAsync.fulfilled, (state) => {
                 state.deleteRestaurant = REQUEST_STATE.FULFILLED;
             })
-            // .addCase(postAuthAsync.pending, (state) => {
-            //     state.postAuth = REQUEST_STATE.PENDING;
-            // })
-            // .addCase(postAuthAsync.fulfilled, (state) => {
-            //     state.postAuth = REQUEST_STATE.FULFILLED;
-            // })
-            // .addCase(postAuthAsync.rejected, (state) => {
-            //     state.postAuth = REQUEST_STATE.REJECTED;
-            // })
+            .addCase(deleteCollectionAsync.pending, (state) => {
+                state.deleteCollection = REQUEST_STATE.PENDING;
+            })
+            .addCase(deleteCollectionAsync.fulfilled, (state) => {
+                state.deleteCollection = REQUEST_STATE.FULFILLED;
+                state.currCollectionDetails = {};
+                state.currRestaurants = [];
+            })
+            .addCase(deleteCollectionAsync.rejected, (state) => {
+                state.deleteCollection = REQUEST_STATE.REJECTED;
+            })
     }
 })
 

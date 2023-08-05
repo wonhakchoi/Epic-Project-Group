@@ -66,12 +66,14 @@ const sampleCauliflowers = [
     img: COLLECTION_IMG1,
     pinned: false,
     restaurants: ["ChIJw-s4pFdxhlQRh2jK22eXlnU"],
+    userId: "64c0c02049527aa580a7d002"
   },
   {
     name: "Dinner",
     img: COLLECTION_IMG2,
-    pineed: false,
+    pinned: false,
     restaurants: [],
+    userId: "64c0c02049527aa580a7d002"
   },
 ];
 
