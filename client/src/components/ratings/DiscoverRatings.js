@@ -21,6 +21,25 @@ const DiscoverRatings = () => {
 
     const resultsPerPage = 4;
 
+    const fetchUserAndRestaurant = useCallback(async () => {
+        if (ratingsSlice.ratings.length >= ratingsSlice.databaseSize) {
+            return;
+        }
+        try {
+            dispatch(getUsersAsync());
+            const data = await dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
+            const ratingsArray = data.payload.data.ratings;
+            setRatings(oldRatings => [...oldRatings, ...ratingsArray]);
+
+            for (const rating of ratingsArray) {
+                const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
+                setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name }]);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }, [restaurants, ratings, dispatch]);
+
     // make initial fetch when entering page
     const shouldFetch = useRef(true);
     useEffect(() => {
@@ -45,92 +64,17 @@ const DiscoverRatings = () => {
             shouldFetch.current = false;
             fetchUserAndRestaurant();
         }
-        // fetchUserAndRestaurant();
+    }, [fetchUserAndRestaurant, dispatch]);
 
-    }, [dispatch]);
-
-    const fetchRequest = useCallback(async () => {
-        if (ratingsSlice.ratings.length >= ratingsSlice.databaseSize) {
-            return;
-        }
-
-        try {
-            dispatch(getUsersAsync());
-            const data = await dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
-            const ratingsArray = data.payload.data.ratings;
-            setRatings(oldRatings => [...oldRatings, ...ratingsArray]);
-
-            for (const rating of ratingsArray) {
-                const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name }]);
-            }
-
-            // await Promise.all(ratingsArray.map(async (rating) => {
-            //     const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-            //     setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name }]);
-            // }))
-        } catch (err) {
-            console.log(err);
-        }
-    }, [restaurants, ratings, dispatch]);
-
-    // useEffect(() => {
-    //     // if (shouldFetch.current) {
-    //     //     shouldFetch.current = false;
-    //     //     fetchRequest();
-    //     // }
-    //     fetchRequest();
-
-    // }, [fetchRequest]);
-
-    
 
     // sets 'loaded' to true only once the restaurant, ratings, and users are all loaded
     useEffect(() => {
-        console.log('restaurant length')
-        console.log(restaurants.length);
-
-        const lengthOfLoadedRestaurant = ratings.length < resultsPerPage ? ratings.length : resultsPerPage;
-        // if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || restaurants.length < ratingsSlice.ratings.length || !ratings) {
-        // if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || restaurants.length < resultsPerPage || !ratings) {
         if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || !restaurants || !ratings) {
             return;
         }
         setLoaded(true);
     }, [usersSlice.getUsers, usersSlice.users, restaurants, ratings, dispatch]);
 
-
-    // fetches more ratings if not all already fetched
-    const fetchMoreRatings = () => {
-        if (ratingsSlice.ratings.length >= ratingsSlice.databaseSize) {
-            return;
-        }
-        // dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }))
-        //     .then((data) => {
-        //         setRatings(oldRatings => [...oldRatings, ...data.payload.data.ratings]);
-        //     });
-
-        const fetchUserAndRestaurant = async () => {
-            try {
-                dispatch(getUsersAsync());
-                const data = await dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
-                const ratingsArray = data.payload.data.ratings;
-                setRatings(oldRatings => [...oldRatings, ...ratingsArray]);
-                // console.log('ratings')
-                // console.log(ratings)
-                await Promise.all(ratings.map(async (rating) => {
-                    const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                    setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name }]);
-                }))
-
-                console.log('setRestaurants');
-                console.log(restaurants);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchUserAndRestaurant();
-    };
 
     // find user by ID
     const findUserByID = (userID) => {
@@ -146,7 +90,6 @@ const DiscoverRatings = () => {
             return matchedRestaurant[0].restaurantName;
         } catch (err) {
             console.log('loading restaurant name');
-            // return "Loading Restaurant"
         }
 
     };
@@ -160,19 +103,12 @@ const DiscoverRatings = () => {
             <Typography variant="h2" sx={{ marginTop: "30px" }}>
                 All Reviews
             </Typography>
-            {/* {console.log("hello")}
-            {console.log(ratings)} */}
-            {/* {console.log(restaurants.ChIJO1V_sWZxhlQR69RUQ1rHcb0)}; */}
-            {/* {console.log(restaurants[1].restaurantName)} */}
-            {/* {console.log(findRestaurantByID('ChIJO1V_sWZxhlQR69RUQ1rHcb0'))} */}
+            
             {ratingsSlice.ratings.map((rating) => (
                 <RatingCard
                     key={rating._id}
                     id={rating._id}
                     name={findUserByID(rating.userID).firstName ? findUserByID(rating.userID).firstName : "Name"}
-                    // name={rating.userID}
-                    // restaurant={restaurants[1].restaurantName}
-                    // restaurant={rating.restaurantID}
                     restaurant={findRestaurantByID(rating.restaurantID) ? findRestaurantByID(rating.restaurantID) : "Loading"}
                     score={rating.score}
                     comment={rating.comments ? rating.comments : ""}
@@ -186,7 +122,7 @@ const DiscoverRatings = () => {
                     variant="h6"
                     component="div"
                     // onClick={fetchMoreRatings}
-                    onClick={fetchRequest}
+                    onClick={fetchUserAndRestaurant}
                     sx={{ marginTop: "30px" }}
                 >
                     See More Ratings
