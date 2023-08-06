@@ -11,55 +11,81 @@ const FriendRequests = () => {
     const usersSlice = useSelector((state) => state.users.allUsers);
 
     return (
-        <div className="friend-requests-container">
-            <section>
-                <Typography
-                    variant="h4"
-                    component="div"
-                    sx={{ mb: 5, mt: 5 }}
-                >
-                    Pending Requests
-                </Typography>
-                <div className="requests">
-                    {outRequestsSlice.outgoingRequests.map((id) => {
-                        const user = usersSlice.users.filter((user) => user._id === id)[0];
-                        return (
-                            <OutgoingRequest
-                                key={id}
-                                id={id}
-                                icon={user.icon}
-                                name={user.firstName}
-                                biography={user.biography}
-                            />
-                        );
-                    })}
-                </div>
-            </section>
+        <div>
+            <Typography
+                variant="h4"
+                component="div"
+                sx={{ mb: 5, mt: 5 }}
+            >
+                Pending Requests
+            </Typography>
+
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="start"
+                minHeight="12vh"
+                gap={5}
+                sx={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                    mb: 8,
+                }}
+            >
+                {outRequestsSlice.outgoingRequests.map((id) => {
+                    const user = usersSlice.users.filter((user) => user._id === id)[0];
+                    return (
+                        <OutgoingRequest
+                            key={id}
+                            id={id}
+                            icon={user.icon}
+                            name={user.firstName}
+                            biography={user.biography}
+                        />
+                    );
+                })}
+            </Box>
+
             <Divider variant="middle" />
-            <section>
-                <Typography
-                    variant="h4"
-                    component="div"
-                    sx={{ mb: 5, mt: 5 }}
-                >
-                    Incoming Requests
-                </Typography>
-                <div className="requests">
-                    {inRequestsSlice.incomingRequests.map((id) => {
-                        const user = usersSlice.users.filter((user) => user._id === id)[0];
-                        return (
-                            <IncomingRequest
-                                key={id}
-                                id={id}
-                                icon={user.icon}
-                                name={user.firstName}
-                                biography={user.biography}
-                            />
-                        );
-                    })}
-                </div>
-                <Divider variant="middle" />
-            </section>
+
+            <Typography
+                variant="h4"
+                component="div"
+                sx={{ mb: 5, mt: 5 }}
+            >
+                Incoming Requests
+            </Typography>
+
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="start"
+                minHeight="12vh"
+                gap={5}
+                sx={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                    mb: 8,
+                }}
+            >
+                {inRequestsSlice.incomingRequests.map((id) => {
+                    const user = usersSlice.users.filter((user) => user._id === id)[0];
+                    return (
+                        <IncomingRequest
+                            key={id}
+                            id={id}
+                            icon={user.icon}
+                            name={user.firstName}
+                            biography={user.biography}
+                        />
+                    );
+                })}
+            </Box>
+
+            <Divider variant="middle" />
+
         </div>
     );
 };

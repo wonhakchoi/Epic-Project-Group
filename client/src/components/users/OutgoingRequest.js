@@ -11,7 +11,7 @@ const OutgoingRequest = ({ id, icon, name, biography }) => {
     const dispatch = useDispatch();
 
     return (
-        <Card sx={{ minWidth: 300, maxWidth: 500, minHeight: 200, p: 1 }}>
+        <Card sx={{ width: 300, minHeight: 240, p: 1 }}>
             <CardHeader
                 avatar={
                     <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
@@ -37,6 +37,7 @@ const OutgoingRequest = ({ id, icon, name, biography }) => {
                     spacing={1}
                     fullWidth
                     sx={{ mt: 3 }}
+                    position="relative"
                 >
                     <Grid item xs={6}>
                         <Button

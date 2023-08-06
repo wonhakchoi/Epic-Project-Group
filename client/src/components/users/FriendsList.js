@@ -49,7 +49,6 @@ const FriendsList = () => {
                         />
                     );
                 })}
-                {/* </Grid> */}
             </Box>
 
         </div>

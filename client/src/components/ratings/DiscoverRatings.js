@@ -52,7 +52,7 @@ const DiscoverRatings = () => {
 
                 for (const rating of ratingsArray) {
                     const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                    setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name ? restaurantData.data.result.name : "Restaurant" }]);
+                    setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result?.name ? restaurantData.data.result.name : "Restaurant" }]);
                 }
                 console.log('setRestaurants');
                 console.log(restaurants);
@@ -108,7 +108,7 @@ const DiscoverRatings = () => {
                 <RatingCard
                     key={rating._id}
                     id={rating._id}
-                    name={findUserByID(rating.userID).firstName ? findUserByID(rating.userID).firstName : "Name"}
+                    name={findUserByID(rating.userID)?.firstName ? findUserByID(rating.userID).firstName : "Name"}
                     restaurant={findRestaurantByID(rating.restaurantID) ? findRestaurantByID(rating.restaurantID) : "Loading"}
                     score={rating.score}
                     comment={rating.comments ? rating.comments : ""}

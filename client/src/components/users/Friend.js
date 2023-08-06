@@ -28,7 +28,7 @@ const Friend = ({ id, icon, name, biography }) => {
     }, []);
 
     return (
-        <Card sx={{ minWidth: 300, maxWidth: 500, minHeight: 320, p: 1 }}>
+        <Card sx={{ width:300, minHeight: 320, p: 1 }}>
             <CardHeader
                 avatar={
                     <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
