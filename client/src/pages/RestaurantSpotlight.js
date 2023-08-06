@@ -63,14 +63,14 @@ const RestaurantSpotlight = () => {
         <div>
             {loaded ? (
                 <section>
-                    <Typography variant="h2" component="div" sx={{ m: 5 }}>
+                    <Typography variant="h4" component="div" sx={{ m: 5 }}>
                         {restaurant.name}
                     </Typography>
 
                     <Carousel>
                         {
                             photos.map((photo, i) => {
-                                return <img className="restaurant-img" src={photo} alt="URL not found"></img>
+                                return <img className="restaurant-img-carousel" src={photo} alt="URL not found"></img>
                             })
                         }
                     </Carousel>

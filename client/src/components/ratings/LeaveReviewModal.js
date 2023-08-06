@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import "./LeaveReviewModal.css";
-import { Typography, Box, TextField, Grid, Button } from '@mui/material';
+import { Typography, Box, TextField, Grid, Button, Rating, Stack } from '@mui/material';
 import { postUserRatingsAsync } from '../../redux/thunks/ratingsThunks';
 
 export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID }) => {
@@ -45,8 +45,19 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID 
                         <Typography component="h1" variant="h5">
                             Leave Review
                         </Typography>
-                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                            <TextField
+
+                        <Box component="form" onSubmit={handleSubmit} noValidate >
+                            <Rating
+                                className="rating"
+                                value={score}
+                                precision={0.5}
+                                size="large"
+                                onChange={(event, newValue) => {
+                                    setScore(newValue);
+                                }}
+                                // sx={{border:4}}
+                            />
+                            {/* <TextField
                                 margin="normal"
                                 required
                                 fullWidth
@@ -57,12 +68,12 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID 
                                 autoFocus
                                 onChange={handleScoreChange}
                                 value={score}
-                            />
+                            /> */}
                             <TextField
                                 margin="normal"
                                 fullWidth
                                 id="comment"
-                                label="Your comment" 
+                                label="Your comment"
                                 name="comment"
                                 autoComplete="current-password"
                                 autoFocus
