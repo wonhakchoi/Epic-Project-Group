@@ -4,7 +4,7 @@ import { unfriendAsync } from "../../redux/thunks/usersThunks";
 import RatingService from "../../redux/services/ratingsService";
 import "./Friend.css";
 import "./Buttons.css";
-import { Box, Card, CardActions, CardContent, Button, Typography, CardHeader, Divider, Grid } from '@mui/material';
+import { Box, Card, CardContent, Button, Typography, CardHeader, Divider, Grid } from '@mui/material';
 
 
 const Friend = ({ id, icon, name, biography }) => {
@@ -28,13 +28,17 @@ const Friend = ({ id, icon, name, biography }) => {
     }, []);
 
     return (
-        <Card sx={{ width:300, minHeight: 320, p: 1 }}>
+        <Card sx={{ width: 300, minHeight: 240, p: 1 }}>
             <CardHeader
                 avatar={
                     <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
                 }
                 title={
-                    <Typography mr={2} variant="h6" component="h2">
+                    <Typography
+                        mr={6}
+                        variant="h6"
+                        component="h2"
+                    >
                         {name}
                     </Typography>
                 }
@@ -44,7 +48,7 @@ const Friend = ({ id, icon, name, biography }) => {
                     {biography}
                 </Typography>
                 <Divider variant="middle" sx={{ mt: 1, mb: 1 }} />
-                <Typography variant="h6" component="div">
+                {/* <Typography variant="h6" component="div">
                     Rated Restaurants
                 </Typography>
                 {ratings ?
@@ -57,7 +61,7 @@ const Friend = ({ id, icon, name, biography }) => {
                     <Typography sx={{ mb: 1.5, fontSize: 14 }} color="text.secondary">
                         Loading...
                     </Typography>
-                }
+                } */}
 
                 <Grid
                     container

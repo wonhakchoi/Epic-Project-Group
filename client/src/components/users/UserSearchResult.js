@@ -18,7 +18,6 @@ const UserSearchResult = ({ id, icon, name, status }) => {
                 </Grid>
                 <Grid item xs={6}>
                     <Typography
-                        // variant="body1"
                         variant="h6"
                         component="div"
                     >

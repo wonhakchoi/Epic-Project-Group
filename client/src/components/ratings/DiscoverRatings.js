@@ -82,7 +82,7 @@ const DiscoverRatings = () => {
         return matchedUser[0];
     };
 
-    // find user by ID
+    // find restaurant by ID
     const findRestaurantByID = (placeID) => {
         try {
             const matchedRestaurant = restaurants.filter((restaurant) => restaurant.restaurantID === placeID);

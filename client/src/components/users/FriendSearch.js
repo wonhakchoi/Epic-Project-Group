@@ -4,10 +4,9 @@ import UserSearchResult from "./UserSearchResult";
 import useDebounce from "../../hooks/useDebounce";
 import { determineStatus } from "../../utils/userUtils";
 import "./FriendSearch.css";
-import { Typography, Divider, Box, Container } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
-import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
@@ -143,8 +142,6 @@ const FriendSearch = () => {
                         component="div"
                         position="relative"
                         bottom="0px"
-                        // color="text.secondary"
-                        // sx={{ mb: 5, mt: 5 }}
                     >
                         Page {offset / resultsPerPage + 1} out of{" "}
                         {Math.max(1, Math.ceil(Object.keys(filteredUsers).length / resultsPerPage))}

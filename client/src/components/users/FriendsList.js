@@ -38,6 +38,8 @@ const FriendsList = () => {
                 {friendsSlice.friends.map((id) => {
                     const user = usersSlice.users.filter((user) => user._id === id)[0];
                     // console.log(user);
+                    console.log(user);
+                    console.log(user.ratedRestaurants);
                     return (
                         <Friend
                             key={id}

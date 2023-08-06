@@ -17,7 +17,7 @@ const IncomingRequest = ({ id, icon, name, biography }) => {
                     <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
                 }
                 title={
-                    <Typography mr={2} variant="h6" component="h2">
+                    <Typography mr={6} variant="h6" component="h2">
                         {name}
                     </Typography>
                 }
@@ -60,27 +60,6 @@ const IncomingRequest = ({ id, icon, name, biography }) => {
                 </Grid>
             </CardContent>
         </Card>
-        // <div className="request-container">
-        //     <section className="incoming-request-header">
-        //         <img className="user-icon" src={icons[icon]} alt={name} />
-        //         <h3>{name}</h3>
-        //         <p className="biography">{biography}</p>
-        //     </section>
-        //     <section className="incoming-request-buttons">
-        //         <button
-        //             className="accept-button friend-request-button"
-        //             onClick={() => dispatch(acceptIncomingAsync({ userID: currUser, otherID: id }))}
-        //         >
-        //             Accept
-        //         </button>
-        //         <button
-        //             className="reject-button friend-request-button"
-        //             onClick={() => dispatch(rejectIncomingAsync({ userID: currUser, otherID: id }))}
-        //         >
-        //             Reject
-        //         </button>
-        //     </section>
-        // </div>
     );
 };
 

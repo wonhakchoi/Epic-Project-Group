@@ -17,7 +17,7 @@ const OutgoingRequest = ({ id, icon, name, biography }) => {
                     <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
                 }
                 title={
-                    <Typography mr={2} variant="h6" component="h2">
+                    <Typography mr={6} variant="h6" component="h2">
                         {name}
                     </Typography>
                 }
