@@ -52,7 +52,7 @@ const DiscoverRatings = () => {
 
                 for (const rating of ratingsArray) {
                     const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                    setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name }]);
+                    setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name ? restaurantData.data.result.name : "Restaurant" }]);
                 }
                 console.log('setRestaurants');
                 console.log(restaurants);
@@ -64,7 +64,7 @@ const DiscoverRatings = () => {
             shouldFetch.current = false;
             fetchUserAndRestaurant();
         }
-    }, [fetchUserAndRestaurant, dispatch]);
+    }, [dispatch]);
 
 
     // sets 'loaded' to true only once the restaurant, ratings, and users are all loaded

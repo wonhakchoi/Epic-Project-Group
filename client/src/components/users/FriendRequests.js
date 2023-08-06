@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import OutgoingRequest from "./OutgoingRequest";
 import IncomingRequest from "./IncomingRequest";
 import "./FriendRequests.css";
+import { Typography, Divider, Box, Container } from "@mui/material";
 
 const FriendRequests = () => {
     const outRequestsSlice = useSelector((state) => state.users.outgoingRequests);
@@ -12,7 +13,13 @@ const FriendRequests = () => {
     return (
         <div className="friend-requests-container">
             <section>
-                <h2>Pending Requests</h2>
+                <Typography
+                    variant="h4"
+                    component="div"
+                    sx={{ mb: 5, mt: 5 }}
+                >
+                    Pending Requests
+                </Typography>
                 <div className="requests">
                     {outRequestsSlice.outgoingRequests.map((id) => {
                         const user = usersSlice.users.filter((user) => user._id === id)[0];
@@ -28,8 +35,15 @@ const FriendRequests = () => {
                     })}
                 </div>
             </section>
+            <Divider variant="middle" />
             <section>
-                <h2>Incoming Requests</h2>
+                <Typography
+                    variant="h4"
+                    component="div"
+                    sx={{ mb: 5, mt: 5 }}
+                >
+                    Incoming Requests
+                </Typography>
                 <div className="requests">
                     {inRequestsSlice.incomingRequests.map((id) => {
                         const user = usersSlice.users.filter((user) => user._id === id)[0];
@@ -44,6 +58,7 @@ const FriendRequests = () => {
                         );
                     })}
                 </div>
+                <Divider variant="middle" />
             </section>
         </div>
     );

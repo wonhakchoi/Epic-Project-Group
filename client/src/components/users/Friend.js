@@ -28,7 +28,7 @@ const Friend = ({ id, icon, name, biography }) => {
     }, []);
 
     return (
-        <Card sx={{ minWidth: 120, maxWidth: 500, p: 1 }}>
+        <Card sx={{ minWidth: 300, maxWidth: 500, minHeight: 320, p: 1 }}>
             <CardHeader
                 avatar={
                     <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
@@ -72,7 +72,7 @@ const Friend = ({ id, icon, name, biography }) => {
                         <Button
                             variant="outlined"
                             color="success"
-                            sx={{ minWidth: '120px', minHeight: '30px' }}
+                            sx={{ minWidth: '30vh', minHeight: '6vh' }}
                             onClick={() => console.log(`View Profile ID ${id}`)}
                         >
                             View
@@ -80,7 +80,7 @@ const Friend = ({ id, icon, name, biography }) => {
                     </Grid>
                     <Grid item xs={6}>
                         <Button
-                            sx={{ minWidth: '120px', minHeight: '30px' }}
+                            sx={{ minWidth: '30vh', minHeight: '6vh' }}
                             variant="outlined"
                             color="error"
                             onClick={() => dispatch(unfriendAsync({ userID: currUser, otherID: id }))}>

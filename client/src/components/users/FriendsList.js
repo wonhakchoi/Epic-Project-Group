@@ -24,8 +24,8 @@ const FriendsList = () => {
             <Box
                 display="flex"
                 justifyContent="center"
-                alignItems="center"
-                minHeight="10vh"
+                alignItems="start"
+                minHeight="12vh"
                 gap={5}
                 sx={{
                     flexDirection: 'row',
