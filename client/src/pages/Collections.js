@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {showForm} from "../redux/reducers/collectionsSlice";
 import CollectionCard from "../components/collections/CollectionCard";
@@ -16,20 +16,28 @@ export default function Collections() {
     const collections = useSelector((state) => state.collections.collections);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    let isLoggedIn = useSelector((state) => state.sauth.isLoggedIn);
+    let currUser = useSelector((state) => state.sauth.currUser);
     const [cookies, removeCookie] = useCookies([]);
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         dispatch(postAuthAsync(cookies.token))
             .then((data) => {
                 const s = data.payload.status;
-                if (s) {
-                    dispatch(getCollectionsAsync());
-                } else {
+                if (!s) {
                     removeCookie('token');
                     navigate("/login");
                 }
             })
     }, [cookies, navigate, removeCookie]);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            dispatch(getCollectionsAsync(currUser));
+            setLoaded(true);
+        }
+    }, [isLoggedIn, currUser])
 
     const handleAddCollection = () => {
         dispatch(showForm());
@@ -44,6 +52,10 @@ export default function Collections() {
                 <CollectionCard collectionId={collection._id} collection={collection}/>
             </Grid>
         ));
+
+    if (!loaded) {
+        return (<LoadingUsers/>);
+    }
 
     return (
         <Container maxWidth="lg">
