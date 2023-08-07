@@ -3,6 +3,32 @@ const {Cauliflower} = require("../database/models/cauliflowerModel");
 const router = express.Router();
 const axios = require("axios");
 
+// PATCH change pin status
+router.patch('/pin/:collectionId', async (req, res) => {
+    const cId = req.params.collectionId;
+    const isPinned = req.body.isPinned;
+    let cauliflower;
+    try {
+        cauliflower = await Cauliflower.findByIdAndUpdate(cId, {pinned: isPinned}).exec();
+    } catch (e) {
+        console.error(e)
+    }
+    console.log(cauliflower);
+    return res.send(cauliflower);
+})
+
+// GET all pinned collections for user
+router.get('/pinned/:userId', async (req, res) => {
+    const uId = req.params.userId;
+    let collections = [];
+    try {
+        collections = await Cauliflower.find({userId: uId, pinned: true}).exec();
+    } catch (e) {
+        console.error(e);
+    }
+    return res.send(collections);
+})
+
 // POST new collection
 router.post('/', async (req, res) => {
 
