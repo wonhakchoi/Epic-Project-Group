@@ -10,7 +10,7 @@ const cauliflowerSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        // Array of restaurant ids
+        // Array of place ids
         restaurants: {
             type: [String],
             required: true

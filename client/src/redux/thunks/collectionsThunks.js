@@ -3,10 +3,17 @@ import getCollections, {
     addNewCollection, addRestaurantCollection, deleteCollection,
     deleteRestaurantCollection,
     getCollectionDetails,
-    getRestaurants
+    getRestaurants, patchCollectionPin
 } from "../services/collectionsService";
 
 // thunks for collections actions
+
+export const patchCollectionPinAsync = createAsyncThunk (
+    'collections/patchCollectionPin',
+    async ({isPinned, collectionId}) => {
+        return patchCollectionPin({isPinned: isPinned, collectionId: collectionId});
+    }
+)
 
 export const deleteCollectionAsync = createAsyncThunk (
     'collections/deleteCollection',
