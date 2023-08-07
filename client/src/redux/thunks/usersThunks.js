@@ -32,3 +32,7 @@ export const editIconAsync = createAsyncThunk("users/editIcon", async ({ userID,
 export const editBiographyAsync = createAsyncThunk("users/editBio", async ({ userID, biography }) => {
     return await UserService.editBiography(userID, biography);
 });
+
+export const editProfileAsync = createAsyncThunk("users/editProfile", async ({ userID, body }) => {
+    return await UserService.editProfile(userID, body);
+});
