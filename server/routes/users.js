@@ -21,6 +21,17 @@ router.get("/", async (req, res, next) => {
     }
 });
 
+router.get("/:userID", async (req, res, next) => {
+    let { userID } = req.params;
+    const userObjectID = new mongoose.Types.ObjectId(userID.toString());
+    try {
+        const user = await User.find({ _id: userObjectID });
+        res.send(user);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 /* PUT incoming to friend */
 router.put("/acceptIncoming/:userID/:otherID", async (req, res, next) => {
     let { userID, otherID } = req.params;

@@ -24,7 +24,7 @@ const authentication = (state = initialState, action) => {
             // console.log("authentication.js end");
             return {
                 ...state,
-                user: action.payload._id,
+                user: action.payload,
                 error: null,
                 isLoggedIn: true,
             };

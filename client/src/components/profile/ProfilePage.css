@@ -68,6 +68,7 @@
 .user-descriptor {
     padding-top:10px;
     text-align: left;
+    position: relative;
 }
 
 .friend-image {
@@ -166,8 +167,4 @@
     display: inline-block;
     background-color: white;
     border: 1px solid black;
-}
-
-label {
-    margin: 10px;
 }
