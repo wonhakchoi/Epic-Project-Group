@@ -20,7 +20,6 @@ export default function ProfileFriend({id}) {
 
 
     if (friend.data != undefined) {
-        console.log(friend)
         return (
             <div className="friend">
                 <img className="friend-image" src={"/images/user-icons/giraffe.png"} alt="image not found" />

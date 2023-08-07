@@ -28,7 +28,7 @@ router.get("/restaurant/:placeID", async (req, res, next) => {
     const { data } = await axios.get(
         `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeID}&key=${process.env.GOOGLE_PLACES_API_KEY}`
     );
-    console.log(data.result.photos);
+    
     if (data.result.photos) {
         const photoUrls = await Promise.all(
             data.result.photos.map(async (photo) => {

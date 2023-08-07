@@ -48,7 +48,7 @@
 
 #description {
     font-size: 30px;
-    color: rgb(130, 130, 130);
+    color: rgb(70, 95, 95);
 }
 
 .friends-header {
@@ -78,11 +78,12 @@
 
 #friend-name {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 28px;
 }
 
 #friend-description {
-    color: rgb(90, 90, 90);
+    color: rgb(70, 95, 95);
+    font-size: 28px;
 }
 
 #navigate-button {
@@ -166,5 +167,5 @@
     cursor: pointer;
     display: inline-block;
     background-color: white;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
