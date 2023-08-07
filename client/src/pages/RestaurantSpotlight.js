@@ -7,8 +7,8 @@ import RatingService from "../redux/services/ratingsService";
 import { getUsersAsync } from "../redux/thunks/usersThunks";
 import { REQUEST_STATE } from "../redux/requestStates";
 import LoadingUsers from "../components/users/LoadingUsers";
-import { Rating, Typography, Paper, Button, Divider, Box, Tooltip } from "@mui/material";
-import Carousel from 'react-material-ui-carousel'
+import { Rating, Typography, Paper, Button, Divider, Tooltip } from "@mui/material";
+import Carousel from "react-material-ui-carousel";
 
 const RestaurantSpotlight = () => {
     const { placeID } = useParams();
@@ -45,11 +45,7 @@ const RestaurantSpotlight = () => {
             return;
         }
         setLoaded(true);
-    }, [usersSlice.getUsers, usersSlice.users, restaurant, ratings, dispatch]);
-
-    useEffect(() => {
-        console.log(restaurant);
-    }, [restaurant]);
+    }, [usersSlice.getUsers, usersSlice.users, restaurant, ratings]);
 
     // find user by ID
     const findUserByID = (userID) => {
@@ -57,58 +53,54 @@ const RestaurantSpotlight = () => {
         return matchedUser[0];
     };
 
+    if (!loaded) {
+        return <LoadingUsers />;
+    }
+
     // restaurant fields:
     // name, formatted_address, opening_hours, rating, user_ratings_total, picture_icon, types
     return (
         <div>
-            {loaded ? (
-                <section>
-                    <Typography variant="h4" component="div" sx={{ m: 5 }}>
-                        {restaurant.name}
-                    </Typography>
+            <section>
+                <Typography variant="h4" component="div" sx={{ m: 5 }}>
+                    {restaurant.name}
+                </Typography>
 
-                    <Carousel>
-                        {
-                            photos.map((photo, i) => {
-                                return <img className="restaurant-img-carousel" src={photo} alt="URL not found"></img>
-                            })
-                        }
-                    </Carousel>
+                <Carousel>
+                    {photos.map((photo, i) => {
+                        return <img className="restaurant-img-carousel" src={photo} alt="URL not found"></img>;
+                    })}
+                </Carousel>
 
-                    <Typography sx={{ mt: 4 }} variant="overline" component="legend">Google Ratings</Typography>
-                    <Tooltip title={restaurant.rating} placement="right">
-                        <Button>
-                            <Rating
-                                name="read-only"
-                                value={restaurant.rating}
-                                readOnly
-                                precision={0.1}
-                            />
-                        </Button>
-                    </Tooltip>
-                    <Typography variant="overline" component="legend">from {restaurant.user_ratings_total} users </Typography>
+                <Typography sx={{ mt: 4 }} variant="overline" component="legend">
+                    Google Ratings
+                </Typography>
+                <Tooltip title={restaurant.rating} placement="right">
+                    <Button>
+                        <Rating name="read-only" value={restaurant.rating} readOnly precision={0.1} />
+                    </Button>
+                </Tooltip>
+                <Typography variant="overline" component="legend">
+                    from {restaurant.user_ratings_total} users{" "}
+                </Typography>
 
-                    <Divider variant="middle" sx={{ mt: 5, mb: 1 }} />
-                    <Typography variant="h4" component="div" sx={{ m: 5 }}>
-                        Reviews
-                    </Typography>
-                    {ratings.map((rating) => (
-                        <RestaurantRating
-                            key={rating._id}
-                            score={rating.score}
-                            comments={rating.comments ? rating.comments : ""}
-                            createdAt={rating.createdAt}
-                            userName={findUserByID(rating.userID).firstName}
-                            userIcon={findUserByID(rating.userID).icon}
-                            restaurantName={restaurant.name}
-                        />
-                    ))}
-                    <Typography variant="body2" component="div" sx={{ mb: 5 }}>
-                    </Typography>
-                </section>
-            ) : (
-                <LoadingUsers />
-            )}
+                <Divider variant="middle" sx={{ mt: 5, mb: 1 }} />
+                <Typography variant="h4" component="div" sx={{ m: 5 }}>
+                    Reviews
+                </Typography>
+                {ratings.map((rating) => (
+                    <RestaurantRating
+                        key={rating._id}
+                        score={rating.score}
+                        comments={rating.comments ? rating.comments : ""}
+                        createdAt={rating.createdAt}
+                        userName={findUserByID(rating.userID).firstName}
+                        userIcon={findUserByID(rating.userID).icon}
+                        restaurantName={restaurant.name}
+                    />
+                ))}
+                <Typography variant="body2" component="div" sx={{ mb: 5 }}></Typography>
+            </section>
         </div>
     );
 };
