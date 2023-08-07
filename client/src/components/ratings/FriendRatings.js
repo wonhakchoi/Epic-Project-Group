@@ -19,7 +19,7 @@ const FriendRatings = () => {
     useEffect(() => {
         if (shouldFetch.current) {
             shouldFetch.current = false;
-            console.log(friendsSlice.friends);
+            // console.log(friendsSlice.friends);
             dispatch(
                 getFriendRatingsAsync({
                     skipAmount: ratingsSlice.ratings.length,

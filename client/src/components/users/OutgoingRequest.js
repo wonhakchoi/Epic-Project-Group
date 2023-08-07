@@ -6,7 +6,7 @@ import "./Buttons.css";
 
 const OutgoingRequest = ({ id, icon, name, biography }) => {
     const icons = useSelector((state) => state.users.iconLocations);
-    const authenticationSlice = useSelector((state) => state.authentication.authentication);
+    let currUser = useSelector((state) => state.sauth.currUser);
     const dispatch = useDispatch();
 
     return (
@@ -19,7 +19,7 @@ const OutgoingRequest = ({ id, icon, name, biography }) => {
             <section className="outgoing-request-buttons">
                 <button
                     className="reject-button friend-request-button"
-                    onClick={() => dispatch(cancelOutgoingAsync({ userID: authenticationSlice.user, otherID: id }))}
+                    onClick={() => dispatch(cancelOutgoingAsync({ userID: currUser, otherID: id }))}
                 >
                     Cancel
                 </button>

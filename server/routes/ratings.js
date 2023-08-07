@@ -40,7 +40,7 @@ router.get("/friendRatings/:skip/:limit", async (req, res, next) => {
 router.get("/userRatings/:userID", async (req, res, next) => {
     let { userID } = req.params;
     try {
-        const userRatings = await Rating.find({ userID });
+        const userRatings = await Rating.find({ userID }).sort({ createdAt: -1 });
         res.status(200).send(userRatings);
     } catch (error) {
         console.error(error);
@@ -52,7 +52,7 @@ router.get("/userRatings/:userID", async (req, res, next) => {
 router.get("/restaurantRatings/:restaurantID", async (req, res, next) => {
     let { restaurantID } = req.params;
     try {
-        const restaurantRatings = await Rating.find({ restaurantID });
+        const restaurantRatings = await Rating.find({ restaurantID }).sort({ createdAt: -1 });
         res.status(200).send(restaurantRatings);
     } catch (error) {
         console.error(error);
@@ -65,14 +65,19 @@ router.post("/:userID/:restaurantID", async (req, res, next) => {
     let { userID, restaurantID } = req.params;
     let { score, comments } = req.body;
     try {
-        const newRating = new Rating({
-            userID,
-            restaurantID,
-            score,
-            comments,
-        });
-        await newRating.save();
-        res.status(201).json(newRating);
+        const existingRating = await Rating.findOne({ userID, restaurantID });
+        if (existingRating) {
+            res.status(409).json({ error: "Rating already exists for this user and restaurant" });
+        } else {
+            const newRating = new Rating({
+                userID,
+                restaurantID,
+                score,
+                comments,
+            });
+            await newRating.save();
+            res.status(201).json(newRating);
+        }
     } catch (error) {
         console.error(error);
         res.status(500).send("Server error");

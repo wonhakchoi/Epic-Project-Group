@@ -1,44 +1,44 @@
 import axios from "axios";
 
-// const baseCollectionsUrl = "https://easy-eats-backend-9u5y.onrender.com/collections";
-const baseCollectionsUrl = "http://localhost:3001/collections";
-
 // requests for collections
-export const getCollections = async () => {
-    console.log("GET collections")
-    let data = (await axios.get(baseCollectionsUrl)).data;
+
+export const deleteCollection = async (collectionId) => {
+    await axios.delete(`${process.env.REACT_APP_BACKEND}/collections/${collectionId}`)
+}
+export const getCollections = async (userId) => {
+    let data = (await axios.get(`${process.env.REACT_APP_BACKEND}/collections/user/${userId}`)).data;
     return data;
 }
 
 export const getCollectionDetails = async (collectionId) => {
-    const data = (await axios.get(`${baseCollectionsUrl}/${collectionId}`)).data;
+    const data = (await axios.get(`${process.env.REACT_APP_BACKEND}/collections/${collectionId}`)).data;
     return data;
 }
 
 export const getRestaurants = async (collectionId) => {
-    const data = (await axios.get(`${baseCollectionsUrl}/${collectionId}/restaurants`)).data;
-    // console.log(data[0].result);
+    const data = (await axios.get(`${process.env.REACT_APP_BACKEND}/collections/${collectionId}/restaurants`)).data;
     return data;
 
 }
 
-export const addNewCollection = async ({name, img}) => {
-    const data = (await axios.post(`${baseCollectionsUrl}`,
+export const addNewCollection = async ({name, img, userId}) => {
+    const data = (await axios.post(`${process.env.REACT_APP_BACKEND}/collections`,
         {
             name: name,
             img: img,
             pinned: false,
+            userId: userId
         })).data
     return data;
 
 }
 
 export const deleteRestaurantCollection = async ({collectionId, restaurantId}) => {
-    await axios.delete(`${baseCollectionsUrl}/${collectionId}/${restaurantId}`)
+    await axios.delete(`${process.env.REACT_APP_BACKEND}/collections/${collectionId}/${restaurantId}`)
 }
 
 export const addRestaurantCollection = async ({collectionId, restaurantId}) => {
-    await axios.put(`${baseCollectionsUrl}/${collectionId}/${restaurantId}`)
+    await axios.put(`${process.env.REACT_APP_BACKEND}/collections/${collectionId}/${restaurantId}`)
 }
 
 export default getCollections;
