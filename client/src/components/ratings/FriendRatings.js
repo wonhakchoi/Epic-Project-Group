@@ -23,19 +23,33 @@ const FriendRatings = () => {
     useEffect(() => {
         const fetchUserAndRestaurant = async () => {
             try {
-                const data = await dispatch(getFriendRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage, friendIDs: friendsSlice.friends, }));
+                const data = await dispatch(
+                    getFriendRatingsAsync({
+                        skipAmount: ratingsSlice.ratings.length,
+                        resultsToGet: resultsPerPage,
+                        friendIDs: friendsSlice.friends,
+                    })
+                );
                 const ratingsArray = data.payload.data.ratings;
 
                 for (const rating of ratingsArray) {
                     const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                    setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result?.name ? restaurantData.data.result.name : "Restaurant" }]);
+                    setRestaurants((prevArray) => [
+                        ...prevArray,
+                        {
+                            restaurantID: rating.restaurantID,
+                            restaurantName: restaurantData.data.result?.name
+                                ? restaurantData.data.result.name
+                                : "Restaurant",
+                        },
+                    ]);
                 }
-                console.log('setRestaurants');
+                console.log("setRestaurants");
                 console.log(restaurants);
             } catch (err) {
                 console.log(err);
             }
-        }
+        };
         if (shouldFetch.current) {
             shouldFetch.current = false;
             fetchUserAndRestaurant();
@@ -48,16 +62,21 @@ const FriendRatings = () => {
             return;
         }
         try {
-            const data = await dispatch(getFriendRatingsAsync({
-                skipAmount: ratingsSlice.ratings.length,
-                resultsToGet: resultsPerPage,
-                friendIDs: friendsSlice.friends,
-            }));
+            const data = await dispatch(
+                getFriendRatingsAsync({
+                    skipAmount: ratingsSlice.ratings.length,
+                    resultsToGet: resultsPerPage,
+                    friendIDs: friendsSlice.friends,
+                })
+            );
             const ratingsArray = data.payload.data.ratings;
 
             for (const rating of ratingsArray) {
                 const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name }]);
+                setRestaurants((prevArray) => [
+                    ...prevArray,
+                    { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name },
+                ]);
             }
         } catch (err) {
             console.log(err);
@@ -86,10 +105,16 @@ const FriendRatings = () => {
         setLoaded(true);
     }, [restaurants, dispatch]);
 
-    // find user by ID
-    const findUserByID = (userID) => {
+    // find user's full name by ID
+    const findUserNameByID = (userID) => {
         const matchedUser = usersSlice.users.filter((user) => user._id === userID);
         return `${matchedUser[0].firstName} ${matchedUser[0].lastName}`;
+    };
+
+    // find user's full name by ID
+    const findUserIconByID = (userID) => {
+        const matchedUser = usersSlice.users.filter((user) => user._id === userID);
+        return matchedUser[0].icon;
     };
 
     // find restaurant by ID
@@ -99,7 +124,7 @@ const FriendRatings = () => {
             console.log(matchedRestaurant[0]);
             return matchedRestaurant[0].restaurantName;
         } catch (err) {
-            console.log('loading restaurant name');
+            console.log("loading restaurant name");
         }
     };
 
@@ -110,20 +135,20 @@ const FriendRatings = () => {
     return (
         <div id="ratings-container">
             <Divider variant="middle" />
-            <Typography
-                variant="h4"
-                component="div"
-                sx={{ mb: 5, mt: 6 }}
-            >
+            <Typography variant="h4" component="div" sx={{ mb: 5, mt: 6 }}>
                 Ratings from Your Friends
             </Typography>
             {ratingsSlice.ratings.map((rating) => (
                 <RatingCard
                     key={rating._id}
                     id={rating._id}
-                    name={findUserByID(rating.userID)}
+                    userID={rating.userID}
+                    name={findUserNameByID(rating.userID)}
+                    icon={findUserIconByID(rating.userID)}
                     // restaurant={rating.restaurantID}
-                    restaurant={findRestaurantByID(rating.restaurantID) ? findRestaurantByID(rating.restaurantID) : "Loading"}
+                    restaurant={
+                        findRestaurantByID(rating.restaurantID) ? findRestaurantByID(rating.restaurantID) : "Loading"
+                    }
                     score={rating.score}
                     comment={rating.comments ? rating.comments : ""}
                     date={rating.updatedAt}

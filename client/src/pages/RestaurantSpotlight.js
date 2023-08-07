@@ -94,6 +94,7 @@ const RestaurantSpotlight = () => {
                         score={rating.score}
                         comments={rating.comments ? rating.comments : ""}
                         createdAt={rating.createdAt}
+                        userID={rating.userID}
                         userName={findUserByID(rating.userID).firstName}
                         userIcon={findUserByID(rating.userID).icon}
                         restaurantName={restaurant.name}

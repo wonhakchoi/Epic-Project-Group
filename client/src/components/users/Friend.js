@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { unfriendAsync } from "../../redux/thunks/usersThunks";
 import RatingService from "../../redux/services/ratingsService";
 import "./Friend.css";
 import "./Buttons.css";
-import { Box, Card, CardContent, Button, Typography, CardHeader, Divider, Grid } from '@mui/material';
-
+import { Card, CardContent, Button, Typography, CardHeader, Divider, Grid } from "@mui/material";
 
 const Friend = ({ id, icon, name, biography }) => {
     const icons = useSelector((state) => state.users.iconLocations);
@@ -31,15 +31,15 @@ const Friend = ({ id, icon, name, biography }) => {
         <Card sx={{ width: 300, minHeight: 240, p: 1 }}>
             <CardHeader
                 avatar={
-                    <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
+                    <Link to={`/users/${id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                        <img className="user-icon" src={icons[icon]} alt={name} />
+                    </Link>
                 }
                 title={
-                    <Typography
-                        mr={6}
-                        variant="h6"
-                        component="h2"
-                    >
-                        {name}
+                    <Typography mr={6} variant="h6" component="h2">
+                        <Link to={`/users/${id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                            {name}
+                        </Link>
                     </Typography>
                 }
             />
@@ -73,21 +73,19 @@ const Friend = ({ id, icon, name, biography }) => {
                     sx={{ mt: 3 }}
                 >
                     <Grid item xs={6}>
-                        <Button
-                            variant="outlined"
-                            color="success"
-                            sx={{ minWidth: '30vh', minHeight: '6vh' }}
-                            onClick={() => console.log(`View Profile ID ${id}`)}
-                        >
-                            View
-                        </Button>
+                        <Link to={`/users/${id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                            <Button variant="outlined" color="success" sx={{ minWidth: "30vh", minHeight: "6vh" }}>
+                                View
+                            </Button>
+                        </Link>
                     </Grid>
                     <Grid item xs={6}>
                         <Button
-                            sx={{ minWidth: '30vh', minHeight: '6vh' }}
+                            sx={{ minWidth: "30vh", minHeight: "6vh" }}
                             variant="outlined"
                             color="error"
-                            onClick={() => dispatch(unfriendAsync({ userID: currUser, otherID: id }))}>
+                            onClick={() => dispatch(unfriendAsync({ userID: currUser, otherID: id }))}
+                        >
                             Unfriend
                         </Button>
                     </Grid>

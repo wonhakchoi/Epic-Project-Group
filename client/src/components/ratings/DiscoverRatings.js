@@ -27,13 +27,18 @@ const DiscoverRatings = () => {
         }
         try {
             dispatch(getUsersAsync());
-            const data = await dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
+            const data = await dispatch(
+                getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage })
+            );
             const ratingsArray = data.payload.data.ratings;
-            setRatings(oldRatings => [...oldRatings, ...ratingsArray]);
+            setRatings((oldRatings) => [...oldRatings, ...ratingsArray]);
 
             for (const rating of ratingsArray) {
                 const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name }]);
+                setRestaurants((prevArray) => [
+                    ...prevArray,
+                    { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name },
+                ]);
             }
         } catch (err) {
             console.log(err);
@@ -46,26 +51,35 @@ const DiscoverRatings = () => {
         const fetchUserAndRestaurant = async () => {
             try {
                 dispatch(getUsersAsync());
-                const data = await dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
+                const data = await dispatch(
+                    getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage })
+                );
                 const ratingsArray = data.payload.data.ratings;
-                setRatings(oldRatings => [...oldRatings, ...ratingsArray]);
+                setRatings((oldRatings) => [...oldRatings, ...ratingsArray]);
 
                 for (const rating of ratingsArray) {
                     const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                    setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result?.name ? restaurantData.data.result.name : "Restaurant" }]);
+                    setRestaurants((prevArray) => [
+                        ...prevArray,
+                        {
+                            restaurantID: rating.restaurantID,
+                            restaurantName: restaurantData.data.result?.name
+                                ? restaurantData.data.result.name
+                                : "Restaurant",
+                        },
+                    ]);
                 }
-                console.log('setRestaurants');
+                console.log("setRestaurants");
                 console.log(restaurants);
             } catch (err) {
                 console.log(err);
             }
-        }
+        };
         if (shouldFetch.current) {
             shouldFetch.current = false;
             fetchUserAndRestaurant();
         }
     }, [dispatch]);
-
 
     // sets 'loaded' to true only once the restaurant, ratings, and users are all loaded
     useEffect(() => {
@@ -75,11 +89,16 @@ const DiscoverRatings = () => {
         setLoaded(true);
     }, [usersSlice.getUsers, usersSlice.users, restaurants, ratings, dispatch]);
 
-
-    // find user by ID
-    const findUserByID = (userID) => {
+    // find user's full name by ID
+    const findUserNameByID = (userID) => {
         const matchedUser = usersSlice.users.filter((user) => user._id === userID);
-        return matchedUser[0];
+        return `${matchedUser[0].firstName} ${matchedUser[0].lastName}`;
+    };
+
+    // find user's full name by ID
+    const findUserIconByID = (userID) => {
+        const matchedUser = usersSlice.users.filter((user) => user._id === userID);
+        return matchedUser[0].icon;
     };
 
     // find restaurant by ID
@@ -89,9 +108,8 @@ const DiscoverRatings = () => {
             console.log(matchedRestaurant[0]);
             return matchedRestaurant[0].restaurantName;
         } catch (err) {
-            console.log('loading restaurant name');
+            console.log("loading restaurant name");
         }
-
     };
 
     if (!loaded) {
@@ -103,13 +121,17 @@ const DiscoverRatings = () => {
             <Typography variant="h2" sx={{ marginTop: "30px" }}>
                 All Reviews
             </Typography>
-            
+
             {ratingsSlice.ratings.map((rating) => (
                 <RatingCard
                     key={rating._id}
                     id={rating._id}
-                    name={findUserByID(rating.userID)?.firstName ? findUserByID(rating.userID).firstName : "Name"}
-                    restaurant={findRestaurantByID(rating.restaurantID) ? findRestaurantByID(rating.restaurantID) : "Loading"}
+                    userID={rating.userID}
+                    name={findUserNameByID(rating.userID)}
+                    icon={findUserIconByID(rating.userID)}
+                    restaurant={
+                        findRestaurantByID(rating.restaurantID) ? findRestaurantByID(rating.restaurantID) : "Loading"
+                    }
                     score={rating.score}
                     comment={rating.comments ? rating.comments : ""}
                     date={rating.updatedAt}
