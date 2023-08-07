@@ -28,19 +28,24 @@ router.get("/restaurant/:placeID", async (req, res, next) => {
     const { data } = await axios.get(
         `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeID}&key=${process.env.GOOGLE_PLACES_API_KEY}`
     );
-    
-    if (data.result.photos) {
-        const photoUrls = await Promise.all(
-            data.result.photos.map(async (photo) => {
-                const imageURL = await axios.get(
-                    `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photo.photo_reference}&maxheight=500&maxwidth=500&key=${process.env.GOOGLE_PLACES_API_KEY}`
-                );
-                return imageURL.config.url;
-            })
-        );
-        data.photo_urls = photoUrls;
+
+    try {
+        if (data.result.photos) {
+            const photoUrls = await Promise.all(
+                data.result.photos.map(async (photo) => {
+                    const imageURL = await axios.get(
+                        `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photo.photo_reference}&maxheight=500&maxwidth=500&key=${process.env.GOOGLE_PLACES_API_KEY}`
+                    );
+                    return imageURL.config.url;
+                })
+            );
+            data.photo_urls = photoUrls;
+        }
+        res.json(data);
+    } catch(error) {
+        console.log(error);
     }
-    res.json(data);
+    
 });
 
 module.exports = router;
