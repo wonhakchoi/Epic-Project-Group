@@ -90,7 +90,7 @@ const RestaurantSpotlight = () => {
 
                     <Divider variant="middle" sx={{ mt: 5, mb: 1 }} />
                     <Typography variant="h4" component="div" sx={{ m: 5 }}>
-                        Reviews
+                        Easy Eats Reviews
                     </Typography>
                     {ratings.map((rating) => (
                         <RestaurantRating

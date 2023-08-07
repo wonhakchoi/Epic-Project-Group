@@ -36,7 +36,7 @@ const DiscoverRatings = () => {
         dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
     };
 
-    // sets 'loaded' to true only once the restaurant, ratings, and users are all loaded
+    // sets 'loaded' to true only once the ratings and users are all loaded
     useEffect(() => {
         if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || !ratingsSlice.ratings) {
             return;

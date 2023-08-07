@@ -30,9 +30,9 @@ const RestaurantRating = ({ score, comments, createdAt, userName, userIcon, rest
                         }
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
+                        {/* <Typography gutterBottom variant="h5" component="div">
                             {restaurantName}
-                        </Typography>
+                        </Typography> */}
                         <Rating name="read-only" value={score} readOnly precision={0.5} />
                         <Typography variant="body2" color="text.secondary" mt={2}>
                             {comments}

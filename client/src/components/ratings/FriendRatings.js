@@ -6,7 +6,6 @@ import RatingCard from "./RatingCard";
 import { Typography, Divider } from "@mui/material";
 import "./DiscoverRatings.css";
 import LoadingUsers from "../users/LoadingUsers";
-import { getRestaurantByPlaceID } from "../../redux/services/mapService";
 
 const FriendRatings = () => {
     const ratingsSlice = useSelector((state) => state.ratings.friendRatings);
@@ -21,86 +20,33 @@ const FriendRatings = () => {
     // make initial fetch when entering page
     const shouldFetch = useRef(true);
     useEffect(() => {
-        const fetchUserAndRestaurant = async () => {
-            try {
-                const data = await dispatch(getFriendRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage, friendIDs: friendsSlice.friends, }));
-                const ratingsArray = data.payload.data.ratings;
-
-                for (const rating of ratingsArray) {
-                    const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                    setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result?.name ? restaurantData.data.result.name : "Restaurant" }]);
-                }
-                console.log('setRestaurants');
-                console.log(restaurants);
-            } catch (err) {
-                console.log(err);
-            }
-        }
         if (shouldFetch.current) {
             shouldFetch.current = false;
-            fetchUserAndRestaurant();
+            dispatch(getFriendRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage, friendIDs: friendsSlice.friends, }));
         }
     }, []);
 
     // fetches more ratings if not all already fetched
-    const fetchMoreRatings = useCallback(async () => {
+    const fetchMoreRatings = () => {
         if (ratingsSlice.ratings.length >= ratingsSlice.databaseSize) {
             return;
         }
-        try {
-            const data = await dispatch(getFriendRatingsAsync({
-                skipAmount: ratingsSlice.ratings.length,
-                resultsToGet: resultsPerPage,
-                friendIDs: friendsSlice.friends,
-            }));
-            const ratingsArray = data.payload.data.ratings;
+        dispatch(getFriendRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage, friendIDs: friendsSlice.friends, }));
+    };
 
-            for (const rating of ratingsArray) {
-                const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name }]);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [restaurants, dispatch]);
 
-    // // fetches more ratings if not all already fetched
-    // const fetchMoreRatings = () => {
-    //     if (ratingsSlice.ratings.length >= ratingsSlice.databaseSize) {
-    //         return;
-    //     }
-    //     dispatch(
-    //         getFriendRatingsAsync({
-    //             skipAmount: ratingsSlice.ratings.length,
-    //             resultsToGet: resultsPerPage,
-    //             friendIDs: friendsSlice.friends,
-    //         })
-    //     );
-    // };
-
-    // sets 'loaded' to true only once the restaurant, ratings, and users are all loaded
+    // sets 'loaded' to true only once the ratings and users are all loaded
     useEffect(() => {
-        if (!restaurants) {
+        if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || !ratingsSlice.ratings) {
             return;
         }
         setLoaded(true);
-    }, [restaurants, dispatch]);
+    }, [usersSlice.getUsers, dispatch]);
 
     // find user by ID
     const findUserByID = (userID) => {
         const matchedUser = usersSlice.users.filter((user) => user._id === userID);
         return `${matchedUser[0].firstName} ${matchedUser[0].lastName}`;
-    };
-
-    // find restaurant by ID
-    const findRestaurantByID = (placeID) => {
-        try {
-            const matchedRestaurant = restaurants.filter((restaurant) => restaurant.restaurantID === placeID);
-            console.log(matchedRestaurant[0]);
-            return matchedRestaurant[0].restaurantName;
-        } catch (err) {
-            console.log('loading restaurant name');
-        }
     };
 
     if (!loaded) {
@@ -122,8 +68,7 @@ const FriendRatings = () => {
                     key={rating._id}
                     id={rating._id}
                     name={findUserByID(rating.userID)}
-                    // restaurant={rating.restaurantID}
-                    restaurant={findRestaurantByID(rating.restaurantID) ? findRestaurantByID(rating.restaurantID) : "Loading"}
+                    restaurant={rating.restaurantName ? rating.restaurantName : "no restaurant name"}
                     score={rating.score}
                     comment={rating.comments ? rating.comments : ""}
                     date={rating.updatedAt}
