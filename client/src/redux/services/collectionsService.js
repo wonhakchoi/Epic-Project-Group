@@ -2,6 +2,12 @@ import axios from "axios";
 
 // requests for collections
 
+export const patchCollectionPin = async ({isPinned, collectionId}) => {
+    let response = await axios.patch(`${process.env.REACT_APP_BACKEND}/collections/pin/${collectionId}`,
+        {isPinned: isPinned})
+    return response.data;
+}
+
 export const deleteCollection = async (collectionId) => {
     await axios.delete(`${process.env.REACT_APP_BACKEND}/collections/${collectionId}`)
 }

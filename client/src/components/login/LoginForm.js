@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useCookies} from "react-cookie";
-import LoadingUsers from '../users/LoadingUsers';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -94,7 +93,6 @@ const LoginForm = () => {
         >
           You have logged in successfully! Go to home page.
         </Alert>
-        {/* <button onClick={Logout}>LOGOUT</button> */}
       </Box>
     );
   }

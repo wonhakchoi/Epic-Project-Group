@@ -6,18 +6,20 @@ import User from "./User"
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import UserService from "../../redux/services/usersService";
-import RatingService from "../../redux/services/ratingsService"
-  
-export default function ProfilePage() {  
+import RatingService from "../../redux/services/ratingsService";
+import EditIcon from '@mui/icons-material/Edit';
+import { Tooltip, Button } from "@mui/material";
+
+export default function ProfilePage() {
     let navigate = useNavigate();
 
     let [user, setUser] = useState({})
     let [userRatings, setUserRatings] = useState({})
 
-    const routeChange = () => { 
-        let path = '../friends'; 
+    const routeChange = () => {
+        let path = '../friends';
         navigate(path);
-    } 
+    }
 
     const userID = useSelector((state) => state.sauth.currUser)
 
@@ -31,7 +33,7 @@ export default function ProfilePage() {
                 console.error("Error fetching user data:", error);
             }
         };
-    
+
         fetchUserData();
     }, [])
 
@@ -45,7 +47,7 @@ export default function ProfilePage() {
                 console.error("Error fetching user data:", error);
             }
         };
-    
+
         fetchUserRatings();
     }, [])
 
@@ -53,7 +55,12 @@ export default function ProfilePage() {
     if (user.data !== undefined) {
         return (
             <div>
-                <User name={`${user.data[0].firstName} ${user.data[0].lastName}`} biography={user.data[0].biography}/>
+                <User name={`${user.data[0].firstName} ${user.data[0].lastName}`} biography={user.data[0].biography} />
+                <Tooltip title="Edit profile" placement="right">
+                    <Button href="edit-profile">
+                        <EditIcon />
+                    </Button>
+                </Tooltip>
                 <div className="friends-header">
                     <label id="friend-title">Friends</label>
                     <button id="navigate-button" onClick={routeChange}>To Friends Page</button>
@@ -62,11 +69,11 @@ export default function ProfilePage() {
                 <div className="friends">
                     {user.data[0].friends.map((friend) => {
                         return (
-                            <ProfileFriend key={friend} id={friend}/>
+                            <ProfileFriend key={friend} id={friend} />
                         )
                     })}
                 </div>
-                
+
                 <div className="restaurants-header">
                     <label id="restaurant-title">Your Restaurants</label>
                 </div>

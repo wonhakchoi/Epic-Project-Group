@@ -4,7 +4,7 @@ import {
     addNewCollectionAsync, deleteCollectionAsync, deleteRestaurantCollectionAsync,
     getCollectionDetailsAsync,
     getCollectionsAsync,
-    getRestaurantsAsync
+    getRestaurantsAsync, patchCollectionPinAsync
 } from "../thunks/collectionsThunks";
 
 // reducer logic for collections
@@ -22,7 +22,8 @@ const INITIAL_STATE = {
     getRestaurants: REQUEST_STATE.IDLE,
     addCollection: REQUEST_STATE.IDLE,
     deleteRestaurant: REQUEST_STATE.IDLE,
-    deleteCollection: REQUEST_STATE.IDLE
+    deleteCollection: REQUEST_STATE.IDLE,
+    pinCollection: REQUEST_STATE.IDLE
 }
 
 const collectionsSlice = createSlice({
@@ -43,9 +44,6 @@ const collectionsSlice = createSlice({
         },
         setCollectionImg: (state, action) => {
             state.newCollectionImg = action.payload;
-        },
-        setCollectionPin: (state, action) => {
-            state.newCollectionPin = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -109,6 +107,15 @@ const collectionsSlice = createSlice({
             .addCase(deleteCollectionAsync.rejected, (state) => {
                 state.deleteCollection = REQUEST_STATE.REJECTED;
             })
+            .addCase(patchCollectionPinAsync.pending, (state) => {
+                state.pinCollection = REQUEST_STATE.PENDING;
+            })
+            .addCase(patchCollectionPinAsync.fulfilled, (state) => {
+                state.pinCollection = REQUEST_STATE.FULFILLED;
+            })
+            .addCase(patchCollectionPinAsync.rejected, (state) => {
+                state.pinCollection = REQUEST_STATE.REJECTED;
+        })
     }
 })
 
@@ -117,6 +124,5 @@ export const {
     hideForm,
     setCollectionName,
     setCollectionImg,
-    setCollectionPin,
 } = collectionsSlice.actions;
 export default collectionsSlice.reducer;

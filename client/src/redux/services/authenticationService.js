@@ -11,7 +11,6 @@ export const postAuth = async (token) => {
                 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
             },
-            // credentials: 'same-origin',
             withCredentials: true,
             data: {
                 token: token
@@ -20,7 +19,6 @@ export const postAuth = async (token) => {
     } catch (e) {
         throw new Error(e.response.data.message)
     }
-    // console.log("auth \n" + JSON.stringify(response.data))
     return response.data;
 }
 
@@ -31,7 +29,6 @@ export const doLogin = async ({email, password}) => {
     } catch (e) {
         throw new Error(e.response.data.message);
     }
-    // console.log("post login: \n" + JSON.stringify(response));
     return response.data;
 }
 
@@ -48,6 +45,5 @@ export const doSignup = async ({email, password, firstName, lastName}) => {
     } catch (e) {
         throw new Error(e.response.data.message);
     }
-    // console.log("post signup: \n" + JSON.stringify(response.data));
     return response.data;
 }

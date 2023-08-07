@@ -49,7 +49,7 @@ export default function Collections() {
     const displayCollections = (collectionList) =>
         collectionList.map((collection) => (
             <Grid item key={collection._id} xs={12} sm={6} md={4} lg={3}>
-                <CollectionCard collectionId={collection._id} collection={collection}/>
+                <CollectionCard collection={collection}/>
             </Grid>
         ));
 
