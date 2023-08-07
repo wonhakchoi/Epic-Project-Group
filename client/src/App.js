@@ -10,6 +10,7 @@ import CollectionPage from "./components/collections/CollectionPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
 import Discover from "./pages/Discover";
 import RestaurantSpotlight from "./pages/RestaurantSpotlight";
 import { useEffect } from "react";
@@ -31,6 +32,7 @@ function App() {
                     <Route path={"/login"} element={<Login />}></Route>
                     <Route path={"/signup"} element={<Signup />}></Route>
                     <Route path={"/profile"} element={<Profile />}></Route>
+                    <Route path={"/edit-profile"} element={<EditProfile />}></Route>
                     <Route path={"/discover"} element={<Discover />}></Route>
                     <Route path="/*" element={<NotFound />}></Route>
                 </Routes>
