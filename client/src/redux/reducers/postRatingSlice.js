@@ -8,7 +8,11 @@ let initialState = { ratings: [], databaseSize: 0, uploadState: REQUEST_STATE.PE
 const postRatingSlice = createSlice({
     name: "postRatings",
     initialState,
-    reducers: {},
+    reducers: {
+        clearError: (state, action) => {
+            state.error = null;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(postUserRatingsAsync.pending, (state) => {
@@ -17,6 +21,7 @@ const postRatingSlice = createSlice({
             })
             .addCase(postUserRatingsAsync.fulfilled, (state, action) => {
                 state.uploadState = REQUEST_STATE.FULFILLED;
+                state.error = null;
                 // state.ratings = [...state.ratings, ...action.payload.data.ratings];
             })
             .addCase(postUserRatingsAsync.rejected, (state, action) => {
@@ -26,4 +31,7 @@ const postRatingSlice = createSlice({
     },
 });
 
+export const {
+    clearError,
+} = postRatingSlice.actions;
 export default postRatingSlice.reducer;

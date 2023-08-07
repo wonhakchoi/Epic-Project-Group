@@ -15,83 +15,40 @@ const DiscoverRatings = () => {
     const dispatch = useDispatch();
     const usersSlice = useSelector((state) => state.users.allUsers);
     const [loaded, setLoaded] = useState(false);
-    const [ratings, setRatings] = useState([]);
-    const [restaurants, setRestaurants] = useState([]);
-    // const loggedInUser = useSelector((state) => state.sauth.currUser)
 
     const resultsPerPage = 4;
-
-    const fetchUserAndRestaurant = useCallback(async () => {
-        if (ratingsSlice.ratings.length >= ratingsSlice.databaseSize) {
-            return;
-        }
-        try {
-            dispatch(getUsersAsync());
-            const data = await dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
-            const ratingsArray = data.payload.data.ratings;
-            setRatings(oldRatings => [...oldRatings, ...ratingsArray]);
-
-            for (const rating of ratingsArray) {
-                const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name }]);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [restaurants, ratings, dispatch]);
 
     // make initial fetch when entering page
     const shouldFetch = useRef(true);
     useEffect(() => {
-        const fetchUserAndRestaurant = async () => {
-            try {
-                dispatch(getUsersAsync());
-                const data = await dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
-                const ratingsArray = data.payload.data.ratings;
-                setRatings(oldRatings => [...oldRatings, ...ratingsArray]);
-
-                for (const rating of ratingsArray) {
-                    const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                    setRestaurants(prevArray => [...prevArray, { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result?.name ? restaurantData.data.result.name : "Restaurant" }]);
-                }
-                console.log('setRestaurants');
-                console.log(restaurants);
-            } catch (err) {
-                console.log(err);
-            }
-        }
         if (shouldFetch.current) {
             shouldFetch.current = false;
-            fetchUserAndRestaurant();
+            dispatch(getUsersAsync());
+            dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
         }
-    }, [dispatch]);
+    }, []);
 
+    // fetches more ratings if not all already fetched
+    const fetchMoreRatings = () => {
+        if (ratingsSlice.ratings.length >= ratingsSlice.databaseSize) {
+            return;
+        }
+        dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
+    };
 
-    // sets 'loaded' to true only once the restaurant, ratings, and users are all loaded
+    // sets 'loaded' to true only once the ratings and users are all loaded
     useEffect(() => {
-        if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || !restaurants || !ratings) {
+        if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || !ratingsSlice.ratings) {
             return;
         }
         setLoaded(true);
-    }, [usersSlice.getUsers, usersSlice.users, restaurants, ratings, dispatch]);
+    }, [usersSlice.getUsers, dispatch]);
 
 
     // find user by ID
     const findUserByID = (userID) => {
         const matchedUser = usersSlice.users.filter((user) => user._id === userID);
         return matchedUser[0];
-    };
-
-    // find restaurant by ID
-    const findRestaurantByID = (placeID) => {
-        try {
-            const matchedRestaurant = restaurants.filter((restaurant) => restaurant.restaurantID === placeID);
-            console.log(matchedRestaurant[0]);
-            return matchedRestaurant[0].restaurantName;
-        } catch (err) {
-            console.log('loading restaurant name');
-        }
-
     };
 
     if (!loaded) {
@@ -109,7 +66,7 @@ const DiscoverRatings = () => {
                     key={rating._id}
                     id={rating._id}
                     name={findUserByID(rating.userID)?.firstName ? findUserByID(rating.userID).firstName : "Name"}
-                    restaurant={findRestaurantByID(rating.restaurantID) ? findRestaurantByID(rating.restaurantID) : "Loading"}
+                    restaurant={rating.restaurantName ? rating.restaurantName : "no restaurant name"}
                     score={rating.score}
                     comment={rating.comments ? rating.comments : ""}
                     date={rating.updatedAt}
@@ -121,8 +78,7 @@ const DiscoverRatings = () => {
                     className="load-more"
                     variant="h6"
                     component="div"
-                    // onClick={fetchMoreRatings}
-                    onClick={fetchUserAndRestaurant}
+                    onClick={fetchMoreRatings}
                     sx={{ marginTop: "30px" }}
                 >
                     See More Ratings
@@ -137,5 +93,5 @@ const DiscoverRatings = () => {
 
 export default DiscoverRatings;
 
-// https://stackoverflow.com/questions/73002902/api-getting-called-twice-in-react#:~:text=The%20cause%20of%20the%20issue,which%20call%20the%20API%20twice.
-// shouldFetch ref hook called due to React StrictMode
+// // https://stackoverflow.com/questions/73002902/api-getting-called-twice-in-react#:~:text=The%20cause%20of%20the%20issue,which%20call%20the%20API%20twice.
+// // shouldFetch ref hook called due to React StrictMode

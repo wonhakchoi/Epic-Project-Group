@@ -2,15 +2,22 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import "./LeaveReviewModal.css";
-import { Typography, Box, TextField, Grid, Button, Rating, Stack } from '@mui/material';
+import { Typography, Box, TextField, Grid, Button, Rating, Alert } from '@mui/material';
 import { postUserRatingsAsync } from '../../redux/thunks/ratingsThunks';
+import { clearError } from '../../redux/reducers/postRatingSlice';
+import { REQUEST_STATE } from '../../redux/requestStates';
 
-export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID }) => {
+export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID, restaurantName }) => {
     const modalRef = useRef();
     const [score, setScore] = useState(0);
     const [comment, setComment] = useState('');
     const dispatch = useDispatch();
-    const loggedInUser = useSelector((state) => state.sauth.currUser)
+    const loggedInUser = useSelector((state) => state.sauth.currUser);
+    const postRatingSlice = useSelector((state) => state.ratings.postRating);
+
+    useEffect(() => {
+        dispatch(clearError());
+    }, []);
 
     const closeModal = e => {
         if (modalRef.current === e.target) {
@@ -31,11 +38,16 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID 
         const body = {
             score: score,
             comments: comment,
+            restaurantName: restaurantName,
         }
-        console.log(body);
         dispatch(postUserRatingsAsync({ userID: loggedInUser, restaurantID: placeID, body: body }));
-        setShowReviewModal(false);
     };
+
+    useEffect(() => {
+        if (postRatingSlice.uploadState == REQUEST_STATE.FULFILLED) {
+            setShowReviewModal(false);
+        }
+    }, [postRatingSlice.uploadState]);
 
     return (
         <>
@@ -47,6 +59,9 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID 
                         </Typography>
 
                         <Box component="form" onSubmit={handleSubmit} noValidate >
+                            <Grid item xs={12}>
+                                {postRatingSlice.error?.message && <Alert severity="error" sx={{ mt: 3 }}>You've already left a review for this restaurant</Alert>}
+                            </Grid>
                             <Rating
                                 className="rating"
                                 value={score}
@@ -55,27 +70,15 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID 
                                 onChange={(event, newValue) => {
                                     setScore(newValue);
                                 }}
-                                // sx={{border:4}}
+                            // sx={{border:4}}
                             />
-                            {/* <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="score"
-                                label="Your score"
-                                name="score"
-                                autoComplete="score"
-                                autoFocus
-                                onChange={handleScoreChange}
-                                value={score}
-                            /> */}
                             <TextField
                                 margin="normal"
                                 fullWidth
                                 id="comment"
                                 label="Your comment"
                                 name="comment"
-                                autoComplete="current-password"
+                                autoComplete="current-comment"
                                 autoFocus
                                 onChange={handleCommentChange}
                                 value={comment}

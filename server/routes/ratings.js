@@ -63,7 +63,7 @@ router.get("/restaurantRatings/:restaurantID", async (req, res, next) => {
 /* POST new user rating on a specific restaurant */
 router.post("/:userID/:restaurantID", async (req, res, next) => {
     let { userID, restaurantID } = req.params;
-    let { score, comments } = req.body;
+    let { score, comments, restaurantName } = req.body;
     try {
         const existingRating = await Rating.findOne({ userID, restaurantID });
         if (existingRating) {
@@ -74,6 +74,7 @@ router.post("/:userID/:restaurantID", async (req, res, next) => {
                 restaurantID,
                 score,
                 comments,
+                restaurantName,
             });
             await newRating.save();
             res.status(201).json(newRating);
