@@ -13,7 +13,6 @@ router.patch('/pin/:collectionId', async (req, res) => {
     } catch (e) {
         console.error(e)
     }
-    console.log(cauliflower);
     return res.send(cauliflower);
 })
 

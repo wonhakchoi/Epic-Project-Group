@@ -174,4 +174,45 @@ router.put("/unfriend/:userID/:otherID", async (req, res, next) => {
     }
 });
 
+/* PUT edit new icon */
+router.put("/editIcon/:userID/:iconID", async (req, res, next) => {
+    let { userID, iconID } = req.params;
+    const userObjectID = new mongoose.Types.ObjectId(userID.toString());
+    try {
+        const userQuery = User.findOneAndUpdate(
+            { _id: userObjectID },
+            {
+                $set: { icon: iconID },
+            },
+            { new: true, upsert: true }
+        );
+        const user = await userQuery.exec();
+        res.status(200).send(user);
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(`Error: ${error}`);
+    }
+});
+
+/* PUT edit new biography */
+router.put("/editBio/:userID", async (req, res, next) => {
+    let { userID } = req.params;
+    let biography = req.body;
+    const userObjectID = new mongoose.Types.ObjectId(userID.toString());
+    try {
+        const userQuery = User.findOneAndUpdate(
+            { _id: userObjectID },
+            {
+                $set: { biography: biography },
+            },
+            { new: true, upsert: true }
+        );
+        const user = await userQuery.exec();
+        res.status(200).send(user);
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(`Error: ${error}`);
+    }
+});
+
 module.exports = router;
