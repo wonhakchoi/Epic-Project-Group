@@ -11,6 +11,7 @@ import PushPinIcon from '@mui/icons-material/PushPin';
 import RemoveIcon from '@mui/icons-material/Remove';
 import {useDispatch, useSelector} from "react-redux";
 import {getCollectionsAsync, patchCollectionPinAsync} from "../../redux/thunks/collectionsThunks";
+import CardActions from "@mui/material/CardActions";
 
 // Component for each Collection Card
 export default function CollectionCard({collection}) {
@@ -33,24 +34,6 @@ export default function CollectionCard({collection}) {
 
     return (
         <div style={{position: "relative"}}>
-            {collection.pinned && (
-                <Typography
-                    variant="h6"
-                    component="div"
-                    color="primary"
-                    sx={{
-                        position: "absolute",
-                        top: "-20px",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        backgroundColor: "#fff",
-                        padding: "5px 10px",
-                        borderRadius: "10px",
-                    }}
-                >
-                    Pinned
-                </Typography>
-            )}
             <Card
                 sx={{
                     maxWidth: 300,
@@ -63,6 +46,29 @@ export default function CollectionCard({collection}) {
                     },
                 }}
             >
+                <CardActions>
+                    {!collection.pinned && (
+                        <IconButton
+                            color="default"
+                            onClick={handlePin}
+                            // sx={{position: "relative", top: "5px", right: "5px"}}
+                        >
+                            <PushPinIcon/>
+                            {/* Commenting this out because the icon looks awkward, will fix this later */}
+                        </IconButton>
+                    )}
+                    {collection.pinned && (
+                        <IconButton
+                            color="default"
+                            onClick={handleUnpin}
+                            // sx={{position: "relative", top: "5px", right: "5px"}}
+                        >
+                            <RemoveIcon/>
+                            {/* Commenting this out because the icon looks awkward, will fix this later */}
+                        </IconButton>
+                    )}
+                </CardActions>
+
                 <Link to={"/collections/" + collection._id} style={{textDecoration: "none"}}>
                     <CardMedia
                         component="img"
@@ -86,26 +92,7 @@ export default function CollectionCard({collection}) {
         >
           <PushPinIcon />
         </IconButton> */}
-                {!collection.pinned && (
-                    <IconButton
-                        color="default"
-                        onClick={handlePin}
-                        sx={{position: "absolute", top: "5px", right: "5px"}}
-                    >
-                        <PushPinIcon/>
-                        {/* Commenting this out because the icon looks awkward, will fix this later */}
-                    </IconButton>
-                )}
-                {collection.pinned && (
-                    <IconButton
-                        color="default"
-                        onClick={handleUnpin}
-                        sx={{position: "absolute", top: "5px", right: "5px"}}
-                    >
-                        <RemoveIcon/>
-                        {/* Commenting this out because the icon looks awkward, will fix this later */}
-                    </IconButton>
-                )}
+
             </Card>
         </div>
     );
