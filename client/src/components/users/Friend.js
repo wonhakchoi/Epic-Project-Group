@@ -4,6 +4,8 @@ import { unfriendAsync } from "../../redux/thunks/usersThunks";
 import RatingService from "../../redux/services/ratingsService";
 import "./Friend.css";
 import "./Buttons.css";
+import { Box, Card, CardContent, Button, Typography, CardHeader, Divider, Grid } from '@mui/material';
+
 
 const Friend = ({ id, icon, name, biography }) => {
     const icons = useSelector((state) => state.users.iconLocations);
@@ -26,31 +28,72 @@ const Friend = ({ id, icon, name, biography }) => {
     }, []);
 
     return (
-        <div className="friend-container">
-            <section className="friend-header">
-                <img className="user-icon" src={icons[icon]} alt={name} />
-                <h3>{name}</h3>
-                <p className="biography">{biography}</p>
-            </section>
-            <section className="rated-restaurants">
-                <b>Rated Restaurants</b>
-                {ratings ? ratings.map((rating) => <h3>{rating.restaurantID}</h3>) : <h3>Loading...</h3>}
-            </section>
-            <section className="friend-buttons">
-                <button
-                    className="accept-button friend-request-button"
-                    onClick={() => console.log(`View Profile ID ${id}`)}
+        <Card sx={{ width: 300, minHeight: 240, p: 1 }}>
+            <CardHeader
+                avatar={
+                    <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
+                }
+                title={
+                    <Typography
+                        mr={6}
+                        variant="h6"
+                        component="h2"
+                    >
+                        {name}
+                    </Typography>
+                }
+            />
+            <CardContent>
+                <Typography color="body2" variant="caption">
+                    {biography}
+                </Typography>
+                <Divider variant="middle" sx={{ mt: 1, mb: 1 }} />
+                {/* <Typography variant="h6" component="div">
+                    Rated Restaurants
+                </Typography>
+                {ratings ?
+                    ratings.map((rating) =>
+                        <Typography sx={{ mb: 1.5, fontSize: 14 }} color="text.secondary">
+                            {rating.restaurantID}
+                        </Typography>
+                    )
+                    :
+                    <Typography sx={{ mb: 1.5, fontSize: 14 }} color="text.secondary">
+                        Loading...
+                    </Typography>
+                } */}
+
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={1}
+                    fullWidth
+                    sx={{ mt: 3 }}
                 >
-                    View
-                </button>
-                <button
-                    className="reject-button friend-request-button"
-                    onClick={() => dispatch(unfriendAsync({ userID: currUser, otherID: id }))}
-                >
-                    Unfriend
-                </button>
-            </section>
-        </div>
+                    <Grid item xs={6}>
+                        <Button
+                            variant="outlined"
+                            color="success"
+                            sx={{ minWidth: '30vh', minHeight: '6vh' }}
+                            onClick={() => console.log(`View Profile ID ${id}`)}
+                        >
+                            View
+                        </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Button
+                            sx={{ minWidth: '30vh', minHeight: '6vh' }}
+                            variant="outlined"
+                            color="error"
+                            onClick={() => dispatch(unfriendAsync({ userID: currUser, otherID: id }))}>
+                            Unfriend
+                        </Button>
+                    </Grid>
+                </Grid>
+            </CardContent>
+        </Card>
     );
 };
 

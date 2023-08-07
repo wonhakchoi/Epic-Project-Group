@@ -18,15 +18,23 @@ const RestaurantRating = ({ score, comments, createdAt, userName, userIcon, rest
                 <Card sx={{ maxWidth: 1000 }}>
                     <CardHeader
                         avatar={<img className="user-icon" src={icons[userIcon]} alt="User Icon" />}
-                        title={userName}
-                        subheader={createdAt}
+                        title={
+                            <Typography mr={6} gutterBottom variant="h6" component="h2">
+                                {userName}
+                            </Typography>
+                        }
+                        subheader={
+                            <Typography mr={6} gutterBottom variant="body2" color="text.secondary">
+                                {createdAt}
+                            </Typography>
+                        }
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
                             {restaurantName}
                         </Typography>
                         <Rating name="read-only" value={score} readOnly precision={0.5} />
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography variant="body2" color="text.secondary" mt={2}>
                             {comments}
                         </Typography>
                     </CardContent>

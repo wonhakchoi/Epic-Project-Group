@@ -2,14 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import "./LeaveReviewModal.css";
-import { Typography, Box, TextField, Grid, Button } from '@mui/material';
+import { Typography, Box, TextField, Grid, Button, Rating, Stack } from '@mui/material';
 import { postUserRatingsAsync } from '../../redux/thunks/ratingsThunks';
 
-export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal }) => {
+export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID }) => {
     const modalRef = useRef();
     const [score, setScore] = useState(0);
     const [comment, setComment] = useState('');
     const dispatch = useDispatch();
+    const loggedInUser = useSelector((state) => state.sauth.currUser)
 
     const closeModal = e => {
         if (modalRef.current === e.target) {
@@ -32,7 +33,7 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal }) => {
             comments: comment,
         }
         console.log(body);
-        dispatch(postUserRatingsAsync({ userID: "John Smith", restaurantID: "McDonald's", body: body }));
+        dispatch(postUserRatingsAsync({ userID: loggedInUser, restaurantID: placeID, body: body }));
         setShowReviewModal(false);
     };
 
@@ -44,8 +45,19 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal }) => {
                         <Typography component="h1" variant="h5">
                             Leave Review
                         </Typography>
-                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                            <TextField
+
+                        <Box component="form" onSubmit={handleSubmit} noValidate >
+                            <Rating
+                                className="rating"
+                                value={score}
+                                precision={0.5}
+                                size="large"
+                                onChange={(event, newValue) => {
+                                    setScore(newValue);
+                                }}
+                                // sx={{border:4}}
+                            />
+                            {/* <TextField
                                 margin="normal"
                                 required
                                 fullWidth
@@ -56,12 +68,12 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal }) => {
                                 autoFocus
                                 onChange={handleScoreChange}
                                 value={score}
-                            />
+                            /> */}
                             <TextField
                                 margin="normal"
                                 fullWidth
                                 id="comment"
-                                label="Your comment" 
+                                label="Your comment"
                                 name="comment"
                                 autoComplete="current-password"
                                 autoFocus
@@ -81,16 +93,6 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal }) => {
                     </div>
                 </div>
             ) : null}
-            {/* <div className="modal">
-                <div className="modal-content">
-                    <span className="close" onClick={closeModal} ref={modalRef}>&times;</span>
-                    {showModal && (
-                        <div className="item-detail">
-                            hello
-                        </div>
-                    )}
-                </div>
-            </div> */}
         </>
     );
 };

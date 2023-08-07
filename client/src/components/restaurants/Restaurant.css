@@ -56,10 +56,17 @@
 }
 
 .restaurant-img {
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 4px;
   width: 300px;
   height: 300px;
+}
+
+.restaurant-img-carousel {
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  width: 80vh;
+  height: auto;
 }
 
 .restaurant-card {
