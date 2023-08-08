@@ -24,3 +24,15 @@ export const cancelOutgoingAsync = createAsyncThunk("users/cancelOutgoing", asyn
 export const unfriendAsync = createAsyncThunk("users/unfriend", async ({ userID, otherID }) => {
     return await UserService.unfriend(userID, otherID);
 });
+
+export const editIconAsync = createAsyncThunk("users/editIcon", async ({ userID, iconID }) => {
+    return await UserService.editIcon(userID, iconID);
+});
+
+export const editBiographyAsync = createAsyncThunk("users/editBio", async ({ userID, biography }) => {
+    return await UserService.editBiography(userID, biography);
+});
+
+export const editProfileAsync = createAsyncThunk("users/editProfile", async ({ userID, body }) => {
+    return await UserService.editProfile(userID, body);
+});

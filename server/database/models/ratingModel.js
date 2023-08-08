@@ -10,6 +10,10 @@ const ratingSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        restaurantName: {
+            type: String,
+            required: true,
+        },
         score: {
             type: Number,
             required: true,

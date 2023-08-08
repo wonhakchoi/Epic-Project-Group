@@ -1,12 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {REQUEST_STATE} from "../requestStates";
 import {
-    addNewCollectionAsync, deleteRestaurantCollectionAsync,
+    addNewCollectionAsync, deleteCollectionAsync, deleteRestaurantCollectionAsync,
     getCollectionDetailsAsync,
     getCollectionsAsync,
-    getRestaurantsAsync
+    getRestaurantsAsync, patchCollectionPinAsync
 } from "../thunks/collectionsThunks";
-import {postAuthAsync} from "../thunks/authenticationThunks";
 
 // reducer logic for collections
 
@@ -18,12 +17,14 @@ const INITIAL_STATE = {
     newCollectionName: "",
     newCollectionImg: "",
     newCollectionPin: false,
+    loaded: false,
     getCollections: REQUEST_STATE.IDLE,
     getCollectionDetails: REQUEST_STATE.IDLE,
     getRestaurants: REQUEST_STATE.IDLE,
     addCollection: REQUEST_STATE.IDLE,
     deleteRestaurant: REQUEST_STATE.IDLE,
-    // postAuth: REQUEST_STATE.IDLE
+    deleteCollection: REQUEST_STATE.IDLE,
+    pinCollection: REQUEST_STATE.IDLE
 }
 
 const collectionsSlice = createSlice({
@@ -45,8 +46,8 @@ const collectionsSlice = createSlice({
         setCollectionImg: (state, action) => {
             state.newCollectionImg = action.payload;
         },
-        setCollectionPin: (state, action) => {
-            state.newCollectionPin = action.payload;
+        setLoaded: (state, action) => {
+            state.loaded = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -99,15 +100,26 @@ const collectionsSlice = createSlice({
             .addCase(deleteRestaurantCollectionAsync.fulfilled, (state) => {
                 state.deleteRestaurant = REQUEST_STATE.FULFILLED;
             })
-            // .addCase(postAuthAsync.pending, (state) => {
-            //     state.postAuth = REQUEST_STATE.PENDING;
-            // })
-            // .addCase(postAuthAsync.fulfilled, (state) => {
-            //     state.postAuth = REQUEST_STATE.FULFILLED;
-            // })
-            // .addCase(postAuthAsync.rejected, (state) => {
-            //     state.postAuth = REQUEST_STATE.REJECTED;
-            // })
+            .addCase(deleteCollectionAsync.pending, (state) => {
+                state.deleteCollection = REQUEST_STATE.PENDING;
+            })
+            .addCase(deleteCollectionAsync.fulfilled, (state) => {
+                state.deleteCollection = REQUEST_STATE.FULFILLED;
+                state.currCollectionDetails = {};
+                state.currRestaurants = [];
+            })
+            .addCase(deleteCollectionAsync.rejected, (state) => {
+                state.deleteCollection = REQUEST_STATE.REJECTED;
+            })
+            .addCase(patchCollectionPinAsync.pending, (state) => {
+                state.pinCollection = REQUEST_STATE.PENDING;
+            })
+            .addCase(patchCollectionPinAsync.fulfilled, (state) => {
+                state.pinCollection = REQUEST_STATE.FULFILLED;
+            })
+            .addCase(patchCollectionPinAsync.rejected, (state) => {
+                state.pinCollection = REQUEST_STATE.REJECTED;
+            })
     }
 })
 
@@ -116,6 +128,6 @@ export const {
     hideForm,
     setCollectionName,
     setCollectionImg,
-    setCollectionPin,
+    setLoaded
 } = collectionsSlice.actions;
 export default collectionsSlice.reducer;

@@ -2,6 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Friend from "./Friend";
 import "./FriendsList.css";
+import { Typography, Grid, Box, Container } from "@mui/material";
+import { flexbox } from '@mui/system';
+
 
 const FriendsList = () => {
     const friendsSlice = useSelector((state) => state.users.userFriends);
@@ -9,11 +12,34 @@ const FriendsList = () => {
 
     return (
         <div>
-            <h2>Your Friends</h2>
-            <div className="friendslist-container">
+            <Typography
+                variant="h4"
+                component="div"
+                sx={{ mb: 5, mt: 5 }}
+            >
+                Your Friends
+            </Typography>
+
+
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="start"
+                minHeight="12vh"
+                gap={5}
+                sx={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                    mb: 8,
+                }}
+            >
+
                 {friendsSlice.friends.map((id) => {
                     const user = usersSlice.users.filter((user) => user._id === id)[0];
                     // console.log(user);
+                    console.log(user);
+                    console.log(user.ratedRestaurants);
                     return (
                         <Friend
                             key={id}
@@ -25,7 +51,8 @@ const FriendsList = () => {
                         />
                     );
                 })}
-            </div>
+            </Box>
+
         </div>
     );
 };

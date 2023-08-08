@@ -63,16 +63,22 @@ router.get("/restaurantRatings/:restaurantID", async (req, res, next) => {
 /* POST new user rating on a specific restaurant */
 router.post("/:userID/:restaurantID", async (req, res, next) => {
     let { userID, restaurantID } = req.params;
-    let { score, comments } = req.body;
+    let { score, comments, restaurantName } = req.body;
     try {
-        const newRating = new Rating({
-            userID,
-            restaurantID,
-            score,
-            comments,
-        });
-        await newRating.save();
-        res.status(201).json(newRating);
+        const existingRating = await Rating.findOne({ userID, restaurantID });
+        if (existingRating) {
+            res.status(409).json({ error: "Rating already exists for this user and restaurant" });
+        } else {
+            const newRating = new Rating({
+                userID,
+                restaurantID,
+                score,
+                comments,
+                restaurantName,
+            });
+            await newRating.save();
+            res.status(201).json(newRating);
+        }
     } catch (error) {
         console.error(error);
         res.status(500).send("Server error");

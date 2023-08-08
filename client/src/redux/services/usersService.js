@@ -48,6 +48,26 @@ const unfriend = async (userID, otherID) => {
     return unfriendRequest;
 };
 
+// edit user icon
+const editIcon = async (userID, iconID) => {
+    const userWithNewIcon = await axios.put(`${process.env.REACT_APP_BACKEND}/users/editIcon/${userID}/${iconID}`);
+    // console.log('edit icon\n' + JSON.stringify(userWithNewIcon))
+    return userWithNewIcon;
+};
+
+// edit user biography
+const editBiography = async (userID, biography) => {
+    const userWithNewBiography = await axios.put(`${process.env.REACT_APP_BACKEND}/users/editBio/${userID}`, biography);
+    // console.log('edit biography\n' + JSON.stringify(userWithNewBiography))
+    return userWithNewBiography;
+};
+
+// edit user profile
+const editProfile = async (userID, body) => {
+    const userWithUpdatedProfile = await axios.put(`${process.env.REACT_APP_BACKEND}/users/editProfile/${userID}`, body);
+    return userWithUpdatedProfile;
+};
+
 const UserService = {
     getUsers,
     getUserByID,
@@ -56,6 +76,9 @@ const UserService = {
     sendOutgoing,
     cancelOutgoing,
     unfriend,
+    editIcon,
+    editBiography,
+    editProfile,
 };
 
 export default UserService;
