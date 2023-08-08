@@ -26,7 +26,9 @@ const RatingCard = ({ id, userID, name, icon, restaurant, score, comment, date }
                         }
                         title={
                             <Link to={`/users/${userID}`} style={{ textDecoration: "none", color: "inherit" }}>
-                                {name}
+                                <Typography mr={6} gutterBottom variant="h6" component="h2">
+                                    {name}
+                                </Typography>
                             </Link>
                         }
                         subheader={
