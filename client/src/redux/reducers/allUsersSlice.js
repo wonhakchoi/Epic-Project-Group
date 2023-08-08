@@ -38,6 +38,7 @@ const allUsersSlice = createSlice({
             })
             .addCase(editIconAsync.fulfilled, (state, action) => {
                 state.editIcon = REQUEST_STATE.FULFILLED;
+                console.log(action.payload.data);
                 const updatedUser = action.payload.data;
                 state.users = state.users.map((user) =>
                     user._id === updatedUser._id ? { ...user, icon: updatedUser.icon } : user
