@@ -3,7 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     hideForm,
     setCollectionName,
-    setCollectionImg
+    setCollectionImg,
+    setLoaded
 } from "../../redux/reducers/collectionsSlice";
 import {Modal, TextField, Button, Box} from "@mui/material";
 import {addNewCollectionAsync, getCollectionsAsync} from "../../redux/thunks/collectionsThunks";
@@ -24,10 +25,15 @@ export default function CollectionForm() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        // dispatch(addCollection());
-        dispatch(addNewCollectionAsync({name: newCollectionName, img: newCollectionImg, userId: currUser}));
-        dispatch(getCollectionsAsync(currUser));
-        closeForm();
+        dispatch(setLoaded(false));
+        dispatch(addNewCollectionAsync({name: newCollectionName, img: newCollectionImg, userId: currUser}))
+            .then(() => {
+                dispatch(getCollectionsAsync(currUser));
+            })
+            .then(() => {
+                closeForm();
+                dispatch(setLoaded(true));
+            });
     }
 
     return (

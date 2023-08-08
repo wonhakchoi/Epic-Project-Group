@@ -7,7 +7,6 @@ import "./DiscoverRatings.css";
 import RatingCard from "./RatingCard";
 import { Typography, Grid, Container } from "@mui/material";
 import LoadingUsers from "../users/LoadingUsers";
-import { getRestaurantByPlaceID } from "../../redux/services/mapService";
 
 // Discover page for users to see ratings from other people
 const DiscoverRatings = () => {
@@ -44,7 +43,6 @@ const DiscoverRatings = () => {
         setLoaded(true);
     }, [usersSlice.getUsers, dispatch]);
 
-
     // find user by ID
     const findUserByID = (userID) => {
         const matchedUser = usersSlice.users.filter((user) => user._id === userID);
@@ -60,13 +58,15 @@ const DiscoverRatings = () => {
             <Typography variant="h2" sx={{ marginTop: "30px" }}>
                 All Reviews
             </Typography>
-            
+
             {ratingsSlice.ratings.map((rating) => (
                 <RatingCard
                     key={rating._id}
                     id={rating._id}
+                    userID={rating.userID}
                     name={findUserByID(rating.userID)?.firstName ? findUserByID(rating.userID).firstName : "Name"}
                     restaurant={rating.restaurantName ? rating.restaurantName : "no restaurant name"}
+                    icon={findUserByID(rating.userID)?.icon ? findUserByID(rating.userID).icon : 1}
                     score={rating.score}
                     comment={rating.comments ? rating.comments : ""}
                     date={rating.updatedAt}
