@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Status } from "../../utils/userUtils";
 import { acceptIncomingAsync, sendOutgoingAsync } from "../../redux/thunks/usersThunks";
 import "./UserSearchResult.css";
@@ -12,16 +13,17 @@ const UserSearchResult = ({ id, icon, name, status }) => {
 
     return (
         <div>
-            <Grid container spacing={0} >
+            <Grid container spacing={0}>
                 <Grid item xs={3}>
-                    <img className="user-search-icon" src={icons[icon]} alt={name} />
+                    <Link to={`/users/${id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                        <img className="user-search-icon" src={icons[icon]} alt={name} />
+                    </Link>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography
-                        variant="h6"
-                        component="div"
-                    >
-                        {name}
+                    <Typography variant="h6" component="div">
+                        <Link to={`/users/${id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                            {name}
+                        </Link>
                     </Typography>
                 </Grid>
                 <Grid item xs={2}>
@@ -56,7 +58,6 @@ const UserSearchResult = ({ id, icon, name, status }) => {
                             <p className="friend-text">Add Friend</p>
                         </div>
                     )}
-
                 </Grid>
             </Grid>
         </div>

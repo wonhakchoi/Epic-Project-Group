@@ -1,9 +1,10 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { acceptIncomingAsync, rejectIncomingAsync } from "../../redux/thunks/usersThunks";
 import "./Requests.css";
 import "./Buttons.css";
-import { Box, Card, CardActions, CardContent, Button, Typography, CardHeader, Divider, Grid } from '@mui/material';
+import { Card, CardContent, Button, Typography, CardHeader, Divider, Grid } from "@mui/material";
 
 const IncomingRequest = ({ id, icon, name, biography }) => {
     const icons = useSelector((state) => state.users.iconLocations);
@@ -14,11 +15,15 @@ const IncomingRequest = ({ id, icon, name, biography }) => {
         <Card sx={{ width: 300, minHeight: 240, p: 1 }}>
             <CardHeader
                 avatar={
-                    <img className="user-icon" src={icons[Math.floor(Math.random() * icons.length)]} alt={name} />
+                    <Link to={`/users/${id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                        <img className="user-icon" src={icons[icon]} alt={name} />
+                    </Link>
                 }
                 title={
                     <Typography mr={6} variant="h6" component="h2">
-                        {name}
+                        <Link to={`/users/${id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                            {name}
+                        </Link>
                     </Typography>
                 }
             />
@@ -42,7 +47,7 @@ const IncomingRequest = ({ id, icon, name, biography }) => {
                         <Button
                             variant="outlined"
                             color="success"
-                            sx={{ minWidth: '30vh', minHeight: '6vh' }}
+                            sx={{ minWidth: "30vh", minHeight: "6vh" }}
                             onClick={() => dispatch(acceptIncomingAsync({ userID: currUser, otherID: id }))}
                         >
                             Accept
@@ -50,10 +55,11 @@ const IncomingRequest = ({ id, icon, name, biography }) => {
                     </Grid>
                     <Grid item xs={6}>
                         <Button
-                            sx={{ minWidth: '30vh', minHeight: '6vh' }}
+                            sx={{ minWidth: "30vh", minHeight: "6vh" }}
                             variant="outlined"
                             color="error"
-                            onClick={() => dispatch(acceptIncomingAsync({ userID: currUser, otherID: id }))}>
+                            onClick={() => dispatch(rejectIncomingAsync({ userID: currUser, otherID: id }))}
+                        >
                             Cancel
                         </Button>
                     </Grid>

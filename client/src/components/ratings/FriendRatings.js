@@ -22,7 +22,13 @@ const FriendRatings = () => {
     useEffect(() => {
         if (shouldFetch.current) {
             shouldFetch.current = false;
-            dispatch(getFriendRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage, friendIDs: friendsSlice.friends, }));
+            dispatch(
+                getFriendRatingsAsync({
+                    skipAmount: ratingsSlice.ratings.length,
+                    resultsToGet: resultsPerPage,
+                    friendIDs: friendsSlice.friends,
+                })
+            );
         }
     }, []);
 
@@ -31,9 +37,14 @@ const FriendRatings = () => {
         if (ratingsSlice.ratings.length >= ratingsSlice.databaseSize) {
             return;
         }
-        dispatch(getFriendRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage, friendIDs: friendsSlice.friends, }));
+        dispatch(
+            getFriendRatingsAsync({
+                skipAmount: ratingsSlice.ratings.length,
+                resultsToGet: resultsPerPage,
+                friendIDs: friendsSlice.friends,
+            })
+        );
     };
-
 
     // sets 'loaded' to true only once the ratings and users are all loaded
     useEffect(() => {
@@ -46,7 +57,7 @@ const FriendRatings = () => {
     // find user by ID
     const findUserByID = (userID) => {
         const matchedUser = usersSlice.users.filter((user) => user._id === userID);
-        return `${matchedUser[0].firstName} ${matchedUser[0].lastName}`;
+        return matchedUser[0];
     };
 
     if (!loaded) {
@@ -56,19 +67,17 @@ const FriendRatings = () => {
     return (
         <div id="ratings-container">
             <Divider variant="middle" />
-            <Typography
-                variant="h4"
-                component="div"
-                sx={{ mb: 5, mt: 6 }}
-            >
+            <Typography variant="h4" component="div" sx={{ mb: 5, mt: 6 }}>
                 Ratings from Your Friends
             </Typography>
             {ratingsSlice.ratings.map((rating) => (
                 <RatingCard
                     key={rating._id}
                     id={rating._id}
-                    name={findUserByID(rating.userID)}
+                    userID={rating.userID}
+                    name={findUserByID(rating.userID)?.firstName ? findUserByID(rating.userID).firstName : "Name"}
                     restaurant={rating.restaurantName ? rating.restaurantName : "no restaurant name"}
+                    icon={findUserByID(rating.userID)?.icon ? findUserByID(rating.userID).icon : 1}
                     score={rating.score}
                     comment={rating.comments ? rating.comments : ""}
                     date={rating.updatedAt}

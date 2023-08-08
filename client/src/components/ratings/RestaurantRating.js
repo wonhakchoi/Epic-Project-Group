@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { Rating, Typography, Grid, Container } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -8,7 +9,7 @@ import CardContent from "@mui/material/CardContent";
 
 // import img from "../../../public/images/home-icons/pasta";
 
-const RestaurantRating = ({ score, comments, createdAt, userName, userIcon, restaurantName }) => {
+const RestaurantRating = ({ score, comments, createdAt, userID, userName, userIcon, restaurantName }) => {
     const icons = useSelector((state) => state.users.iconLocations);
 
     // https://mui.com/material-ui/react-card/
@@ -17,11 +18,15 @@ const RestaurantRating = ({ score, comments, createdAt, userName, userIcon, rest
             <Container maxWidth="sm">
                 <Card sx={{ maxWidth: 1000 }}>
                     <CardHeader
-                        avatar={<img className="user-icon" src={icons[userIcon]} alt="User Icon" />}
+                        avatar={
+                            <Link to={`/users/${userID}`} style={{ textDecoration: "none", color: "inherit" }}>
+                                <img className="user-icon" src={icons[userIcon]} alt="User Icon" />
+                            </Link>
+                        }
                         title={
-                            <Typography mr={6} gutterBottom variant="h6" component="h2">
+                            <Link to={`/users/${userID}`} style={{ textDecoration: "none", color: "inherit" }}>
                                 {userName}
-                            </Typography>
+                            </Link>
                         }
                         subheader={
                             <Typography mr={6} gutterBottom variant="body2" color="text.secondary">
