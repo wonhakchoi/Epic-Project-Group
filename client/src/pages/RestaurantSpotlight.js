@@ -86,15 +86,15 @@ const RestaurantSpotlight = () => {
 
                 <Divider variant="middle" sx={{ mt: 5, mb: 1 }} />
                 <Typography variant="h4" component="div" sx={{ m: 5 }}>
-                    Reviews
+                    Easy Eats Reviews
                 </Typography>
                 {ratings.map((rating) => (
                     <RestaurantRating
                         key={rating._id}
                         score={rating.score}
                         comments={rating.comments ? rating.comments : ""}
-                        createdAt={rating.createdAt}
                         userID={rating.userID}
+                        createdAt={rating.createdAt}
                         userName={findUserByID(rating.userID).firstName}
                         userIcon={findUserByID(rating.userID).icon}
                         restaurantName={restaurant.name}

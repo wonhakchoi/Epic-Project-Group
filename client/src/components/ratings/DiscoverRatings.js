@@ -7,7 +7,6 @@ import "./DiscoverRatings.css";
 import RatingCard from "./RatingCard";
 import { Typography, Grid, Container } from "@mui/material";
 import LoadingUsers from "../users/LoadingUsers";
-import { getRestaurantByPlaceID } from "../../redux/services/mapService";
 
 // Discover page for users to see ratings from other people
 const DiscoverRatings = () => {
@@ -15,101 +14,39 @@ const DiscoverRatings = () => {
     const dispatch = useDispatch();
     const usersSlice = useSelector((state) => state.users.allUsers);
     const [loaded, setLoaded] = useState(false);
-    const [ratings, setRatings] = useState([]);
-    const [restaurants, setRestaurants] = useState([]);
-    // const loggedInUser = useSelector((state) => state.sauth.currUser)
 
     const resultsPerPage = 4;
-
-    const fetchUserAndRestaurant = useCallback(async () => {
-        if (ratingsSlice.ratings.length >= ratingsSlice.databaseSize) {
-            return;
-        }
-        try {
-            dispatch(getUsersAsync());
-            const data = await dispatch(
-                getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage })
-            );
-            const ratingsArray = data.payload.data.ratings;
-            setRatings((oldRatings) => [...oldRatings, ...ratingsArray]);
-
-            for (const rating of ratingsArray) {
-                const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                setRestaurants((prevArray) => [
-                    ...prevArray,
-                    { restaurantID: rating.restaurantID, restaurantName: restaurantData.data.result.name },
-                ]);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [restaurants, ratings, dispatch]);
 
     // make initial fetch when entering page
     const shouldFetch = useRef(true);
     useEffect(() => {
-        const fetchUserAndRestaurant = async () => {
-            try {
-                dispatch(getUsersAsync());
-                const data = await dispatch(
-                    getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage })
-                );
-                const ratingsArray = data.payload.data.ratings;
-                setRatings((oldRatings) => [...oldRatings, ...ratingsArray]);
-
-                for (const rating of ratingsArray) {
-                    const restaurantData = await getRestaurantByPlaceID(rating.restaurantID);
-                    setRestaurants((prevArray) => [
-                        ...prevArray,
-                        {
-                            restaurantID: rating.restaurantID,
-                            restaurantName: restaurantData.data.result?.name
-                                ? restaurantData.data.result.name
-                                : "Restaurant",
-                        },
-                    ]);
-                }
-                console.log("setRestaurants");
-                console.log(restaurants);
-            } catch (err) {
-                console.log(err);
-            }
-        };
         if (shouldFetch.current) {
             shouldFetch.current = false;
-            fetchUserAndRestaurant();
+            dispatch(getUsersAsync());
+            dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
         }
-    }, [dispatch]);
+    }, []);
 
-    // sets 'loaded' to true only once the restaurant, ratings, and users are all loaded
+    // fetches more ratings if not all already fetched
+    const fetchMoreRatings = () => {
+        if (ratingsSlice.ratings.length >= ratingsSlice.databaseSize) {
+            return;
+        }
+        dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
+    };
+
+    // sets 'loaded' to true only once the ratings and users are all loaded
     useEffect(() => {
-        if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || !restaurants || !ratings) {
+        if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || !ratingsSlice.ratings) {
             return;
         }
         setLoaded(true);
-    }, [usersSlice.getUsers, usersSlice.users, restaurants, ratings, dispatch]);
+    }, [usersSlice.getUsers, dispatch]);
 
-    // find user's full name by ID
-    const findUserNameByID = (userID) => {
+    // find user by ID
+    const findUserByID = (userID) => {
         const matchedUser = usersSlice.users.filter((user) => user._id === userID);
-        return `${matchedUser[0].firstName} ${matchedUser[0].lastName}`;
-    };
-
-    // find user's full name by ID
-    const findUserIconByID = (userID) => {
-        const matchedUser = usersSlice.users.filter((user) => user._id === userID);
-        return matchedUser[0].icon;
-    };
-
-    // find restaurant by ID
-    const findRestaurantByID = (placeID) => {
-        try {
-            const matchedRestaurant = restaurants.filter((restaurant) => restaurant.restaurantID === placeID);
-            console.log(matchedRestaurant[0]);
-            return matchedRestaurant[0].restaurantName;
-        } catch (err) {
-            console.log("loading restaurant name");
-        }
+        return matchedUser[0];
     };
 
     if (!loaded) {
@@ -127,11 +64,9 @@ const DiscoverRatings = () => {
                     key={rating._id}
                     id={rating._id}
                     userID={rating.userID}
-                    name={findUserNameByID(rating.userID)}
-                    icon={findUserIconByID(rating.userID)}
-                    restaurant={
-                        findRestaurantByID(rating.restaurantID) ? findRestaurantByID(rating.restaurantID) : "Loading"
-                    }
+                    name={findUserByID(rating.userID)?.firstName ? findUserByID(rating.userID).firstName : "Name"}
+                    restaurant={rating.restaurantName ? rating.restaurantName : "no restaurant name"}
+                    icon={findUserByID(rating.userID)?.icon ? findUserByID(rating.userID).icon : 1}
                     score={rating.score}
                     comment={rating.comments ? rating.comments : ""}
                     date={rating.updatedAt}
@@ -143,8 +78,7 @@ const DiscoverRatings = () => {
                     className="load-more"
                     variant="h6"
                     component="div"
-                    // onClick={fetchMoreRatings}
-                    onClick={fetchUserAndRestaurant}
+                    onClick={fetchMoreRatings}
                     sx={{ marginTop: "30px" }}
                 >
                     See More Ratings
@@ -159,5 +93,5 @@ const DiscoverRatings = () => {
 
 export default DiscoverRatings;
 
-// https://stackoverflow.com/questions/73002902/api-getting-called-twice-in-react#:~:text=The%20cause%20of%20the%20issue,which%20call%20the%20API%20twice.
-// shouldFetch ref hook called due to React StrictMode
+// // https://stackoverflow.com/questions/73002902/api-getting-called-twice-in-react#:~:text=The%20cause%20of%20the%20issue,which%20call%20the%20API%20twice.
+// // shouldFetch ref hook called due to React StrictMode

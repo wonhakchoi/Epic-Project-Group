@@ -5,6 +5,7 @@ import { displayAddToCollection, setRestaurant } from "../../redux/reducers/coll
 import { LeaveReviewModal } from "../ratings/LeaveReviewModal";
 import { Typography, Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { clearError } from "../../redux/reducers/postRatingSlice";
 
 const Restaurant = ({ restaurant }) => {
     const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const Restaurant = ({ restaurant }) => {
 
     const openModal = () => {
         setShowReviewModal((showReviewModal) => !showReviewModal);
+        dispatch(clearError());
     };
 
     const handleAddToCollection = () => {
@@ -93,7 +95,7 @@ const Restaurant = ({ restaurant }) => {
                                 </Button>
                             </Link>
                         </Box>
-                        <LeaveReviewModal showReviewModal={showReviewModal} setShowReviewModal={setShowReviewModal} placeID={restaurant.place_id} />
+                        <LeaveReviewModal showReviewModal={showReviewModal} setShowReviewModal={setShowReviewModal} placeID={restaurant.place_id} restaurantName={name} />
                     </div>
                 </div>
             </Box>
