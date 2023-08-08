@@ -16,6 +16,18 @@ router.get("/allRatings/:skip/:limit", async (req, res, next) => {
     }
 });
 
+/* GET rating by ratingID  */
+router.get("/:ratingID", async (req, res, next) => {
+    let { ratingID } = req.params;
+    try {
+        const rating = await Rating.findById(ratingID);
+        res.status(200).send(rating);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server error");
+    }
+});
+
 /* GET only ratings of friends, sorted from latest to earliest creation */
 router.get("/friendRatings/:skip/:limit", async (req, res, next) => {
     const { skip, limit } = req.params;
@@ -97,6 +109,31 @@ router.post("/:ratingID", async (req, res, next) => {
                 $set: { score: score },
                 $set: { comments: comments },
                 $set: { createdAt: new Date() },
+            },
+            { new: true, upsert: false }
+        );
+        const updatedRating = await updatedRatingQuery.exec();
+        res.status(201).json(updatedRating);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server error");
+    }
+});
+
+/* UPDATE existing rating PUT */
+router.put("/:ratingID", async (req, res, next) => {
+    let { ratingID } = req.params;
+    let { score, comments } = req.body;
+    var ratingObjectID = new mongoose.Types.ObjectId(ratingID);
+    try {
+        const updatedRatingQuery = Rating.findOneAndUpdate(
+            ratingObjectID,
+            {
+                $set: { 
+                    score: score,
+                    comments: comments,
+                    createdAt: new Date() 
+                },
             },
             { new: true, upsert: false }
         );

@@ -13,9 +13,11 @@ import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import Discover from "./pages/Discover";
 import RestaurantSpotlight from "./pages/RestaurantSpotlight";
+import EditReview from "./components/ratings/EditReview";
 import { useEffect } from "react";
 import { getCollectionsAsync } from "./redux/thunks/collectionsThunks";
 import { useDispatch } from "react-redux";
+
 
 function App() {
     return (
@@ -32,7 +34,8 @@ function App() {
                     <Route path={"/login"} element={<Login />}></Route>
                     <Route path={"/signup"} element={<Signup />}></Route>
                     <Route path={"/profile"} element={<Profile />}></Route>
-                    <Route path={"/edit-profile"} element={<EditProfile />}></Route>
+                    <Route path={"/profile/edit"} element={<EditProfile />}></Route>
+                    <Route path={"/ratings/:ratingID"} element={<EditReview />}></Route>
                     <Route path={"/discover"} element={<Discover />}></Route>
                     <Route path="/*" element={<NotFound />}></Route>
                 </Routes>
