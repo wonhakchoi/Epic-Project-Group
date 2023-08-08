@@ -1,15 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getRatingsAsync } from "../../redux/thunks/ratingsThunks";
+import { getUsersAsync } from "../../redux/thunks/usersThunks";
 import { REQUEST_STATE } from "../../redux/requestStates";
 import "./DiscoverRatings.css";
 import RatingCard from "./RatingCard";
 import { Typography, Grid, Container } from "@mui/material";
+import LoadingUsers from "../users/LoadingUsers";
 
 // Discover page for users to see ratings from other people
 const DiscoverRatings = () => {
     const ratingsSlice = useSelector((state) => state.ratings.allRatings);
     const dispatch = useDispatch();
+    const usersSlice = useSelector((state) => state.users.allUsers);
+    const [loaded, setLoaded] = useState(false);
 
     const resultsPerPage = 4;
 
@@ -18,6 +22,7 @@ const DiscoverRatings = () => {
     useEffect(() => {
         if (shouldFetch.current) {
             shouldFetch.current = false;
+            dispatch(getUsersAsync());
             dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
         }
     }, []);
@@ -30,17 +35,38 @@ const DiscoverRatings = () => {
         dispatch(getRatingsAsync({ skipAmount: ratingsSlice.ratings.length, resultsToGet: resultsPerPage }));
     };
 
+    // sets 'loaded' to true only once the ratings and users are all loaded
+    useEffect(() => {
+        if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || !ratingsSlice.ratings) {
+            return;
+        }
+        setLoaded(true);
+    }, [usersSlice.getUsers, dispatch]);
+
+    // find user by ID
+    const findUserByID = (userID) => {
+        const matchedUser = usersSlice.users.filter((user) => user._id === userID);
+        return matchedUser[0];
+    };
+
+    if (!loaded) {
+        return <LoadingUsers />;
+    }
+
     return (
         <div id="ratings-container">
             <Typography variant="h2" sx={{ marginTop: "30px" }}>
-                Reviews
+                All Reviews
             </Typography>
+
             {ratingsSlice.ratings.map((rating) => (
                 <RatingCard
                     key={rating._id}
                     id={rating._id}
-                    name={rating.userID}
-                    restaurant={rating.restaurantID}
+                    userID={rating.userID}
+                    name={findUserByID(rating.userID)?.firstName ? findUserByID(rating.userID).firstName : "Name"}
+                    restaurant={rating.restaurantName ? rating.restaurantName : "no restaurant name"}
+                    icon={findUserByID(rating.userID)?.icon ? findUserByID(rating.userID).icon : 1}
                     score={rating.score}
                     comment={rating.comments ? rating.comments : ""}
                     date={rating.updatedAt}
@@ -67,5 +93,5 @@ const DiscoverRatings = () => {
 
 export default DiscoverRatings;
 
-// https://stackoverflow.com/questions/73002902/api-getting-called-twice-in-react#:~:text=The%20cause%20of%20the%20issue,which%20call%20the%20API%20twice.
-// shouldFetch ref hook called due to React StrictMode
+// // https://stackoverflow.com/questions/73002902/api-getting-called-twice-in-react#:~:text=The%20cause%20of%20the%20issue,which%20call%20the%20API%20twice.
+// // shouldFetch ref hook called due to React StrictMode

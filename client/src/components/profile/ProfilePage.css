@@ -14,10 +14,10 @@
     background-color: aliceblue;
     border-radius: 30px;
     height: 200px;
-    display:grid; 
-    grid-template-columns: 49% 49%; 
-    grid-row: auto auto; 
-    grid-column-gap: 20px; 
+    display: grid;
+    grid-template-columns: 49% 49%;
+    grid-row: auto auto;
+    grid-column-gap: 20px;
     grid-row-gap: 20px;
     height: auto;
 }
@@ -43,12 +43,12 @@
 #name {
     font-weight: bold;
     font-size: 50px;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 
 #description {
     font-size: 30px;
-    color: rgb(130, 130, 130);
+    color: rgb(70, 95, 95);
 }
 
 .friends-header {
@@ -66,22 +66,25 @@
 }
 
 .user-descriptor {
-    padding-top:10px;
+    padding-top: 10px;
     text-align: left;
+    position: relative;
 }
 
 .friend-image {
-    width:100px;
-    margin-right: 30px
+    width: 100px;
+    margin-right: 30px;
 }
 
 #friend-name {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 28px;
+    cursor: pointer;
 }
 
 #friend-description {
-    color: rgb(90, 90, 90);
+    color: rgb(70, 95, 95);
+    font-size: 28px;
 }
 
 #navigate-button {
@@ -117,12 +120,12 @@
     background-color: aliceblue;
     border-radius: 30px;
     height: 200px;
-    display:grid; 
-    grid-template-columns: 49% 49%; 
-    grid-row: auto auto; 
-    grid-column-gap: 20px; 
+    display: grid;
+    grid-template-columns: 49% 49%;
+    grid-row: auto auto;
+    grid-column-gap: 20px;
     grid-row-gap: 20px;
-    height: auto; 
+    height: auto;
 }
 
 .restaurants-header {
@@ -143,7 +146,7 @@
 }
 
 .restaurants > div {
-    flex-basis: 40%; 
+    flex-basis: 40%;
     background-color: aliceblue;
     margin: 20px;
 }
@@ -154,20 +157,16 @@
 }
 
 .restaurant-description {
-    font-size: 18px
+    font-size: 18px;
 }
 
 .restaurant-rating {
-    font-size: 18px
+    font-size: 18px;
 }
 
 .item {
     cursor: pointer;
     display: inline-block;
     background-color: white;
-    border: 1px solid black;
-}
-
-label {
-    margin: 10px;
+    /* border: 1px solid black; */
 }

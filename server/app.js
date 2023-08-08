@@ -13,11 +13,10 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const restaurantsRouter = require("./routes/restaurants");
 const collectionsRouter = require("./routes/collections");
-
-
 const ratingsRouter = require("./routes/ratings");
 const authRouter = require("./routes/auth");
 const mapsRouter = require("./routes/maps_api");
+
 const { generateRestaurants, clearDatabase, generateCauliflowers } = require("./database/utils");
 const session = require("express-session");
 
