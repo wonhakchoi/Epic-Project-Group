@@ -17,6 +17,7 @@ const INITIAL_STATE = {
     newCollectionName: "",
     newCollectionImg: "",
     newCollectionPin: false,
+    loaded: false,
     getCollections: REQUEST_STATE.IDLE,
     getCollectionDetails: REQUEST_STATE.IDLE,
     getRestaurants: REQUEST_STATE.IDLE,
@@ -44,6 +45,9 @@ const collectionsSlice = createSlice({
         },
         setCollectionImg: (state, action) => {
             state.newCollectionImg = action.payload;
+        },
+        setLoaded: (state, action) => {
+            state.loaded = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -115,7 +119,7 @@ const collectionsSlice = createSlice({
             })
             .addCase(patchCollectionPinAsync.rejected, (state) => {
                 state.pinCollection = REQUEST_STATE.REJECTED;
-        })
+            })
     }
 })
 
@@ -124,5 +128,6 @@ export const {
     hideForm,
     setCollectionName,
     setCollectionImg,
+    setLoaded
 } = collectionsSlice.actions;
 export default collectionsSlice.reducer;

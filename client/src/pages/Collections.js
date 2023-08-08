@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {showForm} from "../redux/reducers/collectionsSlice";
+import {setLoaded, showForm} from "../redux/reducers/collectionsSlice";
 import CollectionCard from "../components/collections/CollectionCard";
 import CollectionForm from "../components/collections/CollectionForm";
 import {Button, Typography, Container, Grid} from "@mui/material";
@@ -19,7 +19,7 @@ export default function Collections() {
     let isLoggedIn = useSelector((state) => state.sauth.isLoggedIn);
     let currUser = useSelector((state) => state.sauth.currUser);
     const [cookies, removeCookie] = useCookies([]);
-    const [loaded, setLoaded] = useState(false);
+    const loaded = useSelector((state) => state.collections.loaded);
 
     useEffect(() => {
         dispatch(postAuthAsync(cookies.token))
@@ -35,7 +35,7 @@ export default function Collections() {
     useEffect(() => {
         if (isLoggedIn) {
             dispatch(getCollectionsAsync(currUser));
-            setLoaded(true);
+            dispatch(setLoaded(true));
         }
     }, [isLoggedIn, currUser])
 
