@@ -57,7 +57,7 @@ const FriendRatings = () => {
     // find user by ID
     const findUserByID = (userID) => {
         const matchedUser = usersSlice.users.filter((user) => user._id === userID);
-        return `${matchedUser[0].firstName} ${matchedUser[0].lastName}`;
+        return matchedUser[0];
     };
 
     if (!loaded) {
