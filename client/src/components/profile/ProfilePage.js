@@ -55,15 +55,26 @@ export default function ProfilePage() {
     if (user.data !== undefined) {
         return (
             <div>
-                <User name={`${user.data[0].firstName} ${user.data[0].lastName}`} biography={user.data[0].biography} />
-                <Tooltip title="Edit profile" placement="right">
-                    <Button href="edit-profile">
-                        <EditIcon />
-                    </Button>
-                </Tooltip>
+               <div className="friends-header" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+                    <div style={{ display: "flex", alignItems: "center", marginBottom: "2vh" }}>
+                        <div id="friend-title" style={{ marginRight: "10px" }}>My Profile</div>
+                        <Tooltip title="Edit profile" placement="right">
+                            <Button href="edit-profile" >
+                                <EditIcon sx={{
+                      fontSize: "4vh",
+                      color: "#7C40F4",
+               
+                      }}  />
+                            </Button>
+                        </Tooltip>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <User name={`${user.data[0].firstName} ${user.data[0].lastName}`} biography={user.data[0].biography} />
+                    </div>
+                </div>
                 <div className="friends-header">
                     <label id="friend-title">Friends</label>
-                    <button id="navigate-button" onClick={routeChange}>To Friends Page</button>
+                    <button id="navigate-button" onClick={routeChange}>View Friends Page</button>
                 </div>
 
                 <div className="friends">
