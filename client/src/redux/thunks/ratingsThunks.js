@@ -5,6 +5,10 @@ export const getRatingsAsync = createAsyncThunk("ratings/getNextRatings", async 
     return await RatingService.getRatings(skipAmount, resultsToGet);
 });
 
+export const getRatingByIDAsync = createAsyncThunk("ratings/getRatingByID", async ({ ratingID }) => {
+    return await RatingService.getRatings(ratingID);
+});
+
 export const getFriendRatingsAsync = createAsyncThunk(
     "ratings/getNextFriendRatings",
     async ({ skipAmount, resultsToGet, friendIDs }) => {

@@ -10,13 +10,17 @@ import RatingService from "../../redux/services/ratingsService";
 import EditIcon from '@mui/icons-material/Edit';
 import { Tooltip, Button } from "@mui/material";
 import YourRatingCard from "../ratings/YourRatingCard";
+import LoadingUsers from "../users/LoadingUsers";
 
 
 export default function ProfilePage() {
     let navigate = useNavigate();
+    let [loaded, setLoaded] = useState(false);
+    let [user, setUser] = useState({});
+    let [userRatings, setUserRatings] = useState({});
+    // const usersSlice = useSelector((state) => state.users.allUsers);
+    const ratingsSlice = useSelector((state) => state.ratings.allRatings);
 
-    let [user, setUser] = useState({})
-    let [userRatings, setUserRatings] = useState({})
 
     const routeChange = () => {
         let path = '../friends';
@@ -53,6 +57,18 @@ export default function ProfilePage() {
         fetchUserRatings();
     }, [])
 
+    // sets 'loaded' to true only once the ratings and users are all loaded
+    useEffect(() => {
+        if (!userRatings || !user || !ratingsSlice.ratings) {
+            return;
+        }
+        setLoaded(true);
+    }, [userRatings, user, ratingsSlice.ratings]);
+
+    if (!loaded) {
+        return <LoadingUsers />
+    }
+
 
     if (user.data !== undefined) {
         return (
@@ -82,7 +98,7 @@ export default function ProfilePage() {
                 <div className="restaurants">
                     {userRatings.data && userRatings.data.map((rating) => {
                         return (
-                            <YourRatingCard id={rating._id} restaurant={rating.restaurantName} score={rating.score} comment={rating.comments} date={rating.createdAt}/>
+                            <YourRatingCard id={rating._id} restaurant={rating.restaurantName} restaurantID={rating.restaurantID} score={rating.score} comment={rating.comments} date={rating.createdAt} />
                             // <ProfileRestaurant key={rating._id} rating={rating}/>
                         )
                     })}
