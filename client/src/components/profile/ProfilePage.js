@@ -11,6 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Tooltip, Button } from "@mui/material";
 import YourRatingCard from "../ratings/YourRatingCard";
 
+
 export default function ProfilePage() {
     let navigate = useNavigate();
 
