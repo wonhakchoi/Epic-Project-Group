@@ -9,6 +9,8 @@ import UserService from "../../redux/services/usersService";
 import RatingService from "../../redux/services/ratingsService";
 import EditIcon from '@mui/icons-material/Edit';
 import { Tooltip, Button } from "@mui/material";
+import YourRatingCard from "../ratings/YourRatingCard";
+
 
 export default function ProfilePage() {
     let navigate = useNavigate();
@@ -57,7 +59,7 @@ export default function ProfilePage() {
             <div>
                 <User name={`${user.data[0].firstName} ${user.data[0].lastName}`} biography={user.data[0].biography} />
                 <Tooltip title="Edit profile" placement="right">
-                    <Button href="edit-profile">
+                    <Button href="profile/edit">
                         <EditIcon />
                     </Button>
                 </Tooltip>
@@ -80,7 +82,8 @@ export default function ProfilePage() {
                 <div className="restaurants">
                     {userRatings.data && userRatings.data.map((rating) => {
                         return (
-                            <ProfileRestaurant key={rating._id} rating={rating}/>
+                            <YourRatingCard id={rating._id} restaurant={rating.restaurantName} score={rating.score} comment={rating.comments} date={rating.createdAt}/>
+                            // <ProfileRestaurant key={rating._id} rating={rating}/>
                         )
                     })}
                 </div>
