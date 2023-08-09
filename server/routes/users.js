@@ -197,13 +197,39 @@ router.put("/editIcon/:userID/:iconID", async (req, res, next) => {
 /* PUT edit new biography */
 router.put("/editBio/:userID", async (req, res, next) => {
     let { userID } = req.params;
-    let biography = req.body;
-    const userObjectID = new mongoose.Types.ObjectId(userID.toString());
+    let { biography } = req.body;
+    var myQuery = new mongoose.Types.ObjectId(userID);
     try {
         const userQuery = User.findOneAndUpdate(
-            { _id: userObjectID },
+            myQuery,
             {
                 $set: { biography: biography },
+            },
+            { new: true, upsert: true }
+        );
+        const user = await userQuery.exec();
+        res.status(200).send(user);
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(`Error: ${error}`);
+    }
+});
+
+/* PUT edit profile information */
+router.put("/editProfile/:userID", async (req, res, next) => {
+    let { userID } = req.params;
+    let { firstName, lastName, email, biography } = req.body;
+    var myQuery = new mongoose.Types.ObjectId(userID);
+    try {
+        const userQuery = User.findOneAndUpdate(
+            myQuery,
+            {
+                $set: { 
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    biography: biography 
+                },
             },
             { new: true, upsert: true }
         );

@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import { getMap } from "../redux/services/mapService";
 import Restaurant from "./restaurants/Restaurant";
 import LoadingUsers from "./users/LoadingUsers";
+import { predict } from "../ReqSys"
 
 const SearchBar = () => {
     const [results, setResults] = useState([]);
@@ -19,7 +20,8 @@ const SearchBar = () => {
         event.preventDefault();
         if (searchTerm && searchTerm.replace(/\s/g, "").length) {
             getMap(searchTerm).then((res) => {
-                setResults(res.data.results);
+                const results = predict(res.data.results)
+                setResults(results);
                 setLoaded(true);
             });
         } else {
@@ -38,18 +40,38 @@ const SearchBar = () => {
                             value={searchTerm}
                             onChange={handleInputChange}
                             fullWidth
+                            sx={{
+                                marginTop: "1.5vh",
+                                marginBottom: "1vh",
+                                "& input": {
+                                  fontSize: "2vh",
+                                },
+                                "& label": {
+                                  fontSize: "2vh",
+                                },
+                            }}
                         />
                         <Button
                             variant="contained"
                             type="submit"
-                            style={{ marginTop: "10px", backgroundColor: "#D19BE8", color: "#000" }}
+                            sx={{
+                                fontSize: "1.7vh",
+                                padding: "1vh 1.6vh",
+                                backgroundColor: "#5D44CA",
+                                marginBottom: "1vh",
+                                marginTop: "1.5vh",
+                                color: "#FFFFFF",
+                                "&:hover": {
+                                  backgroundColor: "#432C8F",
+                                },
+                              }}
                         >
                             Search
                         </Button>
                     </form>
 
                     <div style={{ marginTop: "50px" }}>
-                        <h2 style={{ textAlign: "left", marginLeft: "100px" }}>All Results For: {searchTerm}</h2>
+                        <h2 style={{ textAlign: "left", marginLeft: "3vh", fontSize: "3vh", }}>All Results For: {searchTerm}</h2>
                         {results.map((result) => (
                             <Restaurant key={result.place_id} restaurant={result} />
                         ))}

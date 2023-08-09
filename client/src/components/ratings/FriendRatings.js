@@ -1,15 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getFriendRatingsAsync } from "../../redux/thunks/ratingsThunks";
 import { REQUEST_STATE } from "../../redux/requestStates";
 import RatingCard from "./RatingCard";
-import { Typography } from "@mui/material";
+import { Typography, Divider } from "@mui/material";
 import "./DiscoverRatings.css";
+import LoadingUsers from "../users/LoadingUsers";
 
 const FriendRatings = () => {
     const ratingsSlice = useSelector((state) => state.ratings.friendRatings);
     const friendsSlice = useSelector((state) => state.users.userFriends);
     const usersSlice = useSelector((state) => state.users.allUsers);
+    const [restaurants, setRestaurants] = useState([]);
+    const [loaded, setLoaded] = useState(false);
     const dispatch = useDispatch();
 
     const resultsPerPage = 4;
@@ -19,7 +22,6 @@ const FriendRatings = () => {
     useEffect(() => {
         if (shouldFetch.current) {
             shouldFetch.current = false;
-            // console.log(friendsSlice.friends);
             dispatch(
                 getFriendRatingsAsync({
                     skipAmount: ratingsSlice.ratings.length,
@@ -44,15 +46,38 @@ const FriendRatings = () => {
         );
     };
 
+    // sets 'loaded' to true only once the ratings and users are all loaded
+    useEffect(() => {
+        if (usersSlice.getUsers !== REQUEST_STATE.FULFILLED || !ratingsSlice.ratings) {
+            return;
+        }
+        setLoaded(true);
+    }, [usersSlice.getUsers, dispatch]);
+
+    // find user by ID
+    const findUserByID = (userID) => {
+        const matchedUser = usersSlice.users.filter((user) => user._id === userID);
+        return matchedUser[0];
+    };
+
+    if (!loaded) {
+        return <LoadingUsers />;
+    }
+
     return (
         <div id="ratings-container">
-            <h2>Ratings from Your Friends</h2>
+            <Divider variant="middle" />
+            <Typography variant="h4" component="div" sx={{ mb: 5, mt: 6 }}>
+                Ratings from Your Friends
+            </Typography>
             {ratingsSlice.ratings.map((rating) => (
                 <RatingCard
                     key={rating._id}
                     id={rating._id}
-                    name={rating.userID}
-                    restaurant={rating.restaurantID}
+                    userID={rating.userID}
+                    name={findUserByID(rating.userID)?.firstName ? findUserByID(rating.userID).firstName : "Name"}
+                    restaurant={rating.restaurantName ? rating.restaurantName : "no restaurant name"}
+                    icon={findUserByID(rating.userID)?.icon ? findUserByID(rating.userID).icon : 1}
                     score={rating.score}
                     comment={rating.comments ? rating.comments : ""}
                     date={rating.updatedAt}

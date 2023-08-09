@@ -1,5 +1,5 @@
 import "./App.css";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
@@ -10,11 +10,10 @@ import CollectionPage from "./components/collections/CollectionPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
 import Discover from "./pages/Discover";
 import RestaurantSpotlight from "./pages/RestaurantSpotlight";
-import { useEffect } from "react";
-import { getCollectionsAsync } from "./redux/thunks/collectionsThunks";
-import { useDispatch } from "react-redux";
+import UserSpotlight from "./pages/UserSpotlight";
 
 function App() {
     return (
@@ -27,10 +26,12 @@ function App() {
                     <Route path={"/collections"} element={<Collections />}></Route>
                     <Route path={"/collections/:collectionId"} element={<CollectionPage />}></Route>
                     <Route path={"/restaurants/:placeID"} element={<RestaurantSpotlight />}></Route>
+                    <Route path={"/users/:userID"} element={<UserSpotlight />}></Route>
                     <Route path={"/friends/*"} element={<Friends />}></Route>
                     <Route path={"/login"} element={<Login />}></Route>
                     <Route path={"/signup"} element={<Signup />}></Route>
                     <Route path={"/profile"} element={<Profile />}></Route>
+                    <Route path={"/edit-profile"} element={<EditProfile />}></Route>
                     <Route path={"/discover"} element={<Discover />}></Route>
                     <Route path="/*" element={<NotFound />}></Route>
                 </Routes>

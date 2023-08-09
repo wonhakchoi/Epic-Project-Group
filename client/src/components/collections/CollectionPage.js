@@ -48,8 +48,7 @@ export default function CollectionPage() {
             </Typography>
             <Button
                 variant="contained"
-                sx={{marginTop: "10px"}}
-                sx={{marginBottom: "20px"}}
+                sx={{marginTop: "10px", marginBottom: "20px"}}
                 onClick={handleDelete}
             >
                 Delete Collection

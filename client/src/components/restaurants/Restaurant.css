@@ -1,7 +1,7 @@
 .restaurant-card {
-  background-color: #f5f5f5;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: #ffffff;
+  border: 0.3vh solid #ccc;
+  border-radius: 1vh;
   padding: 1rem;
   margin-bottom: 1rem;
   border-color: #ddd; /* Border color */
@@ -56,10 +56,17 @@
 }
 
 .restaurant-img {
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 4px;
   width: 300px;
   height: 300px;
+}
+
+.restaurant-img-carousel {
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  width: 80vh;
+  height: auto;
 }
 
 .restaurant-card {

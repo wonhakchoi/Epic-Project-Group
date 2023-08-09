@@ -3,6 +3,31 @@ const {Cauliflower} = require("../database/models/cauliflowerModel");
 const router = express.Router();
 const axios = require("axios");
 
+// PATCH change pin status
+router.patch('/pin/:collectionId', async (req, res) => {
+    const cId = req.params.collectionId;
+    const isPinned = req.body.isPinned;
+    let cauliflower;
+    try {
+        cauliflower = await Cauliflower.findByIdAndUpdate(cId, {pinned: isPinned}).exec();
+    } catch (e) {
+        console.error(e)
+    }
+    return res.send(cauliflower);
+})
+
+// GET all pinned collections for user
+router.get('/pinned/:userId', async (req, res) => {
+    const uId = req.params.userId;
+    let collections = [];
+    try {
+        collections = await Cauliflower.find({userId: uId, pinned: true}).exec();
+    } catch (e) {
+        console.error(e);
+    }
+    return res.send(collections);
+})
+
 // POST new collection
 router.post('/', async (req, res) => {
 
@@ -76,8 +101,6 @@ router.get('/:collectionId/restaurants', async (req, res) => {
     const collection = await Cauliflower.findById(cId).exec();
     let response = [];
 
-    // let restaurants = await Restaurant.find().exec();
-
     if (collection.restaurants.length === 0) {
         return res.send(response);
     }
@@ -96,11 +119,6 @@ router.get('/:collectionId/restaurants', async (req, res) => {
         response.push(restaurant);
     }
 
-    // for (let r of restaurants) {
-    //     if (collection.restaurants.includes(r._id)) {
-    //         response.push(r);
-    //     }
-    // }
     return res.send(response);
 })
 
@@ -120,23 +138,6 @@ router.delete('/:collectionId/:restaurantId/', async (req, res) => {
 
 })
 
-// POST make new collection
-// router.post('/', async (req, res) => {
-//
-//     let collection = {
-//         name: req.body.name,
-//         img: req.body.img,
-//         restaurants: []
-//     }
-//     let newCauliflower = new Cauliflower(collection)
-//     try {
-//         newCauliflower.save();
-//     } catch (e) {
-//         console.error(e)
-//     }
-//     res.send(collection);
-// })
-
 // PUT add restaurant to collection
 router.put('/:collectionId/:restaurantId/', async (req, res) => {
     let cId = req.params.collectionId;
@@ -155,7 +156,6 @@ router.put('/:collectionId/:restaurantId/', async (req, res) => {
     let collection;
     try {
         collection = await Cauliflower.findById(cId).exec();
-        // console.log(collection);
     } catch (e) {
         console.error(e)
     }
