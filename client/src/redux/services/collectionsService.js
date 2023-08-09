@@ -2,6 +2,11 @@ import axios from "axios";
 
 // requests for collections
 
+export const getFriendsCollections = async (userId) => {
+    let response = await axios.get(`${process.env.REACT_APP_BACKEND}/collections/friends/${userId}`)
+    return response.data;
+}
+
 export const patchCollectionPin = async ({isPinned, collectionId}) => {
     let response = await axios.patch(`${process.env.REACT_APP_BACKEND}/collections/pin/${collectionId}`,
         {isPinned: isPinned})

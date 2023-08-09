@@ -9,11 +9,15 @@ import { REQUEST_STATE } from '../../redux/requestStates';
 
 export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID, restaurantName }) => {
     const modalRef = useRef();
+    const navigate = useNavigate();
     const [score, setScore] = useState(0);
     const [comment, setComment] = useState('');
     const dispatch = useDispatch();
     const loggedInUser = useSelector((state) => state.sauth.currUser);
     const postRatingSlice = useSelector((state) => state.ratings.postRating);
+    const allRatingsSlice = useSelector((state) => state.ratings.allRatings);
+
+    // const resultsPerPage = 4;
 
     useEffect(() => {
         dispatch(clearError());
@@ -49,6 +53,13 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID,
         }
     }, [postRatingSlice.uploadState]);
 
+    const handleGoToReview = () => {
+        const currRating = allRatingsSlice.ratings.filter((rating) => rating.restaurantID == placeID);
+        const ratingID = currRating[0]._id;
+        navigate(`/ratings/${ratingID}`);
+    };
+
+
     return (
         <>
             {showReviewModal ? (
@@ -60,7 +71,17 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID,
 
                         <Box component="form" onSubmit={handleSubmit} noValidate >
                             <Grid item xs={12}>
-                                {postRatingSlice.error?.message && <Alert severity="error" sx={{ mt: 3 }}>You've already left a review for this restaurant</Alert>}
+                                {postRatingSlice.error?.message &&
+                                    <Alert severity="error" sx={{ mt: 3 }} onClick={handleGoToReview}>
+                                        <div>You've already left a review for this restaurant.</div>
+                                        <Button sx={{ mt: 1 }} variant="outlined"
+                                            style={{
+                                                color: '#f44336',
+                                                borderColor: '#f44336',
+                                            }}
+                                        >Edit your review</Button>
+                                    </Alert>
+                                }
                             </Grid>
                             <Rating
                                 className="rating"
@@ -70,7 +91,6 @@ export const LeaveReviewModal = ({ showReviewModal, setShowReviewModal, placeID,
                                 onChange={(event, newValue) => {
                                     setScore(newValue);
                                 }}
-                            // sx={{border:4}}
                             />
                             <TextField
                                 margin="normal"
