@@ -58,8 +58,8 @@ const collectionsSlice = createSlice({
                 state.getCollections = REQUEST_STATE.PENDING;
             })
             .addCase(getCollectionsAsync.fulfilled, (state, action) => {
-                state.getCollections = REQUEST_STATE.FULFILLED;
                 state.collections = action.payload;
+                state.getCollections = REQUEST_STATE.FULFILLED;
             })
             .addCase(getCollectionsAsync.rejected, (state) => {
                 state.getCollections = REQUEST_STATE.REJECTED;
@@ -68,8 +68,8 @@ const collectionsSlice = createSlice({
                 state.getCollectionDetails = REQUEST_STATE.PENDING;
             })
             .addCase(getCollectionDetailsAsync.fulfilled, (state, action) => {
-                state.getCollectionDetails = REQUEST_STATE.FULFILLED;
                 state.currCollectionDetails = action.payload;
+                state.getCollectionDetails = REQUEST_STATE.FULFILLED;
             })
             .addCase(getCollectionDetailsAsync.rejected, (state) => {
                 state.getCollectionDetails = REQUEST_STATE.REJECTED;
@@ -78,8 +78,8 @@ const collectionsSlice = createSlice({
                 state.getRestaurants = REQUEST_STATE.PENDING;
             })
             .addCase(getRestaurantsAsync.fulfilled, (state, action) => {
-                state.getRestaurants = REQUEST_STATE.FULFILLED;
                 state.currRestaurants = action.payload;
+                state.getRestaurants = REQUEST_STATE.FULFILLED;
             })
             .addCase(getRestaurantsAsync.rejected, (state) => {
                 state.getRestaurants = REQUEST_STATE.REJECTED;
@@ -106,9 +106,9 @@ const collectionsSlice = createSlice({
                 state.deleteCollection = REQUEST_STATE.PENDING;
             })
             .addCase(deleteCollectionAsync.fulfilled, (state) => {
-                state.deleteCollection = REQUEST_STATE.FULFILLED;
                 state.currCollectionDetails = {};
                 state.currRestaurants = [];
+                state.deleteCollection = REQUEST_STATE.FULFILLED;
             })
             .addCase(deleteCollectionAsync.rejected, (state) => {
                 state.deleteCollection = REQUEST_STATE.REJECTED;
@@ -126,8 +126,8 @@ const collectionsSlice = createSlice({
                 state.getFriends = REQUEST_STATE.PENDING;
             })
             .addCase(getFriendsCollectionsAsync.fulfilled, (state, action) => {
-                state.getFriends = REQUEST_STATE.FULFILLED;
                 state.friendsCollection = action.payload;
+                state.getFriends = REQUEST_STATE.FULFILLED;
             })
             .addCase(getFriendsCollectionsAsync.rejected, (state) => {
                 state.getFriends = REQUEST_STATE.REJECTED;
