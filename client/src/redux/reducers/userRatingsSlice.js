@@ -1,45 +1,44 @@
 /**
- * Represents all ratings on the site
+ * Represents user's ratings on the site
  */
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getRatingsAsync, getAllRatingsAsync, getUserRatingsAsync } from "../thunks/ratingsThunks";
+import { getUserRatingsAsync, deleteRatingsAsync } from "../thunks/ratingsThunks";
 import { REQUEST_STATE } from "../requestStates";
 
 let initialState = { ratings: [], databaseSize: 0, getRatings: REQUEST_STATE.PENDING, error: null };
 
-const allRatingsSlice = createSlice({
-    name: "allRatings",
+const userRatingsSlice = createSlice({
+    name: "userRatings",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getRatingsAsync.pending, (state) => {
+            .addCase(getUserRatingsAsync.pending, (state) => {
                 state.getRatings = REQUEST_STATE.PENDING;
                 state.error = null;
             })
-            .addCase(getRatingsAsync.fulfilled, (state, action) => {
+            .addCase(getUserRatingsAsync.fulfilled, (state, action) => {
                 state.getRatings = REQUEST_STATE.FULFILLED;
-                state.ratings = [...state.ratings, ...action.payload.data.ratings];
-                state.databaseSize = action.payload.data.databaseSize;
+                state.ratings = action.payload.data;
             })
-            .addCase(getRatingsAsync.rejected, (state, action) => {
+            .addCase(getUserRatingsAsync.rejected, (state, action) => {
                 state.getRatings = REQUEST_STATE.REJECTED;
                 state.error = action.error;
             })
-            .addCase(getAllRatingsAsync.pending, (state) => {
+            .addCase(deleteRatingsAsync.pending, (state) => {
                 state.getRatings = REQUEST_STATE.PENDING;
                 state.error = null;
             })
-            .addCase(getAllRatingsAsync.fulfilled, (state, action) => {
+            .addCase(deleteRatingsAsync.fulfilled, (state, action) => {
                 state.getRatings = REQUEST_STATE.FULFILLED;
-                state.ratings = action.payload.data.ratings;
+                state.ratings = state.ratings.filter((rating) => rating._id !== action.payload.data._id);
             })
-            .addCase(getAllRatingsAsync.rejected, (state, action) => {
+            .addCase(deleteRatingsAsync.rejected, (state, action) => {
                 state.getRatings = REQUEST_STATE.REJECTED;
                 state.error = action.error;
             });
     },
 });
 
-export default allRatingsSlice.reducer;
+export default userRatingsSlice.reducer;

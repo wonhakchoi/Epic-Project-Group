@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import RatingService from "../../redux/services/ratingsService";
+import { deleteRatingsAsync } from "../../redux/thunks/ratingsThunks";
 
 import { Rating, Typography, Grid, Container, CardMedia } from '@mui/material';
 import Card from '@mui/material/Card';
@@ -30,10 +31,6 @@ const YourRatingCard = ({ id, restaurant, restaurantID, score, comment, date }) 
 
     const ratingsSlice = useSelector((state) => state.ratings.allRatings);
 
-    useEffect(() => {
-
-    })
-
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -48,7 +45,7 @@ const YourRatingCard = ({ id, restaurant, restaurantID, score, comment, date }) 
 
     const handleDelete = async () => {
         setAnchorEl(null);
-        await RatingService.deleteRatings(id);
+        dispatch(deleteRatingsAsync(id));
     };
 
     // https://mui.com/material-ui/react-card/
@@ -137,7 +134,11 @@ const YourRatingCard = ({ id, restaurant, restaurantID, score, comment, date }) 
                         }
                     />
                     <CardContent>
-                        <Link to={`/restaurants/${restaurantID}`}>
+                        <Link to={`/restaurants/${restaurantID}`}
+                            style={{
+                                textDecoration: 'none',
+                                color: 'black',
+                            }}>
                             <Typography gutterBottom variant="h5" component="div">
                                 {restaurant}
                             </Typography>

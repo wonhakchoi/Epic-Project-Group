@@ -22,7 +22,7 @@ const postRatingSlice = createSlice({
             .addCase(postUserRatingsAsync.fulfilled, (state, action) => {
                 state.uploadState = REQUEST_STATE.FULFILLED;
                 state.error = null;
-                state.ratings = [...state.ratings, ...action.payload.data.ratings];
+                // state.ratings = [...state.ratings, ...action.payload.data.ratings];
             })
             .addCase(postUserRatingsAsync.rejected, (state, action) => {
                 state.uploadState = REQUEST_STATE.REJECTED;

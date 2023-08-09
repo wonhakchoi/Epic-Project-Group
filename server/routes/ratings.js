@@ -108,6 +108,20 @@ router.post("/:userID/:restaurantID", async (req, res, next) => {
     }
 });
 
+/* DELETE existing rating */
+router.delete("/:ratingID", async (req, res, next) => {
+    let { ratingID } = req.params;
+    ratingObjectID = new mongoose.Types.ObjectId(ratingID.toString());
+    try {
+        const deletedRatingQuery = Rating.findOneAndDelete({ _id: ratingObjectID });
+        const deletedRating = await deletedRatingQuery.exec();
+        res.status(201).json(deletedRating);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server error");
+    }
+});
+
 /* UPDATE existing rating */
 router.post("/:ratingID", async (req, res, next) => {
     let { ratingID } = req.params;
@@ -156,18 +170,18 @@ router.put("/:ratingID", async (req, res, next) => {
     }
 });
 
-/* DELETE existing rating */
-router.delete("/:ratingID", async (req, res, next) => {
-    let { ratingID } = req.params;
-    ratingObjectID = new mongoose.Types.ObjectId(ratingID.toString());
-    try {
-        const deletedRatingQuery = Rating.findOneAndDelete({ _id: ratingObjectID });
-        const deletedRating = await deletedRatingQuery.exec();
-        res.status(201).json(deletedRating);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Server error");
-    }
-});
+// /* DELETE existing rating */
+// router.delete("/:ratingID", async (req, res, next) => {
+//     let { ratingID } = req.params;
+//     ratingObjectID = new mongoose.Types.ObjectId(ratingID.toString());
+//     try {
+//         const deletedRatingQuery = Rating.findOneAndDelete({ _id: ratingObjectID });
+//         const deletedRating = await deletedRatingQuery.exec();
+//         res.status(201).json(deletedRating);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send("Server error");
+//     }
+// });
 
 module.exports = router;
