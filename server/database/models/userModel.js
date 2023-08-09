@@ -24,12 +24,17 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        icon: {
+            type: Number,
+        },
         biography: {
             type: String,
+            default: "",
         },
         ratedRestaurants: {
             type: Map,
             of: Number,
+            default: {},
         },
         friends: {
             type: [String],

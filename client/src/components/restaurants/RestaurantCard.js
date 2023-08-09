@@ -1,60 +1,148 @@
-import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {deleteRestaurantCollectionAsync} from "../../redux/thunks/collectionsThunks";
+import React, {useEffect, useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteRestaurantCollectionAsync } from "../../redux/thunks/collectionsThunks";
+import { Box, Typography, Button } from "@mui/material";
 
-// same as Restaurant.js but with remove button instead of add
-// TODO: duplicate code
-export default function RestaurantCard({restaurant}) {
-    const collectionDetails = useSelector((state) => state.collections.currCollectionDetails);
-    // const {_id, name, description, location, openingHours, rating} = restaurant;
+export default function RestaurantCard({ restaurant }) {
+  const collectionDetails = useSelector(
+    (state) => state.collections.currCollectionDetails
+  );
+  const [isCurrUser, setIsCurrUser] = useState(false);
+  const currUser = useSelector((state) => state.sauth.currUser);
+  const { place_id, name, formatted_address, opening_hours, rating, user_ratings_total } = restaurant;
+  let YesOrNo;
+  let ratingWithColour;
+  opening_hours["open_now"] ? (YesOrNo = <span className="yesString">Yes</span>) : (YesOrNo = <span className="noString">No</span>);
+  rating < 2
+    ? (ratingWithColour = <span className="noString">{rating}</span>)
+    : rating < 4
+    ? (ratingWithColour = <span className="midString">{rating}</span>)
+    : (ratingWithColour = <span className="yesString">{rating}</span>);
+  const dispatch = useDispatch();
 
-    const {place_id, name, formatted_address, opening_hours, rating, user_ratings_total} = restaurant;
-    let YesOrNo;
-    let ratingWithColour;
-    opening_hours["open_now"] ? YesOrNo = <span className="yesString">Yes</span> : YesOrNo =
-        <span className="noString">No</span>
-    rating < 2 ? ratingWithColour = <span className="noString">{rating}</span> : rating < 4 ? ratingWithColour =
-        <span className="midString">{rating}</span> : ratingWithColour = <span className="yesString">{rating}</span>
-    const dispatch = useDispatch();
+  useEffect(() => {
+      if (currUser === collectionDetails.userId) {
+          setIsCurrUser(true);
+      } else {
+          setIsCurrUser(false);
+      }
+  }, [currUser, collectionDetails])
 
-    function handleRemove() {
-        let cId = collectionDetails._id;
-        dispatch(deleteRestaurantCollectionAsync({collectionId: cId, restaurantId: place_id}));
-        window.location.reload();
-    }
+  function handleRemove() {
+    let cId = collectionDetails._id;
+    dispatch(deleteRestaurantCollectionAsync({ collectionId: cId, restaurantId: place_id }));
+    window.location.reload();
+  }
 
-    return (
-        <div className={'restaurant-card'}>
-            <h3>{name}</h3>
-            <p className="info">
-                <span className="formatted_address">{formatted_address}</span>
-            </p>
-            <p className="info">
-                <span className="opening-hours">Open Now? {YesOrNo}</span>
-            </p>
-            <p className="info">
-                Rating: {ratingWithColour} by <span className="rating">{user_ratings_total}</span> users
-            </p>
-            <button className="add-to-collection-button" onClick={() => handleRemove()}>
-                Remove to Collection
-            </button>
-        </div>
-    )
+  if (!isCurrUser) {
+      return (
+          <Box
+              sx={{
+                  backgroundColor: "#FFFFFF",
+                  border: "0.2vh solid #BD90FF",
+                  borderColor: "#BD90FF",
+                  borderRadius: "2vh",
+                  padding: "1rem",
+                  marginBottom: "1rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+              }}
+          >
+              <Typography
+                  variant="h5"
+                  component="h3"
+                  sx={{ marginBottom: "1vh", fontSize: "2.2vh" }}
+              >
+                  {name}
+              </Typography>
+              <Typography
+                  variant="body1"
+                  className="info"
+                  sx={{ marginBottom: "0.5vh", fontSize: "1.6vh" }}
+              >
+                  <span className="formatted_address">{formatted_address}</span>
+              </Typography>
+              <Typography
+                  variant="body1"
+                  className="info"
+                  sx={{ marginBottom: "0.5vh", fontSize: "1.6vh" }}
+              >
+                  Open Now? {YesOrNo}
+              </Typography>
+              <Typography
+                  variant="body1"
+                  className="info"
+                  sx={{ marginBottom: "0.5vh", fontSize: "1.6vh" }}
+              >
+                  Rating: {ratingWithColour} by{" "}
+                  <span className="rating">{user_ratings_total}</span> users
+              </Typography>
+          </Box>
+      )
+  }
 
-    // <div className="restaurant-card">
-    //     <h3>{name}</h3>
-    //     <p className="description">{description}</p>
-    //     <p className="info">
-    //         <span className="location">{location}</span>
-    //     </p>
-    //     <p className="info">
-    //         <span className="opening-hours">{openingHours}</span>
-    //     </p>
-    //     <p className="info">
-    //         Rating: <span className="rating">{rating}</span>
-    //     </p>
-    //     <button className="add-to-collection-button" onClick={() => handleRemove()}>
-    //         Remove from Collection
-    //     </button>
-    // </div>
+  return (
+    <Box
+      sx={{
+        backgroundColor: "#FFFFFF",
+        border: "0.2vh solid #BD90FF",
+        borderColor: "#BD90FF",
+        borderRadius: "2vh",
+        padding: "1rem",
+        marginBottom: "1rem",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Typography
+        variant="h5"
+        component="h3"
+        sx={{ marginBottom: "1vh", fontSize: "2.2vh" }}
+      >
+        {name}
+      </Typography>
+      <Typography
+        variant="body1"
+        className="info"
+        sx={{ marginBottom: "0.5vh", fontSize: "1.6vh" }}
+      >
+        <span className="formatted_address">{formatted_address}</span>
+      </Typography>
+      <Typography
+        variant="body1"
+        className="info"
+        sx={{ marginBottom: "0.5vh", fontSize: "1.6vh" }}
+      >
+        Open Now? {YesOrNo}
+      </Typography>
+      <Typography
+        variant="body1"
+        className="info"
+        sx={{ marginBottom: "0.5vh", fontSize: "1.6vh" }}
+      >
+        Rating: {ratingWithColour} by{" "}
+        <span className="rating">{user_ratings_total}</span> users
+      </Typography>
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: "#ECDEFF",
+          borderColor: "#A262FF",
+          borderRadius: "1vh",
+          color: "#6F18EC",
+          fontSize: "1.5vh",
+          "&:hover": {
+            backgroundColor: "#B37EFF",
+            borderColor: "#A262FF",
+            color: "#ffffff",
+          },
+        }}
+        onClick={() => handleRemove()}
+      >
+        Remove from Collection
+      </Button>
+    </Box>
+  );
 }

@@ -10,7 +10,7 @@ const cauliflowerSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        // Array of restaurant ids
+        // Array of place ids
         restaurants: {
             type: [String],
             required: true
@@ -18,6 +18,11 @@ const cauliflowerSchema = new mongoose.Schema(
         userId: {
             type: String,
             required: false
+        },
+        pinned: {
+            type: Boolean,
+            default: false,
+            required: true
         }
     },
     { collection: "cauliflowers" }
