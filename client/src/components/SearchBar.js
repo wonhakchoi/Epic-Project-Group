@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import { getMap } from "../redux/services/mapService";
 import Restaurant from "./restaurants/Restaurant";
 import LoadingUsers from "./users/LoadingUsers";
+import { predict } from "../ReqSys"
 import { getAllRatingsAsync } from "../redux/thunks/ratingsThunks";
 
 const SearchBar = () => {
@@ -27,7 +28,8 @@ const SearchBar = () => {
         event.preventDefault();
         if (searchTerm && searchTerm.replace(/\s/g, "").length) {
             getMap(searchTerm).then((res) => {
-                setResults(res.data.results);
+                const results = predict(res.data.results)
+                setResults(results);
                 setLoaded(true);
             });
         } else {
