@@ -3,7 +3,6 @@ import "./ProfilePage.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import UserService from "../../redux/services/usersService";
-// import { editBiographyAsync } from "../../redux/thunks/usersThunks";
 import { editProfileAsync, editIconAsync } from "../../redux/thunks/usersThunks";
 
 import { Typography, Grid, Container, TextField } from "@mui/material";
@@ -95,14 +94,11 @@ export default function EditProfilePage() {
                             boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
                         }}
                     >
-                        <Typography variant="h4" component="div" sx={{ mt: "2vh", fontSize: "4vh" }}>
+                        <Typography variant="h4" component="div" sx={{ mt: "2vh", fontSize: "3vh", fontFamily: "system-ui", }}>
                             Edit Profile
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleUpdate} sx={{ mt: "3vh" }}>
                             <Grid container spacing={2}>
-                                {/* <Grid item xs={12}>
-                                    {error && <Alert severity="error">{error}</Alert>}
-                                </Grid> */}
                                 <Grid item xs={12} sm={6}>
                                     <TextField
                                         autoComplete="given-name"
@@ -220,9 +216,9 @@ export default function EditProfilePage() {
                         <Typography
                             variant="h4"
                             component="div"
-                            sx={{ mt: "2vh", fontSize: "4vh", marginBottom: "10px" }}
+                            sx={{ mt: "2vh", fontSize: "2.5vh", fontFamily: "system-ui", marginBottom: "2vh" }}
                         >
-                            Avatar
+                            Choose Your Avatar
                         </Typography>
                         <Grid container spacing={2}>
                             {icons.map((icon, index) => (

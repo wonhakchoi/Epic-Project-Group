@@ -108,11 +108,15 @@ const Restaurant = ({ restaurant }) => {
               <Button
                 sx={{
                   fontSize: "1.6vh",
-                  backgroundColor: "#9665D1",
+                  backgroundColor: "#FFFFFF",
+                  color: "#8136EC",
                   fontFamily: "Arial, sans-serif",
                   marginTop: "3vh",
+                  border: "1px solid #8136EC", 
                   "&:hover": {
-                    backgroundColor: "#432C8F",
+                    backgroundColor: "#e1e1e1",
+                    borderColor: "#8136EC", 
+                    color: "#8136EC", 
                   },
                 }}
                 variant="contained"
@@ -123,11 +127,15 @@ const Restaurant = ({ restaurant }) => {
               <Button
                 sx={{
                   fontSize: "1.6vh",
-                  backgroundColor: "#9665D1",
+                  backgroundColor: "#FFFFFF",
+                  color: "#8136EC",
                   fontFamily: "Arial, sans-serif",
                   marginTop: "3vh",
+                  border: "1px solid #8136EC",
                   "&:hover": {
-                    backgroundColor: "#432C8F",
+                    backgroundColor: "#e1e1e1",
+                    borderColor: "#8136EC",
+                    color: "#8136EC", 
                   },
                 }}
                 variant="contained"
@@ -139,11 +147,15 @@ const Restaurant = ({ restaurant }) => {
                 <Button
                   sx={{
                     fontSize: "1.6vh",
-                    backgroundColor: "#9665D1",
+                    backgroundColor: "#FFFFFF",
+                    color: "#8136EC",
                     fontFamily: "Arial, sans-serif",
                     marginTop: "3vh",
+                    border: "1px solid #8136EC", 
                     "&:hover": {
-                      backgroundColor: "#432C8F",
+                      backgroundColor: "#e1e1e1",
+                      borderColor: "#8136EC",
+                      color: "#8136EC", 
                     },
                   }}
                   variant="contained"
