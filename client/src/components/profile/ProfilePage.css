@@ -125,8 +125,8 @@
     display: grid;
     grid-template-columns: 49% 49%;
     grid-row: auto auto;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
+    /* grid-column-gap: 20px;
+    grid-row-gap: 20px; */
     height: auto;
 }
 

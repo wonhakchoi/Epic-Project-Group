@@ -4,39 +4,35 @@ import ProfileFriend from "./ProfileFriend";
 import ProfileRestaurant from "./ProfileRestaurant";
 import User from "./User";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import UserService from "../../redux/services/usersService";
 import RatingService from "../../redux/services/ratingsService";
 import EditIcon from "@mui/icons-material/Edit";
 import { Tooltip, Button } from "@mui/material";
+import YourRatingCard from "../ratings/YourRatingCard";
+import LoadingUsers from "../users/LoadingUsers";
+import { getAllRatingsAsync, getUserRatingsAsync } from "../../redux/thunks/ratingsThunks";
+import { REQUEST_STATE } from "../../redux/requestStates";
+
 
 export default function ProfilePage() {
     let navigate = useNavigate();
-
+    const dispatch = useDispatch();
+    let [loaded, setLoaded] = useState(false);
     let [user, setUser] = useState({});
-    let [userRatings, setUserRatings] = useState({});
+    const userRatingsSlice = useSelector((state) => state.ratings.userRatings);
+    const userID = useSelector((state) => state.sauth.currUser)
+    const icons = useSelector((state) => state.users.iconLocations);
+
+    useEffect(() => {
+        dispatch(getUserRatingsAsync({userID: userID}));
+    }, []);
+
 
     const routeChange = () => {
         let path = "../friends";
         navigate(path);
     };
-
-    const userID = useSelector((state) => state.sauth.currUser);
-    const icons = useSelector((state) => state.users.iconLocations);
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const userRatingData = await RatingService.getUserRatings(userID);
-                setUserRatings(userRatingData);
-            } catch (error) {
-                // Handle any errors that might occur during the promise resolution
-                console.error("Error fetching user data:", error);
-            }
-        };
-
-        fetchUserData();
-    }, []);
 
     useEffect(() => {
         const fetchUserRatings = async () => {
@@ -50,7 +46,20 @@ export default function ProfilePage() {
         };
 
         fetchUserRatings();
-    }, []);
+    }, [])
+
+    // sets 'loaded' to true only once the ratings and users are all loaded
+    useEffect(() => {
+        if ( !userRatingsSlice.getRatings == REQUEST_STATE.FULFILLED|| !user ) {
+            return;
+        }
+        setLoaded(true);
+    }, [ user, userRatingsSlice.ratings]);
+
+    if (!loaded) {
+        return <LoadingUsers />
+    }
+
 
     if (user.data !== undefined) {
         return (
@@ -64,7 +73,7 @@ export default function ProfilePage() {
                             My Profile
                         </div>
                         <Tooltip title="Edit profile" placement="right">
-                            <Button href="edit-profile">
+                            <Button href="profile/edit">
                                 <EditIcon
                                     sx={{
                                         fontSize: "4vh",
@@ -82,6 +91,7 @@ export default function ProfilePage() {
                         />
                     </div>
                 </div>
+
                 <div className="friends-header">
                     <label id="friend-title">Friends</label>
                     <button id="navigate-button" onClick={routeChange}>
@@ -99,10 +109,9 @@ export default function ProfilePage() {
                     <label id="restaurant-title">Your Restaurants</label>
                 </div>
                 <div className="restaurants">
-                    {userRatings.data &&
-                        userRatings.data.map((rating) => {
-                            return <ProfileRestaurant key={rating._id} rating={rating} />;
-                        })}
+                    {userRatingsSlice.ratings.map((rating) => {
+                        return <YourRatingCard id={rating._id} restaurant={rating.restaurantName} restaurantID={rating.restaurantID} score={rating.score} comment={rating.comments} date={rating.createdAt} />
+                    })}
                 </div>
             </div>
         );

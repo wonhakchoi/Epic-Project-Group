@@ -1,8 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import RatingService from "../services/ratingsService";
+import axios from "axios";
 
 export const getRatingsAsync = createAsyncThunk("ratings/getNextRatings", async ({ skipAmount, resultsToGet }) => {
     return await RatingService.getRatings(skipAmount, resultsToGet);
+});
+
+export const getAllRatingsAsync = createAsyncThunk("ratings/getAllRatings", async () => {
+    return await RatingService.getAllRatings();
+});
+
+export const getRatingByIDAsync = createAsyncThunk("ratings/getRatingByID", async ({ ratingID }) => {
+    return await RatingService.getRatings(ratingID);
 });
 
 export const getFriendRatingsAsync = createAsyncThunk(
@@ -31,6 +40,7 @@ export const updateRatingsAsync = createAsyncThunk("ratings/updateRatings", asyn
     return await RatingService.updateRatings(ratingID, body);
 });
 
-export const deleteRatingsAsync = createAsyncThunk("ratings/deleteRatings", async ({ ratingID }) => {
-    return await RatingService.deleteRatings(ratingID);
+export const deleteRatingsAsync = createAsyncThunk("ratings/deleteRatings", async (ratingID) => {
+    const deletedRating = await axios.delete(`${process.env.REACT_APP_BACKEND}/ratings/${ratingID}`);
+    return deletedRating;
 });
