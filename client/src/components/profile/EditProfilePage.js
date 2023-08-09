@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import UserService from "../../redux/services/usersService";
 // import { editBiographyAsync } from "../../redux/thunks/usersThunks";
-import { editProfileAsync } from "../../redux/thunks/usersThunks";
+import { editProfileAsync, editIconAsync } from "../../redux/thunks/usersThunks";
 
 import { Typography, Grid, Container, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -14,12 +14,13 @@ import Box from "@mui/material/Box";
 export default function EditProfilePage() {
     let navigate = useNavigate();
     let [user, setUser] = useState({});
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [bio, setBio] = useState('');
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [bio, setBio] = useState("");
 
     const userID = useSelector((state) => state.sauth.currUser);
+    const icons = useSelector((state) => state.users.iconLocations);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -38,7 +39,7 @@ export default function EditProfilePage() {
         };
 
         fetchUserRatings();
-    }, [])
+    }, []);
 
     const handleFirstnameChange = (e) => {
         setFirstName(e.target.value);
@@ -58,40 +59,46 @@ export default function EditProfilePage() {
 
     const handleUpdate = (e) => {
         e.preventDefault();
-        const body = { 
+        const body = {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            biography: bio 
+            biography: bio,
         };
-        dispatch(editProfileAsync({userID: userID, body: body}));
-        navigate('/profile');
+        dispatch(editProfileAsync({ userID: userID, body: body }));
+        navigate("/profile");
     };
-
 
     if (user.data !== undefined) {
         return (
-            <div>
-                <Typography variant="h4" component="div" sx={{ mt: 6 }}>
-                    Edit Profile
-                </Typography>
-                <Container component="main" maxWidth="xs">
+            <Box
+                sx={{
+                    backgroundColor: "#C5BAF4",
+                    minHeight: "90vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <Container component="main" maxWidth="sm">
                     <CssBaseline />
                     <Box
                         sx={{
-                            marginTop: "10vh",
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
                             justifyContent: "center",
+                            backgroundColor: "#FFFFFF",
+                            padding: "2vh",
+                            margin: "20px 0 20px 0",
+                            borderRadius: "2vh",
+                            boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
                         }}
                     >
-                        <Box
-                            component="form"
-                            noValidate
-                            onSubmit={handleUpdate}
-                            sx={{ mt: 3 }}
-                        >
+                        <Typography variant="h4" component="div" sx={{ mt: "2vh", fontSize: "4vh" }}>
+                            Edit Profile
+                        </Typography>
+                        <Box component="form" noValidate onSubmit={handleUpdate} sx={{ mt: "3vh" }}>
                             <Grid container spacing={2}>
                                 {/* <Grid item xs={12}>
                                     {error && <Alert severity="error">{error}</Alert>}
@@ -106,6 +113,15 @@ export default function EditProfilePage() {
                                         autoFocus
                                         value={firstName}
                                         onChange={handleFirstnameChange}
+                                        sx={{
+                                            marginBottom: "2vh",
+                                            "& input": {
+                                                fontSize: "2vh",
+                                            },
+                                            "& label": {
+                                                fontSize: "2vh",
+                                            },
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
@@ -117,6 +133,15 @@ export default function EditProfilePage() {
                                         autoComplete="family-name"
                                         value={lastName}
                                         onChange={handleLastnameChange}
+                                        sx={{
+                                            marginBottom: "2vh",
+                                            "& input": {
+                                                fontSize: "2vh",
+                                            },
+                                            "& label": {
+                                                fontSize: "2vh",
+                                            },
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -128,6 +153,15 @@ export default function EditProfilePage() {
                                         autoComplete="email"
                                         value={email}
                                         onChange={handleEmailChange}
+                                        sx={{
+                                            marginBottom: "2vh",
+                                            "& input": {
+                                                fontSize: "2vh",
+                                            },
+                                            "& label": {
+                                                fontSize: "2vh",
+                                            },
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -140,6 +174,15 @@ export default function EditProfilePage() {
                                         rows={3}
                                         value={bio}
                                         onChange={handleBioChange}
+                                        sx={{
+                                            marginBottom: "2vh",
+                                            "& input": {
+                                                fontSize: "2vh",
+                                            },
+                                            "& label": {
+                                                fontSize: "2vh",
+                                            },
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sx={{ mt: 1 }}>
@@ -148,6 +191,7 @@ export default function EditProfilePage() {
                                         fullWidth
                                         variant="contained"
                                         sx={{
+                                            fontSize: "1.8vh",
                                             backgroundColor: "#8B69C1",
                                             "&:hover": {
                                                 backgroundColor: "#6B41AD",
@@ -160,8 +204,41 @@ export default function EditProfilePage() {
                             </Grid>
                         </Box>
                     </Box>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: "#FFFFFF",
+                            padding: "2vh",
+                            borderRadius: "2vh",
+                            margin: "20px 0 20px 0",
+                            boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+                        }}
+                    >
+                        <Typography
+                            variant="h4"
+                            component="div"
+                            sx={{ mt: "2vh", fontSize: "4vh", marginBottom: "10px" }}
+                        >
+                            Avatar
+                        </Typography>
+                        <Grid container spacing={2}>
+                            {icons.map((icon, index) => (
+                                <Grid item xs={6} sm={3} key={index}>
+                                    <img
+                                        src={icon}
+                                        alt={`User Icon ${index}`}
+                                        onClick={() => dispatch(editIconAsync({ userID, iconID: index }))}
+                                        style={{ width: "50%", cursor: "pointer" }}
+                                    />
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </Box>
                 </Container>
-            </div>
+            </Box>
         );
     }
-};
+}

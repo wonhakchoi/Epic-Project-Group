@@ -106,7 +106,7 @@ router.put("/sendOutgoing/:userID/:otherID", async (req, res, next) => {
         const otherQuery = User.findOneAndUpdate(
             { _id: otherObjectID },
             {
-                $addToSet: { incomingRequests: otherID },
+                $addToSet: { incomingRequests: userID },
             },
             { new: true, upsert: true }
         );
@@ -224,11 +224,11 @@ router.put("/editProfile/:userID", async (req, res, next) => {
         const userQuery = User.findOneAndUpdate(
             myQuery,
             {
-                $set: { 
+                $set: {
                     firstName: firstName,
                     lastName: lastName,
                     email: email,
-                    biography: biography 
+                    biography: biography,
                 },
             },
             { new: true, upsert: true }
