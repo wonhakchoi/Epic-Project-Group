@@ -85,10 +85,10 @@ export default function CollectionCard({ collection }) {
             sx={{ objectFit: "cover" }}
           />
           <CardContent>
-            <Link
-              to={"/collections/" + collection._id}
-              style={{ textDecoration: "none" }}
-            >
+            {/*<Link*/}
+            {/*  to={"/collections/" + collection._id}*/}
+            {/*  style={{ textDecoration: "none" }}*/}
+            {/*>*/}
               <Typography
                 variant="h6"
                 component="div"
@@ -99,7 +99,7 @@ export default function CollectionCard({ collection }) {
               >
                 {collection.name}
               </Typography>
-            </Link>
+            {/*</Link>*/}
           </CardContent>
         </Link>
       </Card>
