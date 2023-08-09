@@ -3,7 +3,7 @@ import {REQUEST_STATE} from "../requestStates";
 import {
     addNewCollectionAsync, deleteCollectionAsync, deleteRestaurantCollectionAsync,
     getCollectionDetailsAsync,
-    getCollectionsAsync,
+    getCollectionsAsync, getFriendsCollectionsAsync,
     getRestaurantsAsync, patchCollectionPinAsync
 } from "../thunks/collectionsThunks";
 
@@ -11,6 +11,7 @@ import {
 
 const INITIAL_STATE = {
     collections: [],
+    friendsCollections: [],
     currCollectionDetails: {},
     currRestaurants: [],
     formVisible: false,
@@ -24,7 +25,8 @@ const INITIAL_STATE = {
     addCollection: REQUEST_STATE.IDLE,
     deleteRestaurant: REQUEST_STATE.IDLE,
     deleteCollection: REQUEST_STATE.IDLE,
-    pinCollection: REQUEST_STATE.IDLE
+    pinCollection: REQUEST_STATE.IDLE,
+    getFriends: REQUEST_STATE.IDLE
 }
 
 const collectionsSlice = createSlice({
@@ -119,6 +121,16 @@ const collectionsSlice = createSlice({
             })
             .addCase(patchCollectionPinAsync.rejected, (state) => {
                 state.pinCollection = REQUEST_STATE.REJECTED;
+            })
+            .addCase(getFriendsCollectionsAsync.pending, (state) => {
+                state.getFriends = REQUEST_STATE.PENDING;
+            })
+            .addCase(getFriendsCollectionsAsync.fulfilled, (state, action) => {
+                state.getFriends = REQUEST_STATE.FULFILLED;
+                state.friendsCollection = action.payload;
+            })
+            .addCase(getFriendsCollectionsAsync.rejected, (state) => {
+                state.getFriends = REQUEST_STATE.REJECTED;
             })
     }
 })

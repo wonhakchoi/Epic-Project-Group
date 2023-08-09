@@ -9,40 +9,36 @@ import {
 } from "../../redux/thunks/collectionsThunks";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingUsers from "../users/LoadingUsers";
+import {setLoaded} from "../../redux/reducers/collectionsSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Tooltip } from "@mui/material";
 
 export default function CollectionPage() {
-  const collectionDetails = useSelector(
-    (state) => state.collections.currCollectionDetails
-  );
-  const restaurants = useSelector((state) => state.collections.currRestaurants);
-  const dispatch = useDispatch();
-  const [loaded, setLoaded] = useState(false);
-  const navigate = useNavigate();
+    const collectionDetails = useSelector((state) => state.collections.currCollectionDetails);
+    const restaurants = useSelector((state) => state.collections.currRestaurants);
+    const dispatch = useDispatch();
+    const [loaded, setPageLoaded] = useState(false);
+    const navigate = useNavigate();
 
   // https://stackoverflow.com/questions/66021357/how-to-pass-id-to-react-js-path-link
   const { collectionId } = useParams();
+    useEffect(() => {
+        dispatch(getCollectionDetailsAsync(collectionId));
+        dispatch(getRestaurantsAsync(collectionId));
+        setPageLoaded(true);
+    }, []);
 
-  useEffect(() => {
-    dispatch(getCollectionDetailsAsync(collectionId));
-    dispatch(getRestaurantsAsync(collectionId));
-    setLoaded(true);
-  }, []);
+    const restaurantList = restaurants?.map((result) => (
+        <RestaurantCard key={result.place_id} restaurant={result}/>
+    ));
 
-  const restaurantList = restaurants?.map((result) => (
-    <RestaurantCard key={result._id} restaurant={result} />
-  ));
-
-  function handleDelete() {
-    setLoaded(false);
-    dispatch(deleteCollectionAsync(collectionId));
-    navigate("/collections");
-  }
-
-  if (!loaded) {
-    return <LoadingUsers />;
-  }
+    function handleDelete() {
+        setPageLoaded(false);
+        dispatch(setLoaded(false));
+        dispatch(deleteCollectionAsync(collectionId));
+        navigate('/collections');
+        dispatch(setLoaded(true));
+    }
 
   return (
     <Box sx={{ maxWidth: "500px", margin: "25px auto" }}>

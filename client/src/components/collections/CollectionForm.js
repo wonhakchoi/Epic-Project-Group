@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  hideForm,
-  setCollectionName,
-  setCollectionImg,
-  setLoaded,
+    hideForm,
+    setCollectionName,
+    setCollectionImg,
+    setLoaded
 } from "../../redux/reducers/collectionsSlice";
 import { Modal, TextField, Button, Box, IconButton } from "@mui/material";
-import { Close } from "@mui/icons-material"; 
+import { Close } from "@mui/icons-material";
 import {
   addNewCollectionAsync,
   getCollectionsAsync,

@@ -9,11 +9,12 @@ import FriendSearch from "../components/users/FriendSearch";
 import FriendRequests from "../components/users/FriendRequests";
 import FriendRatings from "../components/ratings/FriendRatings";
 import LoadingUsers from "../components/users/LoadingUsers";
-import { REQUEST_STATE } from "../redux/requestStates";
-import { getUsersAsync } from "../redux/thunks/usersThunks";
-import { getRestaurantsAsync } from "../redux/thunks/restaurantsThunks";
-import { setFriendsLists } from "../redux/actions/userActions";
-import { postAuthAsync } from "../redux/thunks/authenticationThunks";
+import {REQUEST_STATE} from "../redux/requestStates";
+import {getUsersAsync} from "../redux/thunks/usersThunks";
+import {getRestaurantsAsync} from "../redux/thunks/restaurantsThunks";
+import {setFriendsLists} from "../redux/actions/userActions";
+import {postAuthAsync} from "../redux/thunks/authenticationThunks";
+import FriendsCollections from "../components/users/FriendsCollections";
 
 const Friends = () => {
     const usersSlice = useSelector((state) => state.users.allUsers);
@@ -69,8 +70,9 @@ const Friends = () => {
                             path="/"
                             element={
                                 <section>
-                                    <FriendsList />
-                                    <FriendRatings />
+                                    <FriendsList/>
+                                    <FriendsCollections/>
+                                    <FriendRatings/>
                                 </section>
                             }
                         ></Route>
