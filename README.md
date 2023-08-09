@@ -27,15 +27,19 @@ EasyEats is a social media platform centered around food, where users can create
 ## Technologies Used
 
 **HTML + CSS + JavaScript**
+
 Some of our components are styled in CSS, with each file corresponding to a component. The logic of our application is also written with JavaScript.
 
 **React + Redux**
+
 Our application is built with multiple React components, with state management done with Redux. With Redux, we are able to have a single source of truth, reduce time and resources spent on unnecessary, duplicate API calls, as well as manage asynchronous behaviour in a more organized and predictable manner.
 
 **Node + Express**
+
 Our server’s API is implemented in Express to make calls to both our database and the Google Place API. We also used the Node Package Manager to easily manage and utilize external dependencies, such as Axios, Material UI, and Mongoose.
 
 **MongoDB**
+
 Our database information is stored in MongoDB, and we interact with the data through Mongoose. The data we store includes the profiles of our users, their ratings, and the collections of each user.
 
 ## Above and Beyond Functionality 
@@ -50,24 +54,29 @@ One of our stretch requirements was to implement a recommendation system for rec
 ## Contributions
 
 **Cedric**
+
 - Implemented the friends system for users to send requests, view their friends, and accept new ones, as well as a search function that finds users by their name
 - Implemented the backend, redux, and logic for loading information to the frontend for our rating system to add new reviews, and fetch all reviews of a user, a restaurant, or all friends of a user. Related to the ratings, I also made a Discover page for users to see the ratings of other users with lazy loading for better performance
 
 **Malcolm**
+
 - Designed and styled the profile page to display each user’s friends and their rated restaurants, with their profile icons and descriptions
 Made the search page, linking search results to the Google Places API and Photos API to display all restaurants in the Vancouver area with photos for each
 - Created a recommendation system to sort displayed restaurants to appeal more to users 
 
 **Wendy**
+
 - Made the collections system including creation and deletion of each collection, adding and removing of restaurants, and the ability to pin and unpin collections.
 - Debugged and refactored the authentication system to ensure that login, logout, and signup all worked smoothly.
 - Handled the deployment process for the frontend and backend.
 
 **Tammy**
+
 - Worked on the UI, including home page, navigation bar, profile page, collections page, and search page. Focused on refining the overall flow and enhancing user experience.
 - Worked on the development of both frontend and backend functionalities for pinning and unpinning collections
 
 **Wonhak**
+
 - Implemented the authentication system with cookie session storage and encrypted password storage, allowing users to sign up/login securely. 
 - Helped with styling using the Material UI library
 - Worked on building the frontend for users to view, add, edit, and delete their reviews 
