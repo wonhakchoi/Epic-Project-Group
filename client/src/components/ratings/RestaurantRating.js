@@ -25,7 +25,9 @@ const RestaurantRating = ({ score, comments, createdAt, userID, userName, userIc
                         }
                         title={
                             <Link to={`/users/${userID}`} style={{ textDecoration: "none", color: "inherit" }}>
-                                {userName}
+                                <Typography mr={6} gutterBottom variant="h6" component="h2">
+                                    {userName}
+                                </Typography>
                             </Link>
                         }
                         subheader={
@@ -35,9 +37,6 @@ const RestaurantRating = ({ score, comments, createdAt, userID, userName, userIc
                         }
                     />
                     <CardContent>
-                        {/* <Typography gutterBottom variant="h5" component="div">
-                            {restaurantName}
-                        </Typography> */}
                         <Rating name="read-only" value={score} readOnly precision={0.5} />
                         <Typography variant="body2" color="text.secondary" mt={2}>
                             {comments}
