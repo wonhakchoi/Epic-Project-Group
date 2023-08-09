@@ -11,6 +11,7 @@ import User from "../components/profile/User";
 const UserSpotlight = () => {
     const { userID } = useParams();
     const usersSlice = useSelector((state) => state.users.allUsers);
+    const icons = useSelector((state) => state.users.iconLocations);
     const [user, setUser] = useState(null);
     const [ratings, setRatings] = useState(null);
     const [loaded, setLoaded] = useState(false);
@@ -47,7 +48,7 @@ const UserSpotlight = () => {
 
     return (
         <div>
-            <User name={`${user.firstName} ${user.lastName}`} biography={user.biography} />
+            <User name={`${user.firstName} ${user.lastName}`} biography={user.biography} icon={icons[user.icon]} />
             <div className="restaurants-header">
                 <label id="restaurant-title">Their Ratings</label>
             </div>

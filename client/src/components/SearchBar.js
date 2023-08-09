@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { getMap } from "../redux/services/mapService";
 import Restaurant from "./restaurants/Restaurant";
 import LoadingUsers from "./users/LoadingUsers";
 import { predict } from "../ReqSys"
+import { getAllRatingsAsync } from "../redux/thunks/ratingsThunks";
 
 const SearchBar = () => {
     const [results, setResults] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [loaded, setLoaded] = useState(true);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getAllRatingsAsync());
+    }, []);
+
 
     const handleInputChange = (event) => {
         setSearchTerm(event.target.value);
