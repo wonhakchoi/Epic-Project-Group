@@ -23,10 +23,7 @@ export const predict = (results) => {
 }
 
 const score = (rating, users, maxRating, mostPopular) => {
-    let ans = (rating/maxRating) + (users/mostPopular)
-    console.log(ans)
-    return ans
-    // return (rating/maxRating) + (users/mostPopular)
+    return (rating/maxRating) + (users/mostPopular)
 }
 
 const findMaxRating = (results) => {
