@@ -82,20 +82,6 @@ Made the search page, linking search results to the Google Places API and Photos
 - Worked on building the frontend for users to view, add, edit, and delete their reviews 
   - Refactored/debugged code for fetching ratings details
 
-## Task Breakdowns
-- Account/Login System
-  - Create a login page where user can enter their credentials and log in
-  - On the login page add a link to create account if you haven’t created an account yet 
-  - Create a form where users can enter their username and password
-  - Save username and password to database
-  - User must enter correct username and password to successfully log in
-
-- Friends
-  - Make friend page to view list of friends
-  - Have a button send friend request by username
-  - Page to view friend requests
-  - Can accept or decline friend requests
-
 ## Prototypes
 ### Prototype 1
 ![image](https://github.com/wonhakchoi/Epic-Project-Group/assets/64765407/41226d51-a2d4-4d39-8513-821f884036ca)
