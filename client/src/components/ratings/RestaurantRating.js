@@ -12,6 +12,16 @@ import CardContent from "@mui/material/CardContent";
 const RestaurantRating = ({ score, comments, createdAt, userID, userName, userIcon, restaurantName }) => {
     const icons = useSelector((state) => state.users.iconLocations);
 
+    const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+    };
+
+    const formattedDate = new Intl.DateTimeFormat("en-US", options).format(new Date(createdAt));
+
     // https://mui.com/material-ui/react-card/
     return (
         <Grid container direction="column" justifyContent="center" alignItems="center" sx={{ marginTop: "30px" }}>
@@ -32,7 +42,7 @@ const RestaurantRating = ({ score, comments, createdAt, userID, userName, userIc
                         }
                         subheader={
                             <Typography mr={6} gutterBottom variant="body2" color="text.secondary">
-                                {createdAt}
+                                {formattedDate}
                             </Typography>
                         }
                     />

@@ -22,36 +22,17 @@ export default function ProfilePage() {
     let [user, setUser] = useState({});
     const userRatingsSlice = useSelector((state) => state.ratings.userRatings);
     const userID = useSelector((state) => state.sauth.currUser)
+    const icons = useSelector((state) => state.users.iconLocations);
 
     useEffect(() => {
         dispatch(getUserRatingsAsync({userID: userID}));
     }, []);
 
 
-    let [user, setUser] = useState({});
-    let [userRatings, setUserRatings] = useState({});
-
     const routeChange = () => {
         let path = "../friends";
         navigate(path);
     };
-
-    const userID = useSelector((state) => state.sauth.currUser);
-    const icons = useSelector((state) => state.users.iconLocations);
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const userRatingData = await RatingService.getUserRatings(userID);
-                setUserRatings(userRatingData);
-            } catch (error) {
-                // Handle any errors that might occur during the promise resolution
-                console.error("Error fetching user data:", error);
-            }
-        };
-
-        fetchUserData();
-    }, []);
 
     useEffect(() => {
         const fetchUserRatings = async () => {
@@ -128,18 +109,9 @@ export default function ProfilePage() {
                     <label id="restaurant-title">Your Restaurants</label>
                 </div>
                 <div className="restaurants">
-
-                    {/* {userRatings.data && userRatings.data.map((rating) => {
-                        return (
-                            <YourRatingCard id={rating._id} restaurant={rating.restaurantName} restaurantID={rating.restaurantID} score={rating.score} comment={rating.comments} date={rating.createdAt} />
-                            // <ProfileRestaurant key={rating._id} rating={rating}/>
-                        )
-                    })} */}
-                    {console.log(userRatingsSlice)}
                     {userRatingsSlice.ratings.map((rating) => {
                         return <YourRatingCard id={rating._id} restaurant={rating.restaurantName} restaurantID={rating.restaurantID} score={rating.score} comment={rating.comments} date={rating.createdAt} />
                     })}
-
                 </div>
             </div>
         );

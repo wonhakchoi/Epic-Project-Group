@@ -29,8 +29,6 @@ const YourRatingCard = ({ id, restaurant, restaurantID, score, comment, date }) 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
-    const ratingsSlice = useSelector((state) => state.ratings.allRatings);
-
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -48,6 +46,16 @@ const YourRatingCard = ({ id, restaurant, restaurantID, score, comment, date }) 
         dispatch(deleteRatingsAsync(id));
     };
 
+    const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+    };
+
+    const formattedDate = new Intl.DateTimeFormat("en-US", options).format(new Date(date));
+
     // https://mui.com/material-ui/react-card/
     return (
         <Grid
@@ -57,8 +65,8 @@ const YourRatingCard = ({ id, restaurant, restaurantID, score, comment, date }) 
             alignItems="center"
             sx={{ marginTop: '30px' }}
         >
-            <Container maxWidth="sm">
-                <Card sx={{ maxWidth: 1000 }}>
+            {/* <Container maxWidth="sm"> */}
+                <Card sx={{ width: 440, maxWidth: 1000 }}>
                     <CardHeader
                         action={<>
                             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -129,7 +137,7 @@ const YourRatingCard = ({ id, restaurant, restaurantID, score, comment, date }) 
                         }
                         subheader={
                             <Typography mr={6} gutterBottom variant="body2" color="text.secondary">
-                                {date}
+                                {formattedDate}
                             </Typography>
                         }
                     />
@@ -150,7 +158,7 @@ const YourRatingCard = ({ id, restaurant, restaurantID, score, comment, date }) 
 
                     </CardContent>
                 </Card>
-            </Container>
+            {/* </Container> */}
         </Grid >
     );
 };
