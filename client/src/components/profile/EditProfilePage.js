@@ -90,6 +90,7 @@ export default function EditProfilePage() {
                             justifyContent: "center",
                             backgroundColor: "#FFFFFF",
                             padding: "2vh",
+                            margin: "20px 0 20px 0",
                             borderRadius: "2vh",
                             boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
                         }}
@@ -202,8 +203,26 @@ export default function EditProfilePage() {
                                 </Grid>
                             </Grid>
                         </Box>
-                        <Typography variant="h2" gutterBottom>
-                            Choose your icon!
+                    </Box>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: "#FFFFFF",
+                            padding: "2vh",
+                            borderRadius: "2vh",
+                            margin: "20px 0 20px 0",
+                            boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+                        }}
+                    >
+                        <Typography
+                            variant="h4"
+                            component="div"
+                            sx={{ mt: "2vh", fontSize: "4vh", marginBottom: "10px" }}
+                        >
+                            Avatar
                         </Typography>
                         <Grid container spacing={2}>
                             {icons.map((icon, index) => (
@@ -212,7 +231,7 @@ export default function EditProfilePage() {
                                         src={icon}
                                         alt={`User Icon ${index}`}
                                         onClick={() => dispatch(editIconAsync({ userID, iconID: index }))}
-                                        style={{ width: "100%", cursor: "pointer" }}
+                                        style={{ width: "50%", cursor: "pointer" }}
                                     />
                                 </Grid>
                             ))}
