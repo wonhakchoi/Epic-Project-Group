@@ -14,6 +14,7 @@ import {getUsersAsync} from "../redux/thunks/usersThunks";
 import {getRestaurantsAsync} from "../redux/thunks/restaurantsThunks";
 import {setFriendsLists} from "../redux/actions/userActions";
 import {postAuthAsync} from "../redux/thunks/authenticationThunks";
+import FriendsCollections from "../components/users/FriendsCollections";
 
 const Friends = () => {
     const usersSlice = useSelector((state) => state.users.allUsers);
@@ -71,6 +72,7 @@ const Friends = () => {
                             element={
                                 <section>
                                     <FriendsList/>
+                                    <FriendsCollections/>
                                     <FriendRatings/>
                                 </section>
                             }
