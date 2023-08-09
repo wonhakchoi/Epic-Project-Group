@@ -27,9 +27,8 @@ export default function CollectionPage() {
         setPageLoaded(true);
     }, []);
 
-
     const restaurantList = restaurants?.map((result) => (
-        <RestaurantCard key={result._id} restaurant={result}/>
+        <RestaurantCard key={result.place_id} restaurant={result}/>
     ));
 
     function handleDelete() {
