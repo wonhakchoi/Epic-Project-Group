@@ -1,17 +1,18 @@
 .user {
     width: 90%;
     margin: auto;
-    background-color: aliceblue;
+    background-color: rgb(241, 232, 255);
     border-radius: 30px;
     margin-top: 1vh;
-    height: 20vh;
+    height: 23vh;
 }
 
 .friends {
     text-align: left;
     width: 75%;
     margin: auto;
-    background-color: aliceblue;
+    margin-top: 1.5vh;
+    background-color: rgb(241, 232, 255);
     border-radius: 30px;
     height: 15vh;
     display: grid;
@@ -27,7 +28,7 @@
     align-items: center;
     justify-content: center;
     font-family: sans-serif;
-    background-color: aliceblue;
+    background-color: rgb(241, 232, 255);
     margin: 5vh;
 }
 
@@ -90,7 +91,7 @@
 #navigate-button {
     transition: 0.3s;
     border: none;
-    border: 0.6vh solid rgb(155, 102, 245); /* Set the border color */
+    border: 0.3vh solid rgb(155, 102, 245); /* Set the border color */
     font-size: 3vh;
     font-weight: bold;
     color: rgb(155, 102, 245);
@@ -98,7 +99,7 @@
     background-color: rgb(255, 255, 255);
 }
 #navigate-button:hover {
-    background-color: rgb(240, 232, 255);
+    background-color: rgb(236, 236, 236);
 }
 
 .restaurants {
@@ -119,7 +120,8 @@
     text-align: left;
     width: 75%;
     margin: auto;
-    background-color: aliceblue;
+    margin-top: 1.5vh;
+    background-color: rgb(241, 232, 255);
     border-radius: 2vh;
     height: 100vh;
     display: grid;
@@ -149,7 +151,7 @@
 
 .restaurants > div {
     flex-basis: 40%;
-    background-color: aliceblue;
+    background-color: rgb(241, 232, 255);
     margin: 20px;
 }
 
