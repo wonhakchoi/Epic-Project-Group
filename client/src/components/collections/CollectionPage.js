@@ -18,15 +18,28 @@ export default function CollectionPage() {
     const restaurants = useSelector((state) => state.collections.currRestaurants);
     const dispatch = useDispatch();
     const [loaded, setPageLoaded] = useState(false);
+    const currUser = useSelector((state) => state.sauth.currUser);
+    const [isCurrUser, setIsCurrUser] = useState(false);
     const navigate = useNavigate();
 
   // https://stackoverflow.com/questions/66021357/how-to-pass-id-to-react-js-path-link
   const { collectionId } = useParams();
     useEffect(() => {
-        dispatch(getCollectionDetailsAsync(collectionId));
+        dispatch(getCollectionDetailsAsync(collectionId))
         dispatch(getRestaurantsAsync(collectionId));
+    }, [currUser])
+
+    useEffect(() => {
+        if (collectionDetails.userId === currUser) {
+            setIsCurrUser(true);
+        } else {
+            setIsCurrUser(false);
+        }
         setPageLoaded(true);
-    }, []);
+        return () => {
+            setPageLoaded(false);
+        }
+    }, [collectionDetails])
 
     const restaurantList = restaurants?.map((result) => (
         <RestaurantCard key={result.place_id} restaurant={result}/>
@@ -38,6 +51,21 @@ export default function CollectionPage() {
         dispatch(deleteCollectionAsync(collectionId));
         navigate('/collections');
         dispatch(setLoaded(true));
+    }
+
+    if (!loaded) {
+        return <LoadingUsers />;
+    }
+
+    if (!isCurrUser) {
+        return (
+            <Box sx={{maxWidth: "500px", margin: "25px auto"}}>
+                <Typography variant="h4" component="h1" sx={{marginBottom: "20px"}}>
+                    {collectionDetails.name}
+                </Typography>
+                {restaurantList}
+            </Box>
+        )
     }
 
   return (
