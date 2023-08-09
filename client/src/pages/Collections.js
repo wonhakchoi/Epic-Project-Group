@@ -64,10 +64,10 @@ export default function Collections() {
         <Typography
           variant="h4"
           sx={{
-            marginTop: "7vh", 
-            marginBottom: "5vh", 
+            marginTop: "7vh",
+            marginBottom: "5vh",
             fontWeight: "bold",
-            fontSize: "4vh", 
+            fontSize: "4vh",
             color: "#000000",
             textAlign: "left",
             fontFamily: "system-ui",
@@ -95,9 +95,9 @@ export default function Collections() {
       <Typography
         variant="h5"
         sx={{
-          marginTop: "1vh", 
-          marginBottom: "8vh", 
-          backgroundColor: "#C5BAF4", 
+          marginTop: "1vh",
+          marginBottom: "8vh",
+          backgroundColor: "#C5BAF4",
           padding: "3vh",
           textAlign: "left",
           fontSize: "3vh",
@@ -116,11 +116,11 @@ export default function Collections() {
       <Typography
         variant="h5"
         sx={{
-          marginTop: "5vh", 
-          backgroundColor: "#E2D6F4", 
+          marginTop: "5vh",
+          backgroundColor: "#E2D6F4",
           padding: "3vh",
           textAlign: "left",
-          fontSize: "3vh", 
+          fontSize: "3vh",
           fontFamily: "system-ui",
           fontWeight: "bold",
           color: "#000000",

@@ -2,6 +2,31 @@ const express = require('express');
 const {Cauliflower} = require("../database/models/cauliflowerModel");
 const router = express.Router();
 const axios = require("axios");
+const {User} = require("../database/models/userModel");
+
+// GET list of collections of friends
+router.get('/friends/:userId', async (req, res) => {
+    const uId = req.params.userId;
+    let user = await User.findById(uId).exec();
+    let friends = user["friends"];
+    let collections = [];
+    for (let f of friends) {
+        let c = null;
+        let friendName = null;
+        try {
+            c = await Cauliflower.findOne({userId: f}).exec();
+            let friend = await User.findById(f).exec();
+            friendName = friend.firstName;
+        } catch (e) {
+            console.error(e);
+        }
+        if (c) {
+            collections.push({friendName: friendName, collection: c});
+        }
+    }
+
+    return res.send(collections);
+})
 
 // PATCH change pin status
 router.patch('/pin/:collectionId', async (req, res) => {
