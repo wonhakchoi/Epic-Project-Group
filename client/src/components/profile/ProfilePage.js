@@ -2,26 +2,27 @@ import React, { useState, useEffect } from "react";
 import "./ProfilePage.css";
 import ProfileFriend from "./ProfileFriend";
 import ProfileRestaurant from "./ProfileRestaurant";
-import User from "./User"
+import User from "./User";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import UserService from "../../redux/services/usersService";
 import RatingService from "../../redux/services/ratingsService";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 import { Tooltip, Button } from "@mui/material";
 
 export default function ProfilePage() {
     let navigate = useNavigate();
 
-    let [user, setUser] = useState({})
-    let [userRatings, setUserRatings] = useState({})
+    let [user, setUser] = useState({});
+    let [userRatings, setUserRatings] = useState({});
 
     const routeChange = () => {
-        let path = '../friends';
+        let path = "../friends";
         navigate(path);
-    }
+    };
 
-    const userID = useSelector((state) => state.sauth.currUser)
+    const userID = useSelector((state) => state.sauth.currUser);
+    const icons = useSelector((state) => state.users.iconLocations);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -35,7 +36,7 @@ export default function ProfilePage() {
         };
 
         fetchUserData();
-    }, [])
+    }, []);
 
     useEffect(() => {
         const fetchUserRatings = async () => {
@@ -49,39 +50,48 @@ export default function ProfilePage() {
         };
 
         fetchUserRatings();
-    }, [])
-
+    }, []);
 
     if (user.data !== undefined) {
         return (
             <div>
-               <div className="friends-header" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+                <div
+                    className="friends-header"
+                    style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}
+                >
                     <div style={{ display: "flex", alignItems: "center", marginBottom: "2vh" }}>
-                        <div id="friend-title" style={{ marginRight: "10px" }}>My Profile</div>
+                        <div id="friend-title" style={{ marginRight: "10px" }}>
+                            My Profile
+                        </div>
                         <Tooltip title="Edit profile" placement="right">
-                            <Button href="edit-profile" >
-                                <EditIcon sx={{
-                      fontSize: "4vh",
-                      color: "#7C40F4",
-               
-                      }}  />
+                            <Button href="edit-profile">
+                                <EditIcon
+                                    sx={{
+                                        fontSize: "4vh",
+                                        color: "#7C40F4",
+                                    }}
+                                />
                             </Button>
                         </Tooltip>
                     </div>
                     <div style={{ display: "flex", alignItems: "center" }}>
-                        <User name={`${user.data[0].firstName} ${user.data[0].lastName}`} biography={user.data[0].biography} />
+                        <User
+                            name={`${user.data[0].firstName} ${user.data[0].lastName}`}
+                            biography={user.data[0].biography}
+                            icon={icons[user.data[0].icon]}
+                        />
                     </div>
                 </div>
                 <div className="friends-header">
                     <label id="friend-title">Friends</label>
-                    <button id="navigate-button" onClick={routeChange}>View Friends Page</button>
+                    <button id="navigate-button" onClick={routeChange}>
+                        View Friends Page
+                    </button>
                 </div>
 
                 <div className="friends">
                     {user.data[0].friends.map((friend) => {
-                        return (
-                            <ProfileFriend key={friend} id={friend} />
-                        )
+                        return <ProfileFriend key={friend} id={friend} />;
                     })}
                 </div>
 
@@ -89,13 +99,12 @@ export default function ProfilePage() {
                     <label id="restaurant-title">Your Restaurants</label>
                 </div>
                 <div className="restaurants">
-                    {userRatings.data && userRatings.data.map((rating) => {
-                        return (
-                            <ProfileRestaurant key={rating._id} rating={rating}/>
-                        )
-                    })}
+                    {userRatings.data &&
+                        userRatings.data.map((rating) => {
+                            return <ProfileRestaurant key={rating._id} rating={rating} />;
+                        })}
                 </div>
             </div>
         );
     }
-};
+}
