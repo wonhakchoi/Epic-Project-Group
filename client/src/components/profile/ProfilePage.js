@@ -9,7 +9,7 @@ import UserService from "../../redux/services/usersService";
 import RatingService from "../../redux/services/ratingsService";
 import EditIcon from "@mui/icons-material/Edit";
 import { Tooltip, Button } from "@mui/material";
-
+ 
 export default function ProfilePage() {
     let navigate = useNavigate();
 
