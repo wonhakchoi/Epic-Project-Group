@@ -37,7 +37,8 @@ const RatingCard = ({ id, userID, name, icon, restaurant, score, comment, date }
                         title={
                             <Link to={`/users/${userID}`} style={{ textDecoration: "none", color: "inherit" }}>
 
-                                <Typography variant="h6" sx={{ fontSize: "1.3rem", textAlign: "center" }}>
+                                {/* <Typography variant="h6" sx={{ fontSize: "1.3rem", textAlign: "center" }}> */}
+                                <Typography mr={6} gutterBottom variant="h6" component="h2">
 
                                     {name}
                                 </Typography>
