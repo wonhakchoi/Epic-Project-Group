@@ -6,6 +6,12 @@ const getRatings = async (skipAmount, resultsToGet) => {
     return response;
 };
 
+// gets the next subset of ratings
+const getAllRatings = async () => {
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND}/ratings/allRatings`);
+    return response;
+};
+
 // gets a rating by rating ID
 const getRatingByID = async (ratingID) => {
     const response = await axios.get(`${process.env.REACT_APP_BACKEND}/ratings/${ratingID}`);
@@ -52,6 +58,7 @@ const deleteRatings = async (ratingID) => {
 
 const RatingService = {
     getRatings,
+    getAllRatings,
     getRatingByID,
     getFriendRatings,
     getUserRatings,

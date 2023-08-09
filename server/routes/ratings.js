@@ -16,6 +16,17 @@ router.get("/allRatings/:skip/:limit", async (req, res, next) => {
     }
 });
 
+/* GET all ratings */
+router.get("/allRatings", async (req, res, next) => {
+    try {
+        const ratingSection = await Rating.find({});
+        res.status(200).send({ ratings: ratingSection });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
+});
+
 /* GET rating by ratingID  */
 router.get("/:ratingID", async (req, res, next) => {
     let { ratingID } = req.params;
