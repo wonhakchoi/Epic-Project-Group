@@ -18,7 +18,6 @@ export default function ProfileFriend({ id }) {
                 console.error("Error fetching friend data:", error);
             }
         };
-
         fetchFriendData();
     }, []);
 
